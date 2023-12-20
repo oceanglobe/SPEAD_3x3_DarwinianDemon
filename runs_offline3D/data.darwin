@@ -223,7 +223,7 @@
 #x-trait here is biovolume, not half-saturation
  numut_bvol(:) = 0.001, 0.000
 #numut_topt(:) = 0.01, 0.00
- numut_topt(:) = 1.0e-5, 0.00
+ numut_topt(:) = 1.0e-2, 0.00
 #numut_topt(:) = 0.0, 0.00  ! For darwinian demon
  numut_paropt(:) = 0.001, 0.0000
 #numut_bvol(:) = 0.000, 0.000
