@@ -1,0 +1,3031 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+C $Header: /u/gcmpack/MITgcm/model/inc/CPP_OPTIONS.h,v 1.51 2012/11/09 22:29:32 jmc Exp $
+C $Name:  $
+
+
+CBOP
+C !ROUTINE: CPP_OPTIONS.h
+C !INTERFACE:
+C #include "CPP_OPTIONS.h"
+
+C !DESCRIPTION:
+C *==================================================================*
+C | main CPP options file for the model:
+C | Control which optional features to compile in model/src code.
+C *==================================================================*
+CEOP
+
+C CPP flags controlling particular source code features
+
+C o Shortwave heating as extra term in external_forcing.F
+C Note: this should be a run-time option
+
+C o Include/exclude phi_hyd calculation code
+
+C o Include/exclude call to S/R CONVECT
+
+C o Include/exclude call to S/R CALC_DIFFUSIVITY
+
+C o Allow full 3D specification of vertical diffusivity
+
+C o Allow latitudinally varying BryanLewis79 vertical diffusivity
+
+C o Include/exclude Implicit vertical advection code
+
+C o Include/exclude AdamsBashforth-3rd-Order code
+
+C o Include/exclude nonHydrostatic code
+
+C o Allow to account for heating due to friction (and momentum dissipation)
+
+C o Allow mass source or sink of Fluid in the interior
+C   (3-D generalisation of oceanic real-fresh water flux)
+
+C o Include pressure loading code
+
+C o exclude/allow external forcing-fields load
+C   this allows to read & do simple linear time interpolation of oceanic
+C   forcing fields, if no specific pkg (e.g., EXF) is used to compute them.
+
+C o Include/exclude balancing surface forcing fluxes code
+
+C o Include/exclude balancing surface forcing relaxation code
+
+C o Include/exclude GM-like eddy stress in momentum code
+
+C o Use "Exact Convervation" of fluid in Free-Surface formulation
+C   so that d/dt(eta) is exactly equal to - Div.Transport
+
+C o Allow the use of Non-Linear Free-Surface formulation
+C   this implies that surface thickness (hFactors) vary with time
+
+C o Include/exclude code for single reduction Conjugate-Gradient solver
+
+C o Choices for implicit solver routines solve_*diagonal.F
+C   The following has low memory footprint, but not suitable for AD
+C   The following one suitable for AD but does not vectorize
+
+C o ALLOW isotropic scaling of harmonic and bi-harmonic terms when
+C   using an locally isotropic spherical grid with (dlambda) x (dphi*cos(phi))
+C *only for use on a lat-lon grid*
+C   Setting this flag here affects both momentum and tracer equation unless
+C   it is set/unset again in other header fields (e.g., GAD_OPTIONS.h).
+C   The definition of the flag is commented to avoid interference with
+C   such other header files.
+C   The preferred method is specifying a value for viscAhGrid or viscA4Grid
+C   in data which is then automatically scaled by the grid size;
+C   the old method of specifying viscAh/viscA4 and this flag is provided
+C   for completeness only (and for use with the adjoint).
+C#define ISOTROPIC_COS_SCALING
+
+C o This flag selects the form of COSINE(lat) scaling of bi-harmonic term.
+C *only for use on a lat-lon grid*
+C   Has no effect if ISOTROPIC_COS_SCALING is undefined.
+C   Has no effect on vector invariant momentum equations.
+C   Setting this flag here affects both momentum and tracer equation unless
+C   it is set/unset again in other header fields (e.g., GAD_OPTIONS.h).
+C   The definition of the flag is commented to avoid interference with
+C   such other header files.
+C#define COSINEMETH_III
+
+C o Use "OLD" UV discretisation near boundaries (*not* recommended)
+C   Note - only works with  #undef NO_SLIP_LATERAL  in calc_mom_rhs.F
+C          because the old code did not have no-slip BCs
+
+C o Use LONG.bin, LATG.bin, etc., initialization for ini_curviliear_grid.F
+C   Default is to use "new" grid files (OLD_GRID_IO undef) but OLD_GRID_IO
+C   is still useful with, e.g., single-domain curvilinear configurations.
+
+C o Execution environment support options
+CBOP
+C     !ROUTINE: CPP_EEOPTIONS.h
+C     !INTERFACE:
+C     include "CPP_EEOPTIONS.h"
+C
+C     !DESCRIPTION:
+C     *==========================================================*
+C     | CPP\_EEOPTIONS.h                                         |
+C     *==========================================================*
+C     | C preprocessor "execution environment" supporting        |
+C     | flags. Use this file to set flags controlling the        |
+C     | execution environment in which a model runs - as opposed |
+C     | to the dynamical problem the model solves.               |
+C     | Note: Many options are implemented with both compile time|
+C     |       and run-time switches. This allows options to be   |
+C     |       removed altogether, made optional at run-time or   |
+C     |       to be permanently enabled. This convention helps   |
+C     |       with the data-dependence analysis performed by the |
+C     |       adjoint model compiler. This data dependency       |
+C     |       analysis can be upset by runtime switches that it  |
+C     |       is unable to recoginise as being fixed for the     |
+C     |       duration of an integration.                        |
+C     |       A reasonable way to use these flags is to          |
+C     |       set all options as selectable at runtime but then  |
+C     |       once an experimental configuration has been        |
+C     |       identified, rebuild the code with the appropriate  |
+C     |       options set at compile time.                       |
+C     *==========================================================*
+CEOP
+
+
+C     In general the following convention applies:
+C     ALLOW  - indicates an feature will be included but it may
+C     CAN      have a run-time flag to allow it to be switched
+C              on and off.
+C              If ALLOW or CAN directives are "undef'd" this generally
+C              means that the feature will not be available i.e. it
+C              will not be included in the compiled code and so no
+C              run-time option to use the feature will be available.
+C
+C     ALWAYS - indicates the choice will be fixed at compile time
+C              so no run-time option will be present
+
+C=== Macro related options ===
+C--   Control storage of floating point operands
+C     On many systems it improves performance only to use
+C     8-byte precision for time stepped variables.
+C     Constant in time terms ( geometric factors etc.. )
+C     can use 4-byte precision, reducing memory utilisation and
+C     boosting performance because of a smaller working set size.
+C     However, on vector CRAY systems this degrades performance.
+C     Enable to switch REAL4_IS_SLOW from genmake2 (with LET_RS_BE_REAL4):
+
+C--   Control use of "double" precision constants.
+C     Use D0 where it means REAL*8 but not where it means REAL*16
+
+C--   Enable some old macro conventions for backward compatibility
+
+C=== IO related options ===
+C--   Flag used to indicate whether Fortran formatted write
+C     and read are threadsafe. On SGI the routines can be thread
+C     safe, on Sun it is not possible - if you are unsure then
+C     undef this option.
+
+C--   Flag used to indicate whether Binary write to Local file (i.e.,
+C     a different file for each tile) and read are thread-safe.
+
+C--   Flag to turn off the writing of error message to ioUnit zero
+
+C--   Alternative formulation of BYTESWAP, faster than
+C     compiler flag -byteswapio on the Altix.
+
+C--   Flag to turn on old default of opening scratch files with the
+C     STATUS='SCRATCH' option. This method, while perfectly FORTRAN-standard,
+C     caused filename conflicts on some multi-node/multi-processor platforms
+C     in the past and has been replace by something (hopefully) more robust.
+
+C--   Flag defined for eeboot_minimal.F, eeset_parms.F and open_copy_data_file.F
+C     to write STDOUT, STDERR and scratch files from process 0 only.
+C WARNING: to use only when absolutely confident that the setup is working
+C     since any message (error/warning/print) from any proc <> 0 will be lost.
+
+C=== MPI, EXCH and GLOBAL_SUM related options ===
+C--   Flag turns off MPI_SEND ready_to_receive polling in the
+C     gather_* subroutines to speed up integrations.
+
+C--   Control MPI based parallel processing
+CXXX We no longer select the use of MPI via this file (CPP_EEOPTIONS.h)
+CXXX To use MPI, use an appropriate genmake2 options file or use
+CXXX genmake2 -mpi .
+CXXX #undef  1
+
+C--   Control use of communication that might overlap computation.
+C     Under MPI selects/deselects "non-blocking" sends and receives.
+C--   Control use of communication that is atomic to computation.
+C     Under MPI selects/deselects "blocking" sends and receives.
+
+C--   Control XY periodicity in processor to grid mappings
+C     Note: Model code does not need to know whether a domain is
+C           periodic because it has overlap regions for every box.
+C           Model assume that these values have been
+C           filled in some way.
+
+C--   disconnect tiles (no exchange between tiles, just fill-in edges
+C     assuming locally periodic subdomain)
+
+C--   Always cumulate tile local-sum in the same order by applying MPI allreduce
+C     to array of tiles ; can get slower with large number of tiles (big set-up)
+
+C--   Alternative way of doing global sum without MPI allreduce call
+C     but instead, explicit MPI send & recv calls. Expected to be slower.
+
+C--   Alternative way of doing global sum on a single CPU
+C     to eliminate tiling-dependent roundoff errors. Note: This is slow.
+
+C=== Other options (to add/remove pieces of code) ===
+C--   Flag to turn on checking for errors from all threads and procs
+C     (calling S/R STOP_IF_ERROR) before stopping.
+
+C--   Control use of communication with other component:
+C     allow to import and export from/to Coupler interface.
+
+C--   Activate some pieces of code for coupling to GEOS AGCM
+
+
+CBOP
+C     !ROUTINE: CPP_EEMACROS.h
+C     !INTERFACE:
+C     include "CPP_EEMACROS.h"
+C     !DESCRIPTION:
+C     *==========================================================*
+C     | CPP_EEMACROS.h
+C     *==========================================================*
+C     | C preprocessor "execution environment" supporting
+C     | macros. Use this file to define macros for  simplifying
+C     | execution environment in which a model runs - as opposed
+C     | to the dynamical problem the model solves.
+C     *==========================================================*
+CEOP
+
+
+C     In general the following convention applies:
+C     ALLOW  - indicates an feature will be included but it may
+C     CAN      have a run-time flag to allow it to be switched
+C              on and off.
+C              If ALLOW or CAN directives are "undef'd" this generally
+C              means that the feature will not be available i.e. it
+C              will not be included in the compiled code and so no
+C              run-time option to use the feature will be available.
+C
+C     ALWAYS - indicates the choice will be fixed at compile time
+C              so no run-time option will be present
+
+C     Flag used to indicate which flavour of multi-threading
+C     compiler directives to use. Only set one of these.
+C     USE_SOLARIS_THREADING  - Takes directives for SUN Workshop
+C                              compiler.
+C     USE_KAP_THREADING      - Takes directives for Kuck and
+C                              Associates multi-threading compiler
+C                              ( used on Digital platforms ).
+C     USE_IRIX_THREADING     - Takes directives for SGI MIPS
+C                              Pro Fortran compiler.
+C     USE_EXEMPLAR_THREADING - Takes directives for HP SPP series
+C                              compiler.
+C     USE_C90_THREADING      - Takes directives for CRAY/SGI C90
+C                              system F90 compiler.
+
+
+
+
+
+
+C--   Define the mapping for the _BARRIER macro
+C     On some systems low-level hardware support can be accessed through
+C     compiler directives here.
+
+C--   Define the mapping for the BEGIN_CRIT() and  END_CRIT() macros.
+C     On some systems we simply execute this section only using the
+C     master thread i.e. its not really a critical section. We can
+C     do this because we do not use critical sections in any critical
+C     sections of our code!
+
+C--   Define the mapping for the BEGIN_MASTER_SECTION() and
+C     END_MASTER_SECTION() macros. These are generally implemented by
+C     simply choosing a particular thread to be "the master" and have
+C     it alone execute the BEGIN_MASTER..., END_MASTER.. sections.
+
+CcnhDebugStarts
+C      Alternate form to the above macros that increments (decrements) a counter each
+C      time a MASTER section is entered (exited). This counter can then be checked in barrier
+C      to try and detect calls to BARRIER within single threaded sections.
+C      Using these macros requires two changes to Makefile - these changes are written
+C      below.
+C      1 - add a filter to the CPP command to kill off commented _MASTER lines
+C      2 - add a filter to the CPP output the converts the string N EWLINE to an actual newline.
+C      The N EWLINE needs to be changes to have no space when this macro and Makefile changes
+C      are used. Its in here with a space to stop it getting parsed by the CPP stage in these
+C      comments.
+C      #define IF ( a .EQ. 1 ) THEN  IF ( a .EQ. 1 ) THEN  N EWLINE      CALL BARRIER_MS(a)
+C      #define ENDIF    CALL BARRIER_MU(a) N EWLINE        ENDIF
+C      'CPP = cat $< | $(TOOLSDIR)/set64bitConst.sh |  grep -v '^[cC].*_MASTER' | cpp  -traditional -P'
+C      .F.f:
+C      $(CPP) $(DEFINES) $(INCLUDES) |  sed 's/N EWLINE/\n/' > $@
+CcnhDebugEnds
+
+C--   Control storage of floating point operands
+C     On many systems it improves performance only to use
+C     8-byte precision for time stepped variables.
+C     Constant in time terms ( geometric factors etc.. )
+C     can use 4-byte precision, reducing memory utilisation and
+C     boosting performance because of a smaller working
+C     set size. However, on vector CRAY systems this degrades
+C     performance.
+C- Note: global_sum/max macros were used to switch to  JAM routines (obsolete);
+C  in addition, since only the R4 & R8 S/R are coded, GLOBAL RS & RL macros
+C  enable to call the corresponding R4 or R8 S/R.
+
+
+
+C- Note: a) exch macros were used to switch to  JAM routines (obsolete)
+C        b) exch R4 & R8 macros are not practically used ; if needed,
+C           will directly call the corrresponding S/R.
+
+C--   Control use of JAM routines for Artic network (no longer supported)
+C     These invoke optimized versions of "exchange" and "sum" that
+C     utilize the programmable aspect of Artic cards.
+CXXX No longer supported ; started to remove JAM routines.
+CXXX #ifdef LETS_MAKE_JAM
+CXXX #define CALL GLOBAL_SUM_R8 ( a, b) CALL GLOBAL_SUM_R8_JAM ( a, b)
+CXXX #define CALL GLOBAL_SUM_R8 ( a, b ) CALL GLOBAL_SUM_R8_JAM ( a, b )
+CXXX #define CALL EXCH_XY_RS ( a, b ) CALL EXCH_XY_R8_JAM ( a, b )
+CXXX #define CALL EXCH_XY_RL ( a, b ) CALL EXCH_XY_R8_JAM ( a, b )
+CXXX #define CALL EXCH_XYZ_RS ( a, b ) CALL EXCH_XYZ_R8_JAM ( a, b )
+CXXX #define CALL EXCH_XYZ_RL ( a, b ) CALL EXCH_XYZ_R8_JAM ( a, b )
+CXXX #endif
+
+C--   Control use of "double" precision constants.
+C     Use d0 where it means REAL*8 but not where it means REAL*16
+
+C--   Substitue for 1.D variables
+C     Sun compilers do not use 8-byte precision for literals
+C     unless .Dnn is specified. CRAY vector machines use 16-byte
+C     precision when they see .Dnn which runs very slowly!
+
+C--   Set the format for writing processor IDs, e.g. in S/R eeset_parms
+C     and S/R open_copy_data_file. The default of I9.9 should work for
+C     a long time (until we will use 10e10 processors and more)
+
+
+
+C o Include/exclude single header file containing multiple packages options
+C   (AUTODIFF, COST, CTRL, ECCO, EXF ...) instead of the standard way where
+C   each of the above pkg get its own options from its specific option file.
+C   Although this method, inherited from ECCO setup, has been traditionally
+C   used for all adjoint built, work is in progress to allow to use the
+C   standard method also for adjoint built.
+c#ifdef 
+c# include "ECCO_CPPOPTIONS.h"
+c#endif
+
+
+CBOP
+C    !ROUTINE: DARWIN_OPTIONS.h
+C    !INTERFACE:
+
+C    !DESCRIPTION:
+C options for darwin package
+CEOP
+
+C tracer selection
+
+C enable (or disable) nitrogen quotas for all plankton
+
+C enable (or disable) phosphorus quotas for all plankton
+
+C enable (or disable) iron quotas for all plankton
+
+C enable (or disable) silica quotas for all plankton
+
+C enable (or disable) chlorophyll quotas for all phototrophs
+
+C enable (or disable) a dynamic CDOM tracer
+
+C enable (or disable) air-sea carbon exchange and Alk and O2 tracers
+
+C optional bits
+
+C enable (or disable) denitrification code
+
+C enable (or disable) separate exudation of individual elements
+
+C enable (or disable) old virtualflux code for DIC and Alk
+
+C reduce nitrate uptake by iron limitation factor
+
+C allow organic matter to sink into bottom (sedimentize)
+
+
+C light
+
+C compute average PAR in layer, assuming exponential decay
+C (ignored when radtrans package is used)
+
+C enable (or disable) GEIDER light code
+
+C use rho instead of acclimated Chl:C for chlorophyll synthesis
+
+C initialize chl as in darwin2 (with radtrans package)
+
+C scattering coefficients are per Chlorophyll (with radtrans package)
+
+C make diagnostics for instrinsic optical properties available
+
+
+C grazing
+
+C for quadratic grazing as in darwin2+quota
+
+C compute palat from size ratios
+
+C turn off grazing temperature dependence
+
+C temperature
+
+C turn off all temperature dependence
+
+C select temperature version: 1, 2 or 3
+
+C restrict phytoplankton growth to a temperature range
+
+
+C iron
+
+C restrict maximum free iron
+
+C enable particle scavenging code
+
+C enable variable iron sediment source
+
+C revert to old variable iron sediment source in terms of POP
+
+C diagnostics
+
+C include code for per-type diagnostics
+
+
+C debugging
+
+C turn on debugging output
+
+C compute and print global element totals
+
+C value for unused traits
+
+
+C deprecated
+
+C base particle scavenging on POP as in darwin2
+
+
+C random trait generation
+C these are for darwin_generate_random
+C assign traits based on random numbers as in darwin2
+
+C set traits for darwin2 2-species setup (requires DARWIN_RANDOM_TRAITS)
+
+C set traits for darwin2 9-species setup (requires DARWIN_RANDOM_TRAITS)
+
+C enable diazotrophy when using (requires DARWIN_RANDOM_TRAITS)
+
+C Traits (Le Gland, 26/03/2021)
+C If defined, ntrait must be superior or equal to 1
+C If defined, ntrait must be superior or equal to 2
+
+C If defined the phytoplankton is a Darwian Demon
+
+
+CBOP
+C !ROUTINE: DARWIN_GENERATE_RANDOM
+
+C !INTERFACE: ==========================================================
+      SUBROUTINE DARWIN_GENERATE_RANDOM( myThid )
+
+C !DESCRIPTION:
+C     Generate parameters for plankton types using a "Monte Carlo"
+C     approach.
+C
+C     Mick Follows, Scott Grant Fall/Winter 2005
+C     Stephanie Dutkiewicz Spring/Summer 2005
+C     Anna Hickman Summer 2008
+C
+C     DARWIN_TWO_SPECIES_SETUP
+C      1=large, 2=small
+C     DARWIN_NINE_SPECIES_SETUP
+C      1=diatom, 2=other large, 3=syn, 4=hl pro, 5=ll pro, 6=trich, 
+C      7=uni diaz, 8=small euk, 9=cocco
+
+C !USES: ===============================================================
+      IMPLICIT NONE
+CBOP
+C     !ROUTINE: EEPARAMS.h
+C     !INTERFACE:
+C     include "EEPARAMS.h"
+C
+C     !DESCRIPTION:
+C     *==========================================================*
+C     | EEPARAMS.h                                               |
+C     *==========================================================*
+C     | Parameters for "execution environemnt". These are used   |
+C     | by both the particular numerical model and the execution |
+C     | environment support routines.                            |
+C     *==========================================================*
+CEOP
+
+C     ========  EESIZE.h  ========================================
+
+C     MAX_LEN_MBUF  :: Default message buffer max. size
+C     MAX_LEN_FNAM  :: Default file name max. size
+C     MAX_LEN_PREC  :: Default rec len for reading "parameter" files
+
+      INTEGER MAX_LEN_MBUF
+      PARAMETER ( MAX_LEN_MBUF = 512 )
+      INTEGER MAX_LEN_FNAM
+      PARAMETER ( MAX_LEN_FNAM = 512 )
+      INTEGER MAX_LEN_PREC
+      PARAMETER ( MAX_LEN_PREC = 200 )
+
+C     MAX_NO_THREADS  :: Maximum number of threads allowed.
+CC    MAX_NO_PROCS    :: Maximum number of processes allowed.
+CC    MAX_NO_BARRIERS :: Maximum number of distinct thread "barriers"
+      INTEGER MAX_NO_THREADS
+      PARAMETER ( MAX_NO_THREADS =  4 )
+c     INTEGER MAX_NO_PROCS
+c     PARAMETER ( MAX_NO_PROCS   =  70000 )
+c     INTEGER MAX_NO_BARRIERS
+c     PARAMETER ( MAX_NO_BARRIERS = 1 )
+
+C     Particularly weird and obscure voodoo numbers
+C     lShare :: This wants to be the length in
+C               [148]-byte words of the size of
+C               the address "window" that is snooped
+C               on an SMP bus. By separating elements in
+C               the global sum buffer we can avoid generating
+C               extraneous invalidate traffic between
+C               processors. The length of this window is usually
+C               a cache line i.e. small O(64 bytes).
+C               The buffer arrays are usually short arrays
+C               and are declared REAL ARRA(lShare[148],LBUFF).
+C               Setting lShare[148] to 1 is like making these arrays
+C               one dimensional.
+      INTEGER cacheLineSize
+      INTEGER lShare1
+      INTEGER lShare4
+      INTEGER lShare8
+      PARAMETER ( cacheLineSize = 256 )
+      PARAMETER ( lShare1 =  cacheLineSize )
+      PARAMETER ( lShare4 =  cacheLineSize/4 )
+      PARAMETER ( lShare8 =  cacheLineSize/8 )
+
+CC    MAX_VGS  :: Maximum buffer size for Global Vector Sum
+c     INTEGER MAX_VGS
+c     PARAMETER ( MAX_VGS = 8192 )
+
+C     ========  EESIZE.h  ========================================
+
+C     Symbolic values
+C     precXXXX :: precision used for I/O
+      INTEGER precFloat32
+      PARAMETER ( precFloat32 = 32 )
+      INTEGER precFloat64
+      PARAMETER ( precFloat64 = 64 )
+
+C     Real-type constant for some frequently used simple number (0,1,2,1/2):
+      Real*8     zeroRS, oneRS, twoRS, halfRS
+      PARAMETER ( zeroRS = 0.0D0 , oneRS  = 1.0D0 )
+      PARAMETER ( twoRS  = 2.0D0 , halfRS = 0.5D0 )
+      Real*8     zeroRL, oneRL, twoRL, halfRL
+      PARAMETER ( zeroRL = 0.0D0 , oneRL  = 1.0D0 )
+      PARAMETER ( twoRL  = 2.0D0 , halfRL = 0.5D0 )
+
+C     UNSET_xxx :: Used to indicate variables that have not been given a value
+      Real*8  UNSET_FLOAT8
+      PARAMETER ( UNSET_FLOAT8 = 1.234567D5 )
+      Real*4  UNSET_FLOAT4
+      PARAMETER ( UNSET_FLOAT4 = 1.234567E5 )
+      Real*8     UNSET_RL
+      PARAMETER ( UNSET_RL     = 1.234567D5 )
+      Real*8     UNSET_RS
+      PARAMETER ( UNSET_RS     = 1.234567D5 )
+      INTEGER UNSET_I
+      PARAMETER ( UNSET_I      = 123456789  )
+
+C     debLevX  :: used to decide when to print debug messages
+      INTEGER debLevZero
+      INTEGER debLevA, debLevB,  debLevC, debLevD, debLevE
+      PARAMETER ( debLevZero=0 )
+      PARAMETER ( debLevA=1 )
+      PARAMETER ( debLevB=2 )
+      PARAMETER ( debLevC=3 )
+      PARAMETER ( debLevD=4 )
+      PARAMETER ( debLevE=5 )
+
+C     SQUEEZE_RIGHT      :: Flag indicating right blank space removal
+C                           from text field.
+C     SQUEEZE_LEFT       :: Flag indicating left blank space removal
+C                           from text field.
+C     SQUEEZE_BOTH       :: Flag indicating left and right blank
+C                           space removal from text field.
+C     PRINT_MAP_XY       :: Flag indicating to plot map as XY slices
+C     PRINT_MAP_XZ       :: Flag indicating to plot map as XZ slices
+C     PRINT_MAP_YZ       :: Flag indicating to plot map as YZ slices
+C     commentCharacter   :: Variable used in column 1 of parameter
+C                           files to indicate comments.
+C     INDEX_I            :: Variable used to select an index label
+C     INDEX_J               for formatted input parameters.
+C     INDEX_K
+C     INDEX_NONE
+      CHARACTER*(*) SQUEEZE_RIGHT
+      PARAMETER ( SQUEEZE_RIGHT = 'R' )
+      CHARACTER*(*) SQUEEZE_LEFT
+      PARAMETER ( SQUEEZE_LEFT = 'L' )
+      CHARACTER*(*) SQUEEZE_BOTH
+      PARAMETER ( SQUEEZE_BOTH = 'B' )
+      CHARACTER*(*) PRINT_MAP_XY
+      PARAMETER ( PRINT_MAP_XY = 'XY' )
+      CHARACTER*(*) PRINT_MAP_XZ
+      PARAMETER ( PRINT_MAP_XZ = 'XZ' )
+      CHARACTER*(*) PRINT_MAP_YZ
+      PARAMETER ( PRINT_MAP_YZ = 'YZ' )
+      CHARACTER*(*) commentCharacter
+      PARAMETER ( commentCharacter = '#' )
+      INTEGER INDEX_I
+      INTEGER INDEX_J
+      INTEGER INDEX_K
+      INTEGER INDEX_NONE
+      PARAMETER ( INDEX_I    = 1,
+     &            INDEX_J    = 2,
+     &            INDEX_K    = 3,
+     &            INDEX_NONE = 4 )
+
+C     EXCH_IGNORE_CORNERS :: Flag to select ignoring or
+C     EXCH_UPDATE_CORNERS    updating of corners during an edge exchange.
+      INTEGER EXCH_IGNORE_CORNERS
+      INTEGER EXCH_UPDATE_CORNERS
+      PARAMETER ( EXCH_IGNORE_CORNERS = 0,
+     &            EXCH_UPDATE_CORNERS = 1 )
+
+C     FORWARD_SIMULATION
+C     REVERSE_SIMULATION
+C     TANGENT_SIMULATION
+      INTEGER FORWARD_SIMULATION
+      INTEGER REVERSE_SIMULATION
+      INTEGER TANGENT_SIMULATION
+      PARAMETER ( FORWARD_SIMULATION = 0,
+     &            REVERSE_SIMULATION = 1,
+     &            TANGENT_SIMULATION = 2 )
+
+C--   COMMON /EEPARAMS_L/ Execution environment public logical variables.
+C     eeBootError    :: Flags indicating error during multi-processing
+C     eeEndError     :: initialisation and termination.
+C     fatalError     :: Flag used to indicate that the model is ended with an error
+C     debugMode      :: controls printing of debug msg (sequence of S/R calls).
+C     useSingleCpuIO :: When useSingleCpuIO is set, MDS_WRITE_FIELD outputs from
+C                       master MPI process only. -- NOTE: read from main parameter
+C                       file "data" and not set until call to INI_PARMS.
+C     useSingleCpuInput :: When useSingleCpuInput is set, EXF_INTERP_READ
+C                       reads forcing files from master MPI process only.
+C                       -- NOTE: read from main parameter file "data"
+C                          and defaults to useSingleCpuInput = useSingleCpuIO
+C     printMapIncludesZeros  :: Flag that controls whether character constant
+C                               map code ignores exact zero values.
+C     useCubedSphereExchange :: use Cubed-Sphere topology domain.
+C     useCoupler     :: use Coupler for a multi-components set-up.
+C     useNEST_PARENT :: use Parent Nesting interface (pkg/nest_parent)
+C     useNEST_CHILD  :: use Child  Nesting interface (pkg/nest_child)
+C     useNest2W_parent :: use Parent 2-W Nesting interface (pkg/nest2w_parent)
+C     useNest2W_child  :: use Child  2-W Nesting interface (pkg/nest2w_child)
+C     useOASIS       :: use OASIS-coupler for a multi-components set-up.
+      COMMON /EEPARAMS_L/
+c    &  eeBootError, fatalError, eeEndError,
+     &  eeBootError, eeEndError, fatalError, debugMode,
+     &  useSingleCpuIO, useSingleCpuInput, printMapIncludesZeros,
+     &  useCubedSphereExchange, useCoupler,
+     &  useNEST_PARENT, useNEST_CHILD,
+     &  useNest2W_parent, useNest2W_child, useOASIS,
+     &  useSETRLSTK, useSIGREG
+      LOGICAL eeBootError
+      LOGICAL eeEndError
+      LOGICAL fatalError
+      LOGICAL debugMode
+      LOGICAL useSingleCpuIO
+      LOGICAL useSingleCpuInput
+      LOGICAL printMapIncludesZeros
+      LOGICAL useCubedSphereExchange
+      LOGICAL useCoupler
+      LOGICAL useNEST_PARENT
+      LOGICAL useNEST_CHILD
+      LOGICAL useNest2W_parent
+      LOGICAL useNest2W_child
+      LOGICAL useOASIS
+      LOGICAL useSETRLSTK
+      LOGICAL useSIGREG
+
+C--   COMMON /EPARAMS_I/ Execution environment public integer variables.
+C     errorMessageUnit    :: Fortran IO unit for error messages
+C     standardMessageUnit :: Fortran IO unit for informational messages
+C     maxLengthPrt1D :: maximum length for printing (to Std-Msg-Unit) 1-D array
+C     scrUnit1      :: Scratch file 1 unit number
+C     scrUnit2      :: Scratch file 2 unit number
+C     eeDataUnit    :: Unit # for reading "execution environment" parameter file
+C     modelDataUnit :: Unit number for reading "model" parameter file.
+C     numberOfProcs :: Number of processes computing in parallel
+C     pidIO         :: Id of process to use for I/O.
+C     myBxLo, myBxHi :: Extents of domain in blocks in X and Y
+C     myByLo, myByHi :: that each threads is responsble for.
+C     myProcId      :: My own "process" id.
+C     myPx          :: My X coord on the proc. grid.
+C     myPy          :: My Y coord on the proc. grid.
+C     myXGlobalLo   :: My bottom-left (south-west) x-index global domain.
+C                      The x-coordinate of this point in for example m or
+C                      degrees is *not* specified here. A model needs to
+C                      provide a mechanism for deducing that information
+C                      if it is needed.
+C     myYGlobalLo   :: My bottom-left (south-west) y-index in global domain.
+C                      The y-coordinate of this point in for example m or
+C                      degrees is *not* specified here. A model needs to
+C                      provide a mechanism for deducing that information
+C                      if it is needed.
+C     nThreads      :: No. of threads
+C     nTx, nTy      :: No. of threads in X and in Y
+C                      This assumes a simple cartesian gridding of the threads
+C                      which is not required elsewhere but that makes it easier
+C     ioErrorCount  :: IO Error Counter. Set to zero initially and increased
+C                      by one every time an IO error occurs.
+      COMMON /EEPARAMS_I/
+     &  errorMessageUnit, standardMessageUnit, maxLengthPrt1D,
+     &  scrUnit1, scrUnit2, eeDataUnit, modelDataUnit,
+     &  numberOfProcs, pidIO, myProcId,
+     &  myPx, myPy, myXGlobalLo, myYGlobalLo, nThreads,
+     &  myBxLo, myBxHi, myByLo, myByHi,
+     &  nTx, nTy, ioErrorCount
+      INTEGER errorMessageUnit
+      INTEGER standardMessageUnit
+      INTEGER maxLengthPrt1D
+      INTEGER scrUnit1
+      INTEGER scrUnit2
+      INTEGER eeDataUnit
+      INTEGER modelDataUnit
+      INTEGER ioErrorCount(MAX_NO_THREADS)
+      INTEGER myBxLo(MAX_NO_THREADS)
+      INTEGER myBxHi(MAX_NO_THREADS)
+      INTEGER myByLo(MAX_NO_THREADS)
+      INTEGER myByHi(MAX_NO_THREADS)
+      INTEGER myProcId
+      INTEGER myPx
+      INTEGER myPy
+      INTEGER myXGlobalLo
+      INTEGER myYGlobalLo
+      INTEGER nThreads
+      INTEGER nTx
+      INTEGER nTy
+      INTEGER numberOfProcs
+      INTEGER pidIO
+
+CEH3 ;;; Local Variables: ***
+CEH3 ;;; mode:fortran ***
+CEH3 ;;; End: ***
+
+CBOP
+C    !ROUTINE: DARWIN_SIZE.h
+C    !INTERFACE:
+C #include DARWIN_SIZE.h
+
+C    !DESCRIPTION:
+C Contains dimensions and index ranges for cell model.
+
+C     integer nplank, nGroup, nopt
+C     integer nPhoto
+C     parameter(nplank=16)
+C     parameter(nplank=170)
+C     parameter(nGroup=5)
+C     parameter(nGroup=2)
+C     parameter(nopt=1)
+C     parameter(nPhoto=15)
+C     parameter(nPhoto=169)
+C Parameters for a continuous 2-trait model (Le Gland, 28/01/2021)
+C The number of traits or moments is not required here, as it is not the dimension of any tracer
+C It can be introduced as a namelist parameter
+C     integer nplank, nGroup, nopt, nphyp, nPhoto, nTrac
+      integer nplank, nGroup, nopt, nphyp, nPhoto, nTrac, nTrait, nCov
+      parameter(nGroup=2)
+      parameter(nplank=2)
+C     parameter(nPhoto=1)
+C Number of phytoplankton species (Le Gland, 22/03/2021)
+      parameter(nphyp=1)
+C     parameter(nPhoto=6)
+C     parameter(nTrac=7)
+      parameter(nopt=1)
+C 3-trait case (Le Gland, 25/03/2021)
+      parameter(nPhoto=10)
+      parameter(nTrac=11)
+C Maximum number of traits (Le Gland, 25/03/2021)
+      parameter(nTrait=3)
+C     parameter(nTrait=2)
+C Number of covariance corresponding to the maximum number of traits (Le Gland, 26/03/2021)
+      parameter(nCov=3)
+C     parameter(nCov=1)
+
+      integer nlam
+      parameter(nlam=1)
+
+CEOP
+
+CBOP
+C    !ROUTINE: DARWIN_INDICES.h
+C    !INTERFACE:
+C #include DARWIN_INDICES.h
+
+C    !DESCRIPTION:
+C Contains indices into ptracer array
+
+C these cannot be modified for now
+C Replace nplank by nTrac ?
+C What about nPhoto ? 1 or 6 ? (Le Gland, 29/01/2021)
+
+      INTEGER iDIC
+      INTEGER iNO3
+      INTEGER iNO2
+      INTEGER iNH4
+      INTEGER iPO4
+      INTEGER iFeT
+      INTEGER iSiO2
+      INTEGER iDOC
+      INTEGER iDON
+      INTEGER iDOP
+      INTEGER iDOFe
+      INTEGER iPOC
+      INTEGER iPON
+      INTEGER iPOP
+      INTEGER iPOFe
+      INTEGER iPOSi
+      INTEGER iPIC
+      INTEGER ic
+      INTEGER eCARBON
+      INTEGER eCDOM
+      INTEGER ec
+      INTEGER en
+      INTEGER ep
+      INTEGER efe
+      INTEGER esi
+      INTEGER eChl
+      INTEGER nDarwin
+      PARAMETER (iDIC   =1)
+      PARAMETER (iNO3   =iDIC+1)
+      PARAMETER (iNO2   =iNO3 +1)
+      PARAMETER (iNH4   =iNO2 +1)
+      PARAMETER (iPO4   =iNH4 +1)
+      PARAMETER (iFeT   =iPO4 +1)
+      PARAMETER (iSiO2  =iFeT +1)
+      PARAMETER (iDOC   =iSiO2+1)
+      PARAMETER (iDON   =iDOC +1)
+      PARAMETER (iDOP   =iDON +1)
+      PARAMETER (iDOFe  =iDOP +1)
+      PARAMETER (iPOC   =iDOFe+1)
+      PARAMETER (iPON   =iPOC +1)
+      PARAMETER (iPOP   =iPON +1)
+      PARAMETER (iPOFe  =iPOP +1)
+      PARAMETER (iPOSi  =iPOFe+1)
+      PARAMETER (iPIC   =iPOSi+1)
+      INTEGER iALK
+      INTEGER iO2
+      PARAMETER (iALK   =iPIC +1)
+      PARAMETER (iO2    =iALK +1)
+      PARAMETER (eCARBON=iO2)
+      PARAMETER (eCDOM  =eCARBON)
+      PARAMETER (ic     =eCDOM+1)
+C     PARAMETER (ec     =ic   +nplank-1)
+      PARAMETER (ec     =ic   +nTrac-1)
+      PARAMETER (en     =ec)
+      PARAMETER (ep     =en)
+      PARAMETER (efe    =ep)
+      PARAMETER (esi    =efe)
+      PARAMETER (eChl   =efe)
+      PARAMETER (nDarwin=eChl)
+
+CEOP
+CBOP
+C    !ROUTINE: DARWIN_RADTRANS.h
+C    !INTERFACE:
+C #include DARWIN_RADTRANS.h
+C
+C    !DESCRIPTION:
+C Contains radtrans-related parameters for the darwin package
+C
+C Requires: RADTRANS_SIZE.h
+C Requires: DARWIN_SIZE.h
+
+
+      COMMON /DARWIN_RT_DEPTRAITS_r/
+     &    alphachl
+C     Real*8 alphachl(nplank,nlam)
+C nplank replaced by nTrac for consistence withh the rest of the code (Le Gland, 16/03/2021)
+      Real*8 alphachl(nTrac,nlam)
+
+CEOP
+
+CBOP
+C     !ROUTINE: DARWIN_PARAMS.h
+C     !INTERFACE:
+C #include DARWIN_PARAMS.h
+
+C     !DESCRIPTION:
+C Contains run-time parameters for the darwin package
+C
+C Requires: DARWIN_SIZE.h
+
+      Real*8 DARWIN_UNINIT_RL
+      PARAMETER(DARWIN_UNINIT_RL=-999999999D0)
+
+C--   COMMON/darwin_forcing_params_l/ darwin parameters related to forcing
+C     darwin_chlInitBalanced :: Initialize Chlorophyll to a balanced value following Geider
+C     darwin_haveSurfPAR     ::
+C     darwin_useSEAICE       :: whether to use ice area from seaice pkg
+C     darwin_useQsw          :: whether to use model shortwave radiation
+C     darwin_useEXFwind      :: whether to use wind speed from exf package
+      COMMON/darwin_forcing_params_l/
+     &    darwin_chlInitBalanced,
+     &    darwin_haveSurfPAR,
+     &    darwin_useSEAICE,
+     &    darwin_useQsw,
+     &    darwin_useEXFwind
+      LOGICAL darwin_chlInitBalanced
+      LOGICAL darwin_haveSurfPAR
+      LOGICAL darwin_useSEAICE
+      LOGICAL darwin_useQsw
+      LOGICAL darwin_useEXFwind
+
+C--   COMMON/darwin_forcing_params_i/ darwin parameters related to forcing
+C     darwin_chlIter0 :: Iteration number when to initialize Chlorophyll
+      COMMON/darwin_forcing_params_i/
+     &    darwin_chlIter0
+      INTEGER darwin_chlIter0
+
+C--   COMMON /DARWIN_CONSTANTS_r/
+C     rad2deg ::
+      COMMON /DARWIN_CONSTANTS_r/
+     &    rad2deg
+      Real*8 rad2deg
+
+C--   COMMON /CARBON_CONSTANTS_r/ Coefficients for DIC chemistry
+C     Pa2Atm :: Convert pressure in Pascal to atm
+C     ptr2mol :: convert ptracers (in mmol/m3) to mol/m3
+C-
+C     sca1 :: Schmidt no. coefficient for CO2
+C     sca2 :: Schmidt no. coefficient for CO2
+C     sca3 :: Schmidt no. coefficient for CO2
+C     sca4 :: Schmidt no. coefficient for CO2
+C-
+C     sox1 :: [] Schmidt no. coefficient for O2 [Keeling et al, GBC, 12, 141, (1998)]
+C     sox2 :: [] Schmidt no. coefficient for O2 [Keeling et al, GBC, 12, 141, (1998)]
+C     sox3 :: [] Schmidt no. coefficient for O2 [Keeling et al, GBC, 12, 141, (1998)]
+C     sox4 :: [] Schmidt no. coefficient for O2 [Keeling et al, GBC, 12, 141, (1998)]
+C-
+C     oA0 :: Coefficient for determining saturation O2
+C     oA1 :: Coefficient for determining saturation O2
+C     oA2 :: Coefficient for determining saturation O2
+C     oA3 :: Coefficient for determining saturation O2
+C     oA4 :: Coefficient for determining saturation O2
+C     oA5 :: Coefficient for determining saturation O2
+C     oB0 :: Coefficient for determining saturation O2
+C     oB1 :: Coefficient for determining saturation O2
+C     oB2 :: Coefficient for determining saturation O2
+C     oB3 :: Coefficient for determining saturation O2
+C     oC0 :: Coefficient for determining saturation O2
+      COMMON /CARBON_CONSTANTS_r/
+     &    Pa2Atm,
+     &    ptr2mol,
+     &    sca1,
+     &    sca2,
+     &    sca3,
+     &    sca4,
+     &    sox1,
+     &    sox2,
+     &    sox3,
+     &    sox4,
+     &    oA0,
+     &    oA1,
+     &    oA2,
+     &    oA3,
+     &    oA4,
+     &    oA5,
+     &    oB0,
+     &    oB1,
+     &    oB2,
+     &    oB3,
+     &    oC0
+      Real*8 Pa2Atm
+      Real*8 ptr2mol
+      Real*8 sca1
+      Real*8 sca2
+      Real*8 sca3
+      Real*8 sca4
+      Real*8 sox1
+      Real*8 sox2
+      Real*8 sox3
+      Real*8 sox4
+      Real*8 oA0
+      Real*8 oA1
+      Real*8 oA2
+      Real*8 oA3
+      Real*8 oA4
+      Real*8 oA5
+      Real*8 oB0
+      Real*8 oB1
+      Real*8 oB2
+      Real*8 oB3
+      Real*8 oC0
+
+C     COMMON /DARWIN_PARAMS_c/ General parameters (same for all plankton)
+C     darwin_pickupSuff :: pickup suffix for darwin; set to ' ' to disable reading at PTRACERS_Iter0
+      COMMON /DARWIN_PARAMS_c/ darwin_pickupSuff
+      CHARACTER*10 darwin_pickupSuff
+C     darwin_strict_check  :: stop instead of issuing warnings
+C     darwin_linFSConserve :: correct non-conservation due to linear free surface (globally)
+C     darwin_read_phos     :: initial conditions for plankton biomass are in mmol P/m3
+C     DARWIN_useQsw        :: use Qsw for light; if .FALSE., use DARWIN_INSOL
+C--   COMMON /DARWIN_PARAMS_l/ General parameters (same for all plankton)
+      COMMON /DARWIN_PARAMS_l/
+     &    darwin_strict_check,
+     &    darwin_linFSConserve,
+     &    darwin_read_phos
+      LOGICAL darwin_strict_check
+      LOGICAL darwin_linFSConserve
+      LOGICAL darwin_read_phos
+
+C--   COMMON /DARWIN_PARAMS_i/ General parameters (same for all plankton)
+C     darwin_seed :: seed for random number generator (for DARWIN_RANDOM_TRAITS)
+C     iDEBUG      :: index in x dimension for debug prints
+C     jDEBUG      :: index in y dimension for debug prints
+C     kDEBUG      :: index in z dimension for debug prints
+      COMMON /DARWIN_PARAMS_i/
+     &    darwin_seed,
+     &    iDEBUG,
+     &    jDEBUG,
+     &    kDEBUG
+      INTEGER darwin_seed
+      INTEGER iDEBUG
+      INTEGER jDEBUG
+      INTEGER kDEBUG
+
+C--   COMMON /DARWIN_PARAMS_r/ General parameters (same for all plankton)
+C     katten_w          :: [1/m]            atten coefficient water
+C     katten_chl        :: [m2/mg Chl]      atten coefficient chl
+C
+C     parfrac           :: []               fraction Qsw that is PAR
+C     parconv           :: [uEin/s/W]       conversion from W/m2 to uEin/m2/s
+C     tempnorm          :: []               set temperature function (was 1.0)
+C     TempAeArr         :: [K]              slope for pseudo-Arrhenius (TEMP_VERSION 2)
+C     TemprefArr        :: [K]              reference temp for pseudo-Arrhenius (TEMP_VERSION 2)
+C     TempCoeffArr      :: []               pre-factor for pseudo-Arrhenius (TEMP_VERSION 2)
+C
+C- Iron parameters
+C     alpfe             :: []                 solubility of Fe dust
+C     scav              :: [1/s]              fixed iron scavenging rate
+C     ligand_tot        :: [mol/m3]           total ligand concentration
+C     ligand_stab       :: [m3/mol]           ligand stability rate ratio
+C     freefemax         :: [mol/m3]           max concentration of free iron
+C     scav_rat          :: [1/s]              rate of POM-based iron scavenging
+C     scav_inter        :: []                 intercept of scavenging power law
+C     scav_exp          :: []                 exponent of scavenging power law
+C     scav_R_POPPOC     :: [mmol P / mmol C]  POP:POC ratio for DARWIN_PART_SCAV_POP
+C     depthfesed        :: [m]                depth above which to add sediment source (was -1000)
+C     fesedflux         :: [mmol Fe /m2/s]    fixed iron flux from sediment
+C     fesedflux_pcm     :: [mmol Fe / mmol C] iron input per POC sinking into bottom for DARWIN_IRON_SED_SOURCE_VARIABLE
+C     fesedflux_min     :: [mmol Fe /s]       min iron input rate subtracted from fesedflux_pcm*wc_sink*POC
+C     R_CP_fesed        :: [mmol C / mmol P]  POC:POP conversion for DARWIN_IRON_SED_SOURCE_POP
+C
+C     Knita             :: [1/s]              ammonia oxidation rate
+C     Knitb             :: [1/s]              nitrite oxidation rate
+C     PAR_oxi           :: [uEin/m2/s]        critical light level after which oxidation starts
+C
+C     Kdoc              :: [1/s] DOC remineralization rate
+C     Kdop              :: [1/s] DON remineralization rate
+C     Kdon              :: [1/s] DOP remineralization rate
+C     KdoFe             :: [1/s] DOFe remineralization rate
+C     KPOC              :: [1/s] POC remineralization rate
+C     KPON              :: [1/s] PON remineralization rate
+C     KPOP              :: [1/s] POP remineralization rate
+C     KPOFe             :: [1/s] POFe remineralization rate
+C     KPOSi             :: [1/s] POSi remineralization rate
+C
+C     wC_sink           :: [m/s] sinking velocity for POC
+C     wN_sink           :: [m/s] sinking velocity for PON
+C     wP_sink           :: [m/s] sinking velocity for POP
+C     wFe_sink          :: [m/s] sinking velocity for POFe
+C     wSi_sink          :: [m/s] sinking velocity for POSi
+C     wPIC_sink         :: [m/s] sinking velocity for PIC
+C     Kdissc            :: [1/s] dissolution rate for PIC
+C
+C- Carbon chemistry parameters
+C     R_OP              :: [mmol O2 / mmol P] O:P ratio for respiration and consumption
+C     R_OC              :: [mmol O2 / mmol C] NOT USED
+C     m3perkg           :: [m3/kg]        constant for converting per kg to per m^3
+C     surfSaltMinInit   :: [ppt]          limits for carbon solver input at initialization
+C     surfSaltMaxInit   :: [ppt]          ...
+C     surfTempMinInit   :: [degrees C]
+C     surfTempMaxInit   :: [degrees C]
+C     surfDICMinInit    :: [mmol C m^-3]
+C     surfDICMaxInit    :: [mmol C m^-3]
+C     surfALKMinInit    :: [meq m^-3]
+C     surfALKMaxInit    :: [meq m^-3]
+C     surfPO4MinInit    :: [mmol P m^-3]
+C     surfPO4MaxInit    :: [mmol P m^-3]
+C     surfSiMinInit     :: [mmol Si m^-3]
+C     surfSiMaxInit     :: [mmol Si m^-3]
+C     surfSaltMin       :: [ppt]           limits for carbon solver input during run
+C     surfSaltMax       :: [ppt]           ...
+C     surfTempMin       :: [degrees C]
+C     surfTempMax       :: [degrees C]
+C     surfDICMin        :: [mmol C m^-3]
+C     surfDICMax        :: [mmol C m^-3]
+C     surfALKMin        :: [meq m^-3]
+C     surfALKMax        :: [meq m^-3]
+C     surfPO4Min        :: [mmol P m^-3]
+C     surfPO4Max        :: [mmol P m^-3]
+C     surfSiMin         :: [mmol Si m^-3]
+C     surfSiMax         :: [mmol Si m^-3]
+C
+C     diaz_ini_fac      :: reduce tracer concentrations by this factor on initialization
+C
+C- Denitrification
+C     O2crit            :: [mmol O2 m-3]      critical oxygen for O2/NO3 remineralization
+C     denit_NP          :: [mmol N / mmol P]  ratio of n to p in denitrification process
+C     denit_NO3         :: [mmol N / mmol P]  ratio of NO3 uptake to phos remineralization in denitrification
+C     NO3crit           :: [mmol N m-3]       critical nitrate below which no denit (or remin) happens
+C
+C- These should probably be traits
+C     PARmin            :: [uEin/m2/s]        minimum light for photosynthesis; for non-Geider: 1.0
+C     chl2nmax          :: [mg Chl / mmol N]  max Chl:N ratio for Chl synthesis following Moore 2002
+C     synthcost         :: [mmol C / mmol N]  cost of biosynthesis
+C     palat_min         :: []                 min non-zero palatability, smaller palat are set to 0 (was 1D-4 in quota)
+C     inhib_graz        :: [(mmol C m-3)-1]   inverse decay scale for grazing inhibition
+C     inhib_graz_exp    :: []                 exponent for grazing inhibition (0 to turn off inhibition)
+C     hillnumUptake     :: []                 exponent for limiting quota uptake in nutrient uptake
+C     hillnumGraz       :: []                 exponent for limiting quota uptake in grazing
+C     hollexp           :: []                 grazing exponential 1= "Holling 2", 2= "Holling 3"
+C     phygrazmin        :: [mmol C m-3]       minimum total prey conc for grazing to occur
+C
+C- Bacteria
+C     pmaxDIN           :: [1/s]           max DIN uptake rate for denitrifying bacteria
+C     pcoefO2           :: [m3/mmol O2/s]  max O2-specific O2 uptake rate for aerobic bacteria
+C     ksatDIN           :: [mmol N m-3]    half-saturation conc of dissolved inorganic nitrogen
+C     alpha_hydrol      :: []              increase in POM needed due to hydrolysis
+C     yod               :: []              organic matter yield of aerobic bacteria
+C     yoe               :: []              energy yield of aerobic bacteria
+C     ynd               :: []              organic matter yield of denitrifying bacteria
+C     yne               :: []              energy yield of denitrifying bacteria
+C     fnh4              :: []              not implemented (for ammonia-oxidizing bacteria)
+C     ynh4              :: []              not implemented (for ammonia-oxidizing bacteria)
+C     yonh4             :: []              not implemented (for ammonia-oxidizing bacteria)
+C     fno2              :: []              not implemented (for nitrite-oxidizing bacteria)
+C     yno2              :: []              not implemented (for nitrite-oxidizing bacteria)
+C     yono2             :: []              not implemented (for nitrite-oxidizing bacteria)
+C
+C- To be implemented
+C     depthdenit        :: [m]             not implemented (depth for denitrification relaxation to start)
+      COMMON /DARWIN_PARAMS_r/
+     &    katten_w,
+     &    katten_chl,
+     &    parfrac,
+     &    parconv,
+     &    tempnorm,
+     &    TempAeArr,
+     &    TemprefArr,
+     &    TempCoeffArr,
+     &    alpfe,
+     &    scav,
+     &    ligand_tot,
+     &    ligand_stab,
+     &    freefemax,
+     &    scav_rat,
+     &    scav_inter,
+     &    scav_exp,
+     &    scav_R_POPPOC,
+     &    depthfesed,
+     &    fesedflux,
+     &    fesedflux_pcm,
+     &    fesedflux_min,
+     &    R_CP_fesed,
+     &    Knita,
+     &    Knitb,
+     &    PAR_oxi,
+     &    Kdoc,
+     &    Kdop,
+     &    Kdon,
+     &    KdoFe,
+     &    KPOC,
+     &    KPON,
+     &    KPOP,
+     &    KPOFe,
+     &    KPOSi,
+     &    wC_sink,
+     &    wN_sink,
+     &    wP_sink,
+     &    wFe_sink,
+     &    wSi_sink,
+     &    wPIC_sink,
+     &    Kdissc,
+     &    R_OP,
+     &    R_OC,
+     &    m3perkg,
+     &    surfSaltMinInit,
+     &    surfSaltMaxInit,
+     &    surfTempMinInit,
+     &    surfTempMaxInit,
+     &    surfDICMinInit,
+     &    surfDICMaxInit,
+     &    surfALKMinInit,
+     &    surfALKMaxInit,
+     &    surfPO4MinInit,
+     &    surfPO4MaxInit,
+     &    surfSiMinInit,
+     &    surfSiMaxInit,
+     &    surfSaltMin,
+     &    surfSaltMax,
+     &    surfTempMin,
+     &    surfTempMax,
+     &    surfDICMin,
+     &    surfDICMax,
+     &    surfALKMin,
+     &    surfALKMax,
+     &    surfPO4Min,
+     &    surfPO4Max,
+     &    surfSiMin,
+     &    surfSiMax,
+     &    diaz_ini_fac,
+     &    O2crit,
+     &    denit_NP,
+     &    denit_NO3,
+     &    NO3crit,
+     &    PARmin,
+     &    chl2nmax,
+     &    synthcost,
+     &    palat_min,
+     &    inhib_graz,
+     &    inhib_graz_exp,
+     &    hillnumUptake,
+     &    hillnumGraz,
+     &    hollexp,
+     &    phygrazmin,
+     &    pcoefO2,
+     &    pmaxDIN,
+     &    ksatDIN,
+     &    alpha_hydrol,
+     &    yod,
+     &    yoe,
+     &    ynd,
+     &    yne,
+C     &    fnh4,
+C     &    ynh4,
+C     &    yonh4,
+C     &    fno2,
+C     &    yno2,
+C     &    yono2,
+     &    depthdenit
+      Real*8 katten_w
+      Real*8 katten_chl
+      Real*8 parfrac
+      Real*8 parconv
+      Real*8 tempnorm
+      Real*8 TempAeArr
+      Real*8 TemprefArr
+      Real*8 TempCoeffArr
+      Real*8 alpfe
+      Real*8 scav
+      Real*8 ligand_tot
+      Real*8 ligand_stab
+      Real*8 freefemax
+      Real*8 scav_rat
+      Real*8 scav_inter
+      Real*8 scav_exp
+      Real*8 scav_R_POPPOC
+      Real*8 depthfesed
+      Real*8 fesedflux
+      Real*8 fesedflux_pcm
+      Real*8 fesedflux_min
+      Real*8 R_CP_fesed
+      Real*8 Knita
+      Real*8 Knitb
+      Real*8 PAR_oxi
+      Real*8 Kdoc
+      Real*8 Kdop
+      Real*8 Kdon
+      Real*8 KdoFe
+      Real*8 KPOC
+      Real*8 KPON
+      Real*8 KPOP
+      Real*8 KPOFe
+      Real*8 KPOSi
+      Real*8 wC_sink
+      Real*8 wN_sink
+      Real*8 wP_sink
+      Real*8 wFe_sink
+      Real*8 wSi_sink
+      Real*8 wPIC_sink
+      Real*8 Kdissc
+      Real*8 R_OP
+      Real*8 R_OC
+      Real*8 m3perkg
+      Real*8 surfSaltMinInit
+      Real*8 surfSaltMaxInit
+      Real*8 surfTempMinInit
+      Real*8 surfTempMaxInit
+      Real*8 surfDICMinInit
+      Real*8 surfDICMaxInit
+      Real*8 surfALKMinInit
+      Real*8 surfALKMaxInit
+      Real*8 surfPO4MinInit
+      Real*8 surfPO4MaxInit
+      Real*8 surfSiMinInit
+      Real*8 surfSiMaxInit
+      Real*8 surfSaltMin
+      Real*8 surfSaltMax
+      Real*8 surfTempMin
+      Real*8 surfTempMax
+      Real*8 surfDICMin
+      Real*8 surfDICMax
+      Real*8 surfALKMin
+      Real*8 surfALKMax
+      Real*8 surfPO4Min
+      Real*8 surfPO4Max
+      Real*8 surfSiMin
+      Real*8 surfSiMax
+      Real*8 diaz_ini_fac
+      Real*8 O2crit
+      Real*8 denit_NP
+      Real*8 denit_NO3
+      Real*8 NO3crit
+      Real*8 PARmin
+      Real*8 chl2nmax
+      Real*8 synthcost
+      Real*8 palat_min
+      Real*8 inhib_graz
+      Real*8 inhib_graz_exp
+      Real*8 hillnumUptake
+      Real*8 hillnumGraz
+      Real*8 hollexp
+      Real*8 phygrazmin
+      Real*8 pcoefO2
+      Real*8 pmaxDIN
+      Real*8 ksatDIN
+      Real*8 alpha_hydrol
+      Real*8 yod
+      Real*8 yoe
+      Real*8 ynd
+      Real*8 yne
+C      Real*8 fnh4
+C      Real*8 ynh4
+C      Real*8 yonh4
+C      Real*8 fno2
+C      Real*8 yno2
+C      Real*8 yono2
+      Real*8 depthdenit
+
+
+C--   COMMON /DARWIN_DEPENDENT_PARAMS_i/
+C     laCDOM    :: index of reference waveband for CDOM absorption spectrum
+C     kMinFeSed :: minimum level index for iron sedimentation
+C     kMaxFeSed :: maximum level index for iron sedimentation
+      COMMON /DARWIN_DEPENDENT_PARAMS_i/
+     &    darwin_dependent_i_dummy,
+     &    kMinFeSed,
+     &    kMaxFeSed
+      INTEGER darwin_dependent_i_dummy
+      INTEGER kMinFeSed
+      INTEGER kMaxFeSed
+
+
+
+
+CBOP
+C     !ROUTINE: DARWIN_TRAITPARAMS.h
+C     !INTERFACE:
+C #include DARWIN_TRAITPARAMS.h
+
+C     !DESCRIPTION:
+C Contains run-time parameters for the darwin package
+C the parameters in this file are used to generate traits
+C
+C Requires: DARWIN_SIZE.h
+
+C--   COMMON /DARWIN_RANDOM_PARAMS_l/ For darwin_allometric_random
+C     oldTwoGrazers :: old defaults for 2 grazers
+      COMMON /DARWIN_RANDOM_PARAMS_l/
+     &    oldTwoGrazers
+      LOGICAL oldTwoGrazers
+
+C--   COMMON /DARWIN_RANDOM_PARAMS_r/ For darwin_allometric_random
+      COMMON /DARWIN_RANDOM_PARAMS_r/
+     &    phymin,
+     &    Smallgrow,
+     &    Biggrow,
+     &    Smallgrowrange,
+     &    Biggrowrange,
+     &    diaz_growfac,
+     &    cocco_growfac,
+     &    diatom_growfac,
+     &    Smallmort,
+     &    Bigmort,
+     &    Smallmortrange,
+     &    Bigmortrange,
+     &    Smallexport,
+     &    Bigexport,
+     &    tempcoeff1,
+     &    tempcoeff2_small,
+     &    tempcoeff2_big,
+     &    tempcoeff3,
+     &    tempmax,
+     &    temprange,
+     &    tempdecay,
+     &    val_R_NC,
+     &    val_R_NC_diaz,
+     &    val_R_PC,
+     &    val_R_SiC_diatom,
+     &    val_R_FeC,
+     &    val_R_FeC_diaz,
+     &    val_R_PICPOC,
+     &    val_R_ChlC,
+     &    val_R_NC_zoo,
+     &    val_R_PC_zoo,
+     &    val_R_SiC_zoo,
+     &    val_R_FeC_zoo,
+     &    val_R_PICPOC_zoo,
+     &    val_R_ChlC_zoo,
+     &    SmallSink,
+     &    BigSink,
+     &    SmallPsat,
+     &    BigPsat,
+     &    ProcPsat,
+     &    UniDzPsat,
+     &    CoccoPsat,
+     &    SmallPsatrange,
+     &    BigPsatrange,
+     &    ProcPsatrange,
+     &    UniDzPsatrange,
+     &    CoccoPsatrange,
+     &    ksatNH4fac,
+     &    ksatNO2fac,
+     &    val_amminhib,
+     &    val_ksatsio2,
+     &    smallksatpar,
+     &    smallksatparstd,
+     &    smallkinhpar,
+     &    smallkinhparstd,
+     &    Bigksatpar,
+     &    Bigksatparstd,
+     &    Bigkinhpar,
+     &    Bigkinhparstd,
+     &    LLProkinhpar,
+     &    Coccokinhpar,
+     &    inhibcoef_geid_val,
+     &    smallmQyield,
+     &    smallmQyieldrange,
+     &    BigmQyield,
+     &    BigmQyieldrange,
+     &    smallchl2cmax,
+     &    smallchl2cmaxrange,
+     &    Bigchl2cmax,
+     &    Bigchl2cmaxrange,
+     &    aphy_chl_ave,
+     &    val_acclimtimescl,
+     &    GrazeFast,
+     &    GrazeSlow,
+     &    ZooexfacSmall,
+     &    ZooexfacBig,
+     &    ZoomortSmall,
+     &    ZoomortBig,
+     &    ZoomortSmall2,
+     &    ZoomortBig2,
+     &    ExGrazfracbig,
+     &    ExGrazfracsmall,
+     &    palathi,
+     &    palatlo,
+     &    diatomgraz,
+     &    coccograz,
+     &    olargegraz,
+     &    GrazeEfflow,
+     &    GrazeEffmod,
+     &    GrazeEffhi,
+     &    GrazeRate,
+     &    ExGrazfrac,
+     &    val_palat,
+     &    val_ass_eff,
+     &    kgrazesat_val,
+     &    Zoomort,
+     &    Zoomort2,
+     &    Zooexfac,
+     &    ZooDM
+      Real*8 phymin
+      Real*8 Smallgrow
+      Real*8 Biggrow
+      Real*8 Smallgrowrange
+      Real*8 Biggrowrange
+      Real*8 diaz_growfac
+      Real*8 cocco_growfac
+      Real*8 diatom_growfac
+      Real*8 Smallmort
+      Real*8 Bigmort
+      Real*8 Smallmortrange
+      Real*8 Bigmortrange
+      Real*8 Smallexport
+      Real*8 Bigexport
+      Real*8 tempcoeff1
+      Real*8 tempcoeff2_small
+      Real*8 tempcoeff2_big
+      Real*8 tempcoeff3
+      Real*8 tempmax
+      Real*8 temprange
+      Real*8 tempdecay
+      Real*8 val_R_NC
+      Real*8 val_R_NC_diaz
+      Real*8 val_R_PC
+      Real*8 val_R_SiC_diatom
+      Real*8 val_R_FeC
+      Real*8 val_R_FeC_diaz
+      Real*8 val_R_PICPOC
+      Real*8 val_R_ChlC
+      Real*8 val_R_NC_zoo
+      Real*8 val_R_PC_zoo
+      Real*8 val_R_SiC_zoo
+      Real*8 val_R_FeC_zoo
+      Real*8 val_R_PICPOC_zoo
+      Real*8 val_R_ChlC_zoo
+      Real*8 SmallSink
+      Real*8 BigSink
+      Real*8 SmallPsat
+      Real*8 BigPsat
+      Real*8 ProcPsat
+      Real*8 UniDzPsat
+      Real*8 CoccoPsat
+      Real*8 SmallPsatrange
+      Real*8 BigPsatrange
+      Real*8 ProcPsatrange
+      Real*8 UniDzPsatrange
+      Real*8 CoccoPsatrange
+      Real*8 ksatNH4fac
+      Real*8 ksatNO2fac
+      Real*8 val_amminhib
+      Real*8 val_ksatsio2
+      Real*8 smallksatpar
+      Real*8 smallksatparstd
+      Real*8 smallkinhpar
+      Real*8 smallkinhparstd
+      Real*8 Bigksatpar
+      Real*8 Bigksatparstd
+      Real*8 Bigkinhpar
+      Real*8 Bigkinhparstd
+      Real*8 LLProkinhpar
+      Real*8 Coccokinhpar
+      Real*8 inhibcoef_geid_val
+      Real*8 smallmQyield
+      Real*8 smallmQyieldrange
+      Real*8 BigmQyield
+      Real*8 BigmQyieldrange
+      Real*8 smallchl2cmax
+      Real*8 smallchl2cmaxrange
+      Real*8 Bigchl2cmax
+      Real*8 Bigchl2cmaxrange
+      Real*8 aphy_chl_ave
+      Real*8 val_acclimtimescl
+      Real*8 GrazeFast
+      Real*8 GrazeSlow
+      Real*8 ZooexfacSmall
+      Real*8 ZooexfacBig
+      Real*8 ZoomortSmall
+      Real*8 ZoomortBig
+      Real*8 ZoomortSmall2
+      Real*8 ZoomortBig2
+      Real*8 ExGrazfracbig
+      Real*8 ExGrazfracsmall
+      Real*8 palathi
+      Real*8 palatlo
+      Real*8 diatomgraz
+      Real*8 coccograz
+      Real*8 olargegraz
+      Real*8 GrazeEfflow
+      Real*8 GrazeEffmod
+      Real*8 GrazeEffhi
+      Real*8 GrazeRate
+      Real*8 ExGrazfrac
+      Real*8 val_palat
+      Real*8 val_ass_eff
+      Real*8 kgrazesat_val
+      Real*8 Zoomort
+      Real*8 Zoomort2
+      Real*8 Zooexfac
+      Real*8 ZooDM
+
+C--   COMMON /DARWIN_TRAIT_PARAMS_l/ Used in darwin_generate_allometric
+C     darwin_sort_biovol    :: whether to sort type by volume rather than group first
+C     darwin_effective_ksat :: compute effective half-saturation for non-quota elements
+      COMMON /DARWIN_TRAIT_PARAMS_l/
+     &    darwin_sort_biovol,
+     &    darwin_effective_ksat
+      LOGICAL darwin_sort_biovol
+      LOGICAL darwin_effective_ksat
+
+C--   COMMON /DARWIN_TRAIT_PARAMS_c/ Used in darwin_generate_allometric
+C     grp_names :: names of functional groups
+      COMMON /DARWIN_TRAIT_PARAMS_c/
+     &    grp_names
+      CHARACTER*80 grp_names(nGroup)
+
+C--   COMMON /DARWIN_TRAIT_PARAMS_i/ Used in darwin_generate_allometric
+C     darwin_select_kn_allom :: 1: use Ward et al formulation, 2: use Follett et al
+C     logvol0ind             :: first index in volume list used by this group
+C     grp_nplank             :: number of plankton types in this group
+C     grp_nbiovol            :: number of plankton size classes in this group
+C     grp_ntopt              :: number of plankton optimal temperatures in this group
+C     grp_photo              :: -> isPhoto
+C     grp_bacttype           :: -> bactType
+C     grp_aerobic            :: -> isAerobic
+C     grp_denit              :: -> isDenit
+C     grp_pred               :: -> isPred
+C     grp_prey               :: -> isPrey
+C     grp_hasSi              :: -> hasSi
+C     grp_hasPIC             :: -> hasPIC
+C     grp_diazo              :: -> diazo
+C     grp_useNH4             :: -> useNH4
+C     grp_useNO2             :: -> useNO2
+C     grp_useNO3             :: -> useNO3
+C     grp_combNO             :: -> combNO
+C Traits of each group (Le Gland, 25/03/2021)
+C     grp_traitbvol          :: -> traitbvol
+C     grp_traittopt          :: -> traittopt
+C     grp_traitparopt        :: -> traitparopt
+C     grp_aptype             :: -> aptype
+C     grp_tempMort           :: -> tempMort
+C     grp_tempMort2          :: -> tempMort2
+C     grp_tempGraz           :: -> tempGraz
+      COMMON /DARWIN_TRAIT_PARAMS_i/
+     &    darwin_select_kn_allom,
+C    &    logvol0ind,
+     &    grp_nplank,
+C    &    grp_nbiovol,
+C    &    grp_ntopt,
+     &    grp_photo,
+     &    grp_bacttype,
+     &    grp_aerobic,
+     &    grp_denit,
+     &    grp_pred,
+     &    grp_prey,
+     &    grp_hasSi,
+     &    grp_hasPIC,
+     &    grp_diazo,
+     &    grp_useNH4,
+     &    grp_useNO2,
+     &    grp_useNO3,
+     &    grp_combNO,
+C Traits of each group (Le Gland, 25/03/2021)
+     &    grp_traitbvol,
+     &    grp_traittopt,
+     &    grp_traitparopt,
+     &    grp_aptype,
+     &    grp_tempMort,
+     &    grp_tempMort2,
+     &    grp_tempGraz
+      INTEGER darwin_select_kn_allom
+C     INTEGER logvol0ind(nGroup)
+      INTEGER grp_nplank(nGroup)
+C     INTEGER grp_nbiovol(nGroup)
+C     INTEGER grp_ntopt(nGroup)
+      INTEGER grp_photo(nGroup)
+      INTEGER grp_bacttype(nGroup)
+      INTEGER grp_aerobic(nGroup)
+      INTEGER grp_denit(nGroup)
+      INTEGER grp_pred(nGroup)
+      INTEGER grp_prey(nGroup)
+      INTEGER grp_hasSi(nGroup)
+      INTEGER grp_hasPIC(nGroup)
+      INTEGER grp_diazo(nGroup)
+      INTEGER grp_useNH4(nGroup)
+      INTEGER grp_useNO2(nGroup)
+      INTEGER grp_useNO3(nGroup)
+      INTEGER grp_combNO(nGroup)
+C Traits of each group (Le Gland, 25/03/2021)
+      INTEGER grp_traitbvol(nGroup)
+      INTEGER grp_traittopt(nGroup)
+      INTEGER grp_traitparopt(nGroup)
+      INTEGER grp_aptype(nGroup)
+      INTEGER grp_tempMort(nGroup)
+      INTEGER grp_tempMort2(nGroup)
+      INTEGER grp_tempGraz(nGroup)
+
+C--   COMMON /DARWIN_TRAIT_PARAMS_r/ Used in darwin_generate_allometric
+C     logvolbase             :: []    log-10 base for list of volumes
+C     logvolinc              :: []    log-10 increment for list of volumes
+C     biovol0                :: [um3] volume of smallest type in group
+C     biovolfac              :: []    factor by which each type is bigger than previous
+C     grp_logvolind          :: []    indices into volume list for type in this group
+C     grp_biovol             :: [um3] volumes of types in each group
+C Le Gland, 10/12/2020
+C     Topt0                  :: [°C]  Optimal temperature of coldest type in group
+C     Toptfac                :: [°C]  Increase in optimal temperature from type to type
+C     grp_Topt               :: [°C]  Optimal temperatures of types in each group
+C Light-related traits (Le Gland, 30/03/2021)
+C     PARopt0                :: [W.m-2]
+C     PARchi0                :: []
+C Le Gland, 18/12/2020
+C     numut_bvol             :: [log(um3)2]    Trait diffusion parameter for biovolume
+C     numut_topt             :: [°C2]  Trait diffusion parameter for optimal temperature
+C Le Gland, 25/03/2021
+C     numut_paropt           :: [log(W m-2)2]  Trait diffusion parameter for optimal irradiance
+C Le Gland, 27/08/2021       :: [] Kill The Winner Parameter (1 = no switching)
+C     a_KTW
+C
+C- Allometric parameters
+C     a_* b_* :: param = a_param*V^b_param
+C
+C- Predator prey preference distribution parameters
+C     a_pp_sig               :: standard deviation of predator-prey volume ratio for palatability
+C     a_pp_opt               :: a for optimal predator-prey volume ratio
+C     b_pp_opt               :: b for optimal predator-prey volume ratio
+C
+C     a_respRate_c           :: Note function of cellular C --> aC^b
+C     a_respRate_c_denom     :: Note function of cellular C --> aC^b
+C     b_respRate_c           :: Note function of cellular C --> aC^b
+C
+C     a_ksatNO2fac           :: only used for darwin_effective_ksat
+C     a_ksatNH4fac           :: only used for darwin_effective_ksat
+C
+      COMMON /DARWIN_TRAIT_PARAMS_r/
+C Only biovol0 and Topt0 are required in the continuous model (Le Gland, 13/01/2021)
+C    &    logvolbase,
+C    &    logvolinc,
+     &    biovol0,
+C    &    biovolfac,
+C    &    grp_logvolind,
+C    &    grp_biovol,
+     &    Topt0,
+C    &    Toptfac,
+C    &    grp_Topt,
+C Light-related traits (Le Gland, 30/03/2021)
+     &    PARopt0,
+     &    PARchi0,
+C Le Gland, 18/12/2020
+     &    numut_bvol,
+     &    numut_topt,
+C Le Gland, 25/03/2021
+     &    numut_paropt,
+C Le Gland, 27/08/2021
+     &    a_KTW,
+     &    a_Xmin,
+     &    a_R_NC,
+     &    a_R_PC,
+     &    a_R_SiC,
+     &    a_R_FeC,
+     &    a_R_ChlC,
+     &    a_R_PICPOC,
+     &    a_ExportFracMort,
+     &    a_ExportFracMort2,
+     &    a_ExportFracExude,
+     &    a_mort,
+     &    a_mort2,
+     &    a_phytoTempCoeff,
+     &    a_phytoTempExp2,
+     &    a_phytoTempExp1,
+C    &    a_phytoTempOptimum,
+C Le Gland, 10/12/2020
+     &    a_phytoTempTol,
+     &    a_phytoDecayPower,
+     &    a_ksatPAR,
+     &    a_kinhPAR,
+     &    a_amminhib,
+     &    a_acclimtimescl,
+     &    a_acclimtimescl_denom,
+     &    a_ksatPON,
+     &    a_ksatDON,
+     &    a_grazemax,
+     &    a_grazemax_denom,
+     &    b_grazemax,
+     &    a_kgrazesat,
+     &    b_kgrazesat,
+C Palatability allometry (Le Gland, 10/06/2021)
+     &    a_palat,
+     &    b_palat,
+     &    a_biosink,
+     &    a_biosink_denom,
+     &    b_biosink,
+     &    a_bioswim,
+     &    a_bioswim_denom,
+     &    b_bioswim,
+     &    a_ppSig,
+     &    a_ppOpt,
+     &    b_ppOpt,
+     &    a_PCmax,
+     &    a_PCmax_denom,
+     &    b_PCmax,
+C Unimodal growth rate (Le Gland, 10/06/2021)
+C    &    b1_PCmax,
+C    &    b2_PCmax,
+C    &    c_PCmax,
+     &    a_qcarbon,
+     &    b_qcarbon,
+     &    a_respRate_c,
+     &    a_respRate_c_denom,
+     &    b_respRate_c,
+     &    a_kexcC,
+     &    b_kexcC,
+     &    a_vmaxNO3,
+     &    a_vmaxNO3_denom,
+     &    b_vmaxNO3,
+     &    a_ksatNO3,
+     &    b_ksatNO3,
+     &    a_Qnmin,
+     &    b_Qnmin,
+     &    a_Qnmax,
+     &    b_Qnmax,
+     &    a_kexcN,
+     &    b_kexcN,
+     &    a_vmaxNO2,
+     &    a_vmaxNO2_denom,
+     &    b_vmaxNO2,
+     &    a_ksatNO2,
+     &    b_ksatNO2,
+     &    a_ksatNO2fac,
+     &    a_vmaxNH4,
+     &    a_vmaxNH4_denom,
+     &    b_vmaxNH4,
+     &    a_ksatNH4,
+     &    b_ksatNH4,
+     &    a_ksatNH4fac,
+     &    a_vmaxN,
+     &    a_vmaxN_denom,
+     &    b_vmaxN,
+     &    a_vmaxPO4,
+     &    a_vmaxPO4_denom,
+     &    b_vmaxPO4,
+     &    a_ksatPO4,
+     &    b_ksatPO4,
+     &    a_Qpmin,
+     &    b_Qpmin,
+     &    a_Qpmax,
+     &    b_Qpmax,
+     &    a_kexcP,
+     &    b_kexcP,
+     &    a_vmaxSiO2,
+     &    a_vmaxSiO2_denom,
+     &    b_vmaxSiO2,
+     &    a_ksatSiO2,
+     &    b_ksatSiO2,
+     &    a_Qsimin,
+     &    b_Qsimin,
+     &    a_Qsimax,
+     &    b_Qsimax,
+     &    a_kexcSi,
+     &    b_kexcSi,
+     &    a_vmaxFeT,
+     &    a_vmaxFeT_denom,
+     &    b_vmaxFeT,
+     &    a_ksatFeT,
+     &    b_ksatFeT,
+     &    a_Qfemin,
+     &    b_Qfemin,
+     &    a_Qfemax,
+     &    b_Qfemax,
+     &    a_kexcFe,
+     &    b_kexcFe,
+C Absolute minima added to prevent:
+C 1) phytoplankton from being smaller than Prochlorococcus
+C 2) large species (opportunists) from having a low Iopt
+     &    a_biovolmin,
+     &    a_PARoptmin,
+     &    b_PARoptmin,
+     &    grp_ExportFracPreyPred,
+     &    grp_ass_eff
+C Only biovol0 and Topt0 are required in the continuous model (Le Gland, 13/01/2021)
+C     Real*8 logvolbase
+C     Real*8 logvolinc
+      Real*8 biovol0(nGroup)
+C     Real*8 biovolfac(nGroup)
+      Real*8 Topt0(nGroup)
+C     Real*8 Toptfac(nGroup)
+C     Real*8 grp_logvolind(nPlank,nGroup)
+C     Real*8 grp_biovol(nPlank,nGroup)
+C     Real*8 grp_Topt(nPlank,nGroup)
+C Light-related traits (Le Gland, 30/03/2021)
+      Real*8 PARopt0(nGroup)
+      Real*8 PARchi0(nGroup)
+C Le Gland, 18/12/2020
+      Real*8 numut_bvol(nGroup)
+      Real*8 numut_topt(nGroup)
+C Le Gland, 15/03/2020
+C     Real*8 numut_bvol(nplank)
+C     Real*8 numut_topt(nplank)
+C Le Gland, 25/03/2021
+      Real*8 numut_paropt(nGroup)
+C Le Gland, 27/08/2021
+      Real*8 a_KTW
+      Real*8 a_Xmin(nGroup)
+      Real*8 a_R_NC(nGroup)
+      Real*8 a_R_PC(nGroup)
+      Real*8 a_R_SiC(nGroup)
+      Real*8 a_R_FeC(nGroup)
+      Real*8 a_R_ChlC(nGroup)
+      Real*8 a_R_PICPOC(nGroup)
+      Real*8 a_ExportFracMort(nGroup)
+      Real*8 a_ExportFracMort2(nGroup)
+      Real*8 a_ExportFracExude(nGroup)
+      Real*8 a_mort(nGroup)
+      Real*8 a_mort2(nGroup)
+      Real*8 a_phytoTempCoeff(nGroup)
+      Real*8 a_phytoTempExp2(nGroup)
+      Real*8 a_phytoTempExp1(nGroup)
+C     Real*8 a_phytoTempOptimum(nGroup)
+C Le Gland, 10/12/2020
+      Real*8 a_phytoTempTol(nGroup)
+      Real*8 a_phytoDecayPower(nGroup)
+      Real*8 a_ksatPAR(nGroup)
+      Real*8 a_kinhPAR(nGroup)
+      Real*8 a_amminhib(nGroup)
+      Real*8 a_acclimtimescl(nGroup)
+      Real*8 a_acclimtimescl_denom(nGroup)
+      Real*8 a_ksatPON(nGroup)
+      Real*8 a_ksatDON(nGroup)
+      Real*8 a_grazemax(nGroup)
+      Real*8 a_grazemax_denom(nGroup)
+      Real*8 b_grazemax(nGroup)
+      Real*8 a_kgrazesat(nGroup)
+      Real*8 b_kgrazesat(nGroup)
+C Palatability allometry (Le Gland, 10/06/2021)
+      Real*8 a_palat(nGroup,nGroup)
+      Real*8 b_palat(nGroup,nGroup)
+      Real*8 a_biosink(nGroup)
+      Real*8 a_biosink_denom(nGroup)
+      Real*8 b_biosink(nGroup)
+      Real*8 a_bioswim(nGroup)
+      Real*8 a_bioswim_denom(nGroup)
+      Real*8 b_bioswim(nGroup)
+      Real*8 a_ppSig(nGroup)
+      Real*8 a_ppOpt(nGroup)
+      Real*8 b_ppOpt(nGroup)
+      Real*8 a_PCmax(nGroup)
+      Real*8 a_PCmax_denom(nGroup)
+      Real*8 b_PCmax(nGroup)
+C Unimodal growth rate (Le Gland, 10/06/2021)
+C     Real*8 b1_PCmax(nGroup)
+C     Real*8 b2_PCmax(nGroup)
+C     Real*8 c_PCmax(nGroup)
+      Real*8 a_qcarbon(nGroup)
+      Real*8 b_qcarbon(nGroup)
+      Real*8 a_respRate_c(nGroup)
+      Real*8 a_respRate_c_denom(nGroup)
+      Real*8 b_respRate_c(nGroup)
+      Real*8 a_kexcC(nGroup)
+      Real*8 b_kexcC(nGroup)
+      Real*8 a_vmaxNO3(nGroup)
+      Real*8 a_vmaxNO3_denom(nGroup)
+      Real*8 b_vmaxNO3(nGroup)
+      Real*8 a_ksatNO3(nGroup)
+      Real*8 b_ksatNO3(nGroup)
+      Real*8 a_Qnmin(nGroup)
+      Real*8 b_Qnmin(nGroup)
+      Real*8 a_Qnmax(nGroup)
+      Real*8 b_Qnmax(nGroup)
+      Real*8 a_kexcN(nGroup)
+      Real*8 b_kexcN(nGroup)
+      Real*8 a_vmaxNO2(nGroup)
+      Real*8 a_vmaxNO2_denom(nGroup)
+      Real*8 b_vmaxNO2(nGroup)
+      Real*8 a_ksatNO2(nGroup)
+      Real*8 b_ksatNO2(nGroup)
+      Real*8 a_ksatNO2fac(nGroup)
+      Real*8 a_vmaxNH4(nGroup)
+      Real*8 a_vmaxNH4_denom(nGroup)
+      Real*8 b_vmaxNH4(nGroup)
+      Real*8 a_ksatNH4(nGroup)
+      Real*8 b_ksatNH4(nGroup)
+      Real*8 a_ksatNH4fac(nGroup)
+      Real*8 a_vmaxN(nGroup)
+      Real*8 a_vmaxN_denom(nGroup)
+      Real*8 b_vmaxN(nGroup)
+      Real*8 a_vmaxPO4(nGroup)
+      Real*8 a_vmaxPO4_denom(nGroup)
+      Real*8 b_vmaxPO4(nGroup)
+      Real*8 a_ksatPO4(nGroup)
+      Real*8 b_ksatPO4(nGroup)
+      Real*8 a_Qpmin(nGroup)
+      Real*8 b_Qpmin(nGroup)
+      Real*8 a_Qpmax(nGroup)
+      Real*8 b_Qpmax(nGroup)
+      Real*8 a_kexcP(nGroup)
+      Real*8 b_kexcP(nGroup)
+      Real*8 a_vmaxSiO2(nGroup)
+      Real*8 a_vmaxSiO2_denom(nGroup)
+      Real*8 b_vmaxSiO2(nGroup)
+      Real*8 a_ksatSiO2(nGroup)
+      Real*8 b_ksatSiO2(nGroup)
+      Real*8 a_Qsimin(nGroup)
+      Real*8 b_Qsimin(nGroup)
+      Real*8 a_Qsimax(nGroup)
+      Real*8 b_Qsimax(nGroup)
+      Real*8 a_kexcSi(nGroup)
+      Real*8 b_kexcSi(nGroup)
+      Real*8 a_vmaxFeT(nGroup)
+      Real*8 a_vmaxFeT_denom(nGroup)
+      Real*8 b_vmaxFeT(nGroup)
+      Real*8 a_ksatFeT(nGroup)
+      Real*8 b_ksatFeT(nGroup)
+      Real*8 a_Qfemin(nGroup)
+      Real*8 b_Qfemin(nGroup)
+      Real*8 a_Qfemax(nGroup)
+      Real*8 b_Qfemax(nGroup)
+      Real*8 a_kexcFe(nGroup)
+      Real*8 b_kexcFe(nGroup)
+C Absolute minima added to prevent:
+C 1) phytoplankton from being smaller than Prochlorococcus
+C 2) large species (opportunists) from having a low Iopt
+      Real*8 a_biovolmin(nGroup)
+      Real*8 a_PARoptmin(nGroup)
+      Real*8 b_PARoptmin(nGroup)
+      Real*8 grp_ExportFracPreyPred(nGroup,nGroup)
+      Real*8 grp_ass_eff(nGroup,nGroup)
+
+
+
+CBOP
+C     !ROUTINE: DARWIN_TRAITS.h
+C     !INTERFACE:
+C #include DARWIN_TRAITS.h
+
+C     !DESCRIPTION:
+C Contains run-time parameters for the darwin package
+C the parameters in this file are traits
+C
+C Requires: DARWIN_SIZE.h
+
+C Replace nTrac by nTrac in all instances (:s/nTrac/nTrac/g)
+C Can be reversed if necessary (Le Gland, 09/03/2021)
+
+C--   COMMON /DARWIN_TRAITS_i/ Per-plankton traits (generated, maybe overwritten by data.traits)
+C     isPhoto   :: 1: does photosynthesis, 0: not
+C     bactType  :: 1: particle associated, 2: free living bacteria, 0: not bacteria
+C     isAerobic :: 1: is aerobic bacteria (also set bactType), 0: not
+C     isDenit   :: 1: is dentrifying bacteria (also set (bactType), 0: not
+C     hasSi     :: 1: uses silica (Diatom), 0: not
+C     hasPIC    :: 1: calcifying, 0: set R_PICPOC to zero
+C     diazo     :: 1: use molecular instead of mineral nitrogen, 0: not
+C     useNH4    :: 1: can use ammonia, 0: not
+C     useNO2    :: 1: can use nitrite, 0: not
+C     useNO3    :: 1: can use nitrate, 0: not
+C     combNO    :: 1: combined nitrite/nitrate limitation, 0: not
+C Traits of each species (Le Gland, 31/03/2021)
+C     traitbvol :: 1: biovolume is variable, 0: biovolume is constant
+C     traittopt :: 1: optimal temperature is variable, 0: constant
+C     traitparopt :: 1: optimal irradiance is variable, 0: constant
+C     isPrey    :: 1: can be grazed, 0: not
+C     isPred    :: 1: can graze, 0: not
+C     tempMort  :: 1: mortality is temperature dependent, 0: turn dependence off
+C     tempMort2 :: 1: quadratic mortality is temperature dependent, 0: turn dependence off
+C     tempGraz  :: 1: grazing is temperature dependent, 0: turn dependence off
+      COMMON /DARWIN_TRAITS_i/
+     &    isPhoto,
+     &    bactType,
+     &    isAerobic,
+     &    isDenit,
+     &    hasSi,
+     &    hasPIC,
+     &    diazo,
+     &    useNH4,
+     &    useNO2,
+     &    useNO3,
+     &    combNO,
+C Traits of each species (Le Gland, 31/03/2021)
+     &    traitbvol,
+     &    traittopt,
+     &    traitparopt,
+     &    isPrey,
+     &    isPred,
+     &    tempMort,
+     &    tempMort2,
+     &    tempGraz
+      INTEGER isPhoto(nTrac)
+      INTEGER bactType(nTrac)
+      INTEGER isAerobic(nTrac)
+      INTEGER isDenit(nTrac)
+      INTEGER hasSi(nTrac)
+      INTEGER hasPIC(nTrac)
+      INTEGER diazo(nTrac)
+      INTEGER useNH4(nTrac)
+      INTEGER useNO2(nTrac)
+      INTEGER useNO3(nTrac)
+      INTEGER combNO(nTrac)
+C Traits of each species (Le Gland, 31/03/2021)
+      INTEGER traitbvol(nplank)
+      INTEGER traittopt(nplank)
+      INTEGER traitparopt(nplank)
+      INTEGER isPrey(nTrac)
+      INTEGER isPred(nTrac)
+      INTEGER tempMort(nTrac)
+      INTEGER tempMort2(nTrac)
+      INTEGER tempGraz(nTrac)
+
+C--   COMMON /DARWIN_TRAITS_r/ Per-plankton traits (generated, maybe overwritten by data.traits)
+C     Xmin               :: [mmol C m^-3]              minimum abundance for mortality, respiration and exudation
+C     amminhib           :: [(mmol N m^-3)^-1]         coefficient for NH4 inhibition of NO uptake
+C     acclimtimescl      :: [s^-1]                     rate of chlorophyll acclimation
+C
+C     mort               :: [s^-1]                     linear mortality rate
+C     mort2              :: [(mmol C m^-3)^-1 s^-1]    quadratic mortality coefficient
+C     ExportFracMort     :: []                         fraction of linear mortality to POM
+C     ExportFracMort2    :: []                         fraction of quadratic mortality to POM
+C     ExportFracExude    :: []                         fraction of exudation to POM
+C
+C- temperature dependence:
+C     phytoTempCoeff     :: []                         see :numref:`pkg_darwin_temperature_params`
+C     phytoTempExp1      :: [exp(1/degrees C)]         see :numref:`pkg_darwin_temperature_params`
+C     phytoTempExp2      :: []                         see :numref:`pkg_darwin_temperature_params`
+C     phytoTempOptimum   :: [degrees C]                see :numref:`pkg_darwin_temperature_params`
+C Le Gland, 10/12/2020
+C     phytoTempTol       :: [degrees C]                see :numref:`pkg_darwin_temperature_params`
+C     phytoDecayPower    :: []                         see :numref:`pkg_darwin_temperature_params`
+C
+C     R_NC               :: [mmol N (mmol C)^-1]       nitrogen-carbon ratio (not used with DARWIN_ALLOW_NQUOTA)
+C     R_PC               :: [mmol P (mmol C)^-1]       phosphorus-carbon ratio (not used with DARWIN_ALLOW_PQUOTA)
+C     R_SiC              :: [mmol Si (mmol C)^-1]      silica-carbon ratio (not used with DARWIN_ALLOW_SIQUOTA)
+C     R_FeC              :: [mmol Fe (mmol C)^-1]      iron-carbon ratio (not used with DARWIN_ALLOW_FEQUOTA)
+C     R_ChlC             :: [mg Chl (mmol C)^-1]       chlorophyll-carbon ratio (not used with DARWIN_ALLOW_CHLQUOTA)
+C     R_PICPOC           :: [mmol PIC (mmol POC)^-1]   inorganic-organic carbon ratio
+C
+C     biosink            :: [m s^-1]                   sinking velocity (positive downwards)
+C     bioswim            :: [m s^-1]                   upward swimming velocity (positive upwards)
+C
+C     respRate           :: [s^-1]                     respiration rate
+C     PCmax              :: [s^-1]                     maximum carbon-specific growth rate
+C
+C     Qnmax              :: [mmol N (mmol C)^-1]       maximum nitrogen quota (only with DARWIN_ALLOW_NQUOTA)
+C     Qnmin              :: [mmol N (mmol C)^-1]       minimum nitrogen quota (only with DARWIN_ALLOW_NQUOTA)
+C     Qpmax              :: [mmol P (mmol C)^-1]       maximum phosphorus quota (only with DARWIN_ALLOW_PQUOTA)
+C     Qpmin              :: [mmol P (mmol C)^-1]       minimum phosphorus quota (only with DARWIN_ALLOW_PQUOTA)
+C     Qsimax             :: [mmol Si (mmol C)^-1]      maximum silica quota (only with DARWIN_ALLOW_SIQUOTA)
+C     Qsimin             :: [mmol Si (mmol C)^-1]      minimum silica quota (only with DARWIN_ALLOW_SIQUOTA)
+C     Qfemax             :: [mmol Fe (mmol C)^-1]      maximum iron quota (only with DARWIN_ALLOW_FEQUOTA)
+C     Qfemin             :: [mmol Fe (mmol C)^-1]      minimum iron quota (only with DARWIN_ALLOW_FEQUOTA)
+C
+C     VmaxNH4            :: [mmol N (mmol C)^-1 s^-1]  maximum ammonia uptake rate (only with DARWIN_ALLOW_NQUOTA)
+C     VmaxNO2            :: [mmol N (mmol C)^-1 s^-1]  maximum nitrite uptake rate (only with DARWIN_ALLOW_NQUOTA)
+C     VmaxNO3            :: [mmol N (mmol C)^-1 s^-1]  maximum nitrate uptake rate (only with DARWIN_ALLOW_NQUOTA)
+C     VmaxN              :: [mmol N (mmol C)^-1 s^-1]  maximum nitrogen uptake rate for diazotrophs (only with DARWIN_ALLOW_NQUOTA)
+C                        ::                            has to be >= vmaxNO3 + vmaxNO2 + vmaxNH4
+C     VmaxPO4            :: [mmol P (mmol C)^-1 s^-1]  maximum phosphate uptake rate (only with DARWIN_ALLOW_PQUOTA)
+C     VmaxSiO2           :: [mmol Si (mmol C)^-1 s^-1] maximum silica uptake rate (only with DARWIN_ALLOW_SIQUOTA)
+C     VmaxFeT            :: [mmol Fe (mmol C)^-1 s^-1] maximum iron uptake rate (only with DARWIN_ALLOW_FEQUOTA)
+C
+C     ksatNH4            :: [mmol N m^-3]              half-saturation conc. for ammonia uptake/limitation
+C     ksatNO2            :: [mmol N m^-3]              half-saturation conc. for nitrite uptake/limitation
+C     ksatNO3            :: [mmol N m^-3]              half-saturation conc. for nitrate uptake/limitation
+C     ksatPO4            :: [mmol P m^-3]              half-saturation conc. for phosphate uptake/limitation
+C     ksatSiO2           :: [mmol Si m^-3]             half-saturation conc. for silica uptake/limitation
+C     ksatFeT            :: [mmol Fe m^-3]             half-saturation conc. for iron uptake/limitation
+C
+C     kexcc              :: [s^-1]                 exudation rate for carbon
+C     kexcn              :: [s^-1]                 exudation rate for nitrogen
+C     kexcp              :: [s^-1]                 exudation rate for phosphorus
+C     kexcsi             :: [s^-1]                 exudation rate for silica
+C     kexcfe             :: [s^-1]                 exudation rate for iron
+C
+C- Geider
+C     inhibGeider        :: []                     photo-inhibition coefficient for Geider growth
+C- not Geider
+C     ksatPAR            :: [(uEin m^-2 s^-1)^-1]  saturation coefficient for PAR (w/o GEIDER)
+C     kinhPAR            :: [(uEin m^-2 s^-1)^-1]  inhibition coefficient for PAR (w/o GEIDER)
+C     PARopt             :: [W m^-2]               optimal irradiance
+C     PARchi             :: []                     photoinhibition factor
+C- always defined
+C     mQyield            :: [mmol C (uEin)^-1]     maximum quantum yield
+C     chl2cmax           :: [mg Chl (mmol C)^-1]   maximum Chlorophyll-carbon ratio
+C
+C- Grazing
+C     grazemax           :: [s^-1]          maximum grazing rate
+C     kgrazesat          :: [mmol C m^-3]   grazing half-saturation concentration
+C     palat              :: []              palatability matrix
+C     asseff             :: []              assimilation efficiency matrix
+C     ExportFracPreyPred :: []              fraction of unassimilated prey becoming particulate organic matter
+C
+C- Bacteria
+C     yield              :: []              bacterial growth yield for all organic matter
+C     yieldO2            :: []              bacterial growth yield for oxygen
+C     yieldNO3           :: []              bacterial growth yield for nitrate
+C     ksatPON            :: [mmol N m^-3]   half-saturation of PON for bacterial growth
+C     ksatPOC            :: [mmol C m^-3]   half-saturation of POC for bacterial growth
+C     ksatPOP            :: [mmol P m^-3]   half-saturation of POP for bacterial growth
+C     ksatPOFe           :: [mmol Fe m^-3]  half-saturation of POFe for bacterial growth
+C     ksatDON            :: [mmol N m^-3]   half-saturation of DON for bacterial growth
+C     ksatDOC            :: [mmol C m^-3]   half-saturation of DOC for bacterial growth
+C     ksatDOP            :: [mmol P m^-3]   half-saturation of DOP for bacterial growth
+C     ksatDOFe           :: [mmol Fe m^-3]  half-saturation of DOFe for bacterial growth
+      COMMON /DARWIN_TRAITS_r/
+     &    Xmin,
+     &    amminhib,
+     &    acclimtimescl,
+     &    mort,
+     &    mort2,
+     &    ExportFracMort,
+     &    ExportFracMort2,
+     &    ExportFracExude,
+     &    phytoTempCoeff,
+     &    phytoTempExp1,
+     &    phytoTempExp2,
+     &    phytoTempOptimum,
+C Le Gland, 10/12/2020
+     &    phytoTempTol,
+     &    phytoDecayPower,
+     &    R_NC,
+     &    R_PC,
+     &    R_SiC,
+     &    R_FeC,
+     &    R_ChlC,
+     &    R_PICPOC,
+     &    biosink,
+     &    bioswim,
+     &    respRate,
+     &    PCmax,
+     &    Qnmax,
+     &    Qnmin,
+     &    Qpmax,
+     &    Qpmin,
+     &    Qsimax,
+     &    Qsimin,
+     &    Qfemax,
+     &    Qfemin,
+     &    VmaxNH4,
+     &    VmaxNO2,
+     &    VmaxNO3,
+     &    VmaxN,
+     &    VmaxPO4,
+     &    VmaxSiO2,
+     &    VmaxFeT,
+     &    ksatNH4,
+     &    ksatNO2,
+     &    ksatNO3,
+     &    ksatPO4,
+     &    ksatSiO2,
+     &    ksatFeT,
+     &    kexcc,
+     &    kexcn,
+     &    kexcp,
+     &    kexcsi,
+     &    kexcfe,
+     &    ksatPAR,
+     &    kinhPAR,
+     &    PARopt,
+     &    PARchi,
+C Mutation rate of each species (Le Gland, 31/03/2021)
+     &    numut_tr,
+C Reference trait values for each species (Le Gland, 14/05/2021)
+     &    ref_tr,
+C Minimum and maximum trait values, maximum variance (Le Gland, 07/06/2021)
+     &    min_tr,
+     &    max_tr,
+     &    max_vr_tr,
+     &    mQyield,
+     &    chl2cmax,
+     &    grazemax,
+     &    kgrazesat,
+     &    palat,
+     &    asseff,
+     &    ExportFracPreyPred,
+     &    yield,
+     &    yieldO2,
+     &    yieldNO3,
+     &    ksatPON,
+     &    ksatPOC,
+     &    ksatPOP,
+     &    ksatPOFe,
+     &    ksatDON,
+     &    ksatDOC,
+     &    ksatDOP,
+     &    ksatDOFe
+      Real*8 Xmin(nTrac)
+      Real*8 amminhib(nTrac)
+      Real*8 acclimtimescl(nTrac)
+      Real*8 mort(nTrac)
+      Real*8 mort2(nTrac)
+      Real*8 ExportFracMort(nTrac)
+      Real*8 ExportFracMort2(nTrac)
+      Real*8 ExportFracExude(nTrac)
+      Real*8 phytoTempCoeff(nTrac)
+      Real*8 phytoTempExp1(nTrac)
+      Real*8 phytoTempExp2(nTrac)
+      Real*8 phytoTempOptimum(nTrac)
+C Le Gland, 10/12/2020
+      Real*8 phytoTempTol(nTrac)
+      Real*8 phytoDecayPower(nTrac)
+      Real*8 R_NC(nTrac)
+      Real*8 R_PC(nTrac)
+      Real*8 R_SiC(nTrac)
+      Real*8 R_FeC(nTrac)
+      Real*8 R_ChlC(nTrac)
+      Real*8 R_PICPOC(nTrac)
+      Real*8 biosink(nTrac)
+      Real*8 bioswim(nTrac)
+      Real*8 respRate(nTrac)
+      Real*8 PCmax(nTrac)
+      Real*8 Qnmax(nTrac)
+      Real*8 Qnmin(nTrac)
+      Real*8 Qpmax(nTrac)
+      Real*8 Qpmin(nTrac)
+      Real*8 Qsimax(nTrac)
+      Real*8 Qsimin(nTrac)
+      Real*8 Qfemax(nTrac)
+      Real*8 Qfemin(nTrac)
+      Real*8 VmaxNH4(nTrac)
+      Real*8 VmaxNO2(nTrac)
+      Real*8 VmaxNO3(nTrac)
+      Real*8 VmaxN(nTrac)
+      Real*8 VmaxPO4(nTrac)
+      Real*8 VmaxSiO2(nTrac)
+      Real*8 VmaxFeT(nTrac)
+      Real*8 ksatNH4(nTrac)
+      Real*8 ksatNO2(nTrac)
+      Real*8 ksatNO3(nTrac)
+      Real*8 ksatPO4(nTrac)
+      Real*8 ksatSiO2(nTrac)
+      Real*8 ksatFeT(nTrac)
+      Real*8 kexcc(nTrac)
+      Real*8 kexcn(nTrac)
+      Real*8 kexcp(nTrac)
+      Real*8 kexcsi(nTrac)
+      Real*8 kexcfe(nTrac)
+      Real*8 ksatPAR(nTrac)
+      Real*8 kinhPAR(nTrac)
+      Real*8 PARopt(nTrac)
+      Real*8 PARchi(nTrac)
+C Mutation rate of each species (Le Gland, 31/03/2021)
+      Real*8 numut_tr(nplank,nTrait)
+C Reference trait values for each species (Le Gland, 14/05/2021)
+      Real*8 ref_tr(nplank,nTrait)
+C Minimum and maximum trait values, maximum variance (Le Gland, 07/06/2021)
+      Real*8 min_tr(nplank,nTrait)
+      Real*8 max_tr(nplank,nTrait)
+      Real*8 max_vr_tr(nplank,nTrait)
+      Real*8 mQyield(nTrac)
+      Real*8 chl2cmax(nTrac)
+      Real*8 grazemax(nTrac)
+      Real*8 kgrazesat(nTrac)
+      Real*8 palat(nTrac,nTrac)
+      Real*8 asseff(nTrac,nTrac)
+      Real*8 ExportFracPreyPred(nTrac,nTrac)
+      Real*8 yield(nTrac)
+      Real*8 yieldO2(nTrac)
+      Real*8 yieldNO3(nTrac)
+      Real*8 ksatPON(nTrac)
+      Real*8 ksatPOC(nTrac)
+      Real*8 ksatPOP(nTrac)
+      Real*8 ksatPOFe(nTrac)
+      Real*8 ksatDON(nTrac)
+      Real*8 ksatDOC(nTrac)
+      Real*8 ksatDOP(nTrac)
+      Real*8 ksatDOFe(nTrac)
+
+C--   COMMON /DARWIN_DEPENDENT_TRAITS_i/ Dependent and constant (not read-in) parameters
+C     group  :: which group this type belongs to
+C     plank  :: which species this type belongs to (Le Gland, 11/03/2021)
+C     igroup :: index within group
+C     jgroup :: index for topt (Le Gland, 10/12/2020)
+C     jgroup is useless in the continuous model (Le Gland, 13/01/2021)
+C     num_trait :: number of traits for each species (Le Gland, 26/03/2021)
+C     num_cov :: number of covariances for each species (Le Gland, 26/03/2021)
+C
+C- Radtrans only:
+C     aptype :: optical type (for absorption/scattering spectra)
+      COMMON /DARWIN_DEPENDENT_TRAITS_i/
+     &    group,
+C Le Gland, 11/03/2021
+     &    plank,
+C Le Gland, 10/12/2020
+C    &    igroup,
+C    &    jgroup
+C Le Gland, 09/03/2021
+     &    iplank,
+C Le Gland, 26/03/2021
+     &    num_trait,
+     &    num_cov
+      INTEGER group(nTrac)
+C Le Gland, 11/03/2021
+      INTEGER plank(nTrac)
+C     INTEGER igroup(nTrac)
+C Le Gland, 10/12/2020
+C     INTEGER jgroup(nTrac)
+C Le Gland, 09/03/2021
+      INTEGER iplank(nplank)
+C Le Gland, 26/03/2021
+      INTEGER num_trait(nplank)
+      INTEGER num_cov(nplank)
+
+C--   COMMON /DARWIN_DEPENDENT_TRAITS_r/ Dependent and constant (not read-in) parameters
+C     normI            :: []                    normalization factor for non-Geider light curve
+C     biovol           :: [um^3]                volume
+C     qcarbon          :: [mmol C/cell]         cellular carbon content
+C     biovol_bygroup   :: [um^3]                volume of types in each group
+C     Topt_bygroup     :: [°C]                  optimal temperature of types in each group
+C     chl2cmin         :: [mg Chl (mmol C)^-1]  minimum Chl:C ratio (function of chl2cmax and alpha_mean)
+C     alpha_mean       :: [mmol C s-1 (uEin m^-2 s^-1)^-1 (mg Chl)^-1]  mean initial slope of light curve (over wavebands)
+      COMMON /DARWIN_DEPENDENT_TRAITS_r/
+     &    normI,
+     &    biovol,
+     &    qcarbon,
+C    &    biovol_bygroup,
+C    &    Topt_bygroup,
+     &    alpha_mean,
+     &    chl2cmin
+      Real*8 normI(nTrac)
+      Real*8 biovol(nTrac)
+      Real*8 qcarbon(nTrac)
+C     Real*8 biovol_bygroup(nTrac,ngroup)
+C Le Gland, 10/12/2020
+C     Real*8 Topt_bygroup(nTrac,ngroup)
+      Real*8 alpha_mean(nTrac)
+      Real*8 chl2cmin(nTrac)
+
+
+
+
+C !INPUT PARAMETERS: ===================================================
+C  myThid               :: thread number
+      INTEGER myThid
+CEOP
+
+
+C !FUNCTIONS: ==========================================================
+      Real*8 DARWIN_RANDOM
+      EXTERNAL DARWIN_RANDOM
+      Real*8 DARWIN_RANDOM_NORMAL
+      EXTERNAL DARWIN_RANDOM_NORMAL
+
+C !LOCAL VARIABLES: ====================================================
+C     msgBuf    - Informational/error meesage buffer
+      CHARACTER*(MAX_LEN_MBUF) msgBuf
+      integer iUnit1, iUnit2
+      INTEGER iMinPrey, iMaxPrey, iMinPred, iMaxPred
+      Real*8 RandNoSize
+      Real*8 RandNoDiatom
+      Real*8 RandNoDiazo
+      Real*8 RandNoGrow
+      Real*8 RandNoMort
+      Real*8 RandNoNsrc
+      Real*8 RandNoAPType3
+      Real*8 RandNoAPType2
+      Real*8 RandNoAPType1
+      Real*8 RandNoAPType4
+      Real*8 RandNoTemp
+      Real*8 RandNoKsat
+      Real*8 RandNoKsatPAR
+      Real*8 RandNoKinhPAR
+      Real*8 RandNoDummy
+      Real*8 RandNoGrowGeider
+      Real*8 RandNoYield
+      Real*8 RandNoChl2C
+
+      Real*8 growthdays
+      Real*8 mortdays
+      Real*8 pday
+      Real*8 year
+      Real*8 month
+      Real*8 fiveday
+      Real*8 rtime
+      Real*8 dm
+      Real*8 dmzoo(nplank)
+      Real*8 volp
+      Real*8 sm
+      Real*8 PI
+      INTEGER np,nz,l,i,iopt
+      INTEGER signvar
+      PARAMETER ( PI    = 3.14159265358979323844d0   )
+
+C     used to be global in monod pkg
+      Real*8 phyto_esd(nplank)
+      Real*8 phyto_vol(nplank)
+
+      INTEGER physize(nplank)
+      INTEGER nsource(nplank)
+      INTEGER diacoc(nplank)
+
+C ======================================================================
+
+c length of day (seconds)
+      pday = 86400.0D0
+
+      DO np = 1, nPlank
+       kexcc(np) = 0.0D0
+       kexcn(np) = 0.0D0
+       kexcp(np) = 0.0D0
+       kexcsi(np) = 0.0D0
+       kexcfe(np) = 0.0D0
+
+       Qnmax(np) = 0.0D0
+       Qnmin(np) = 0.0D0
+       Qpmax(np) = 0.0D0
+       Qpmin(np) = 0.0D0
+       Qsimax(np) = 0.0D0
+       Qsimin(np) = 0.0D0
+       Qfemax(np) = 0.0D0
+       Qfemin(np) = 0.0D0
+
+       vmaxFeT(np) = 0.0D0
+       vmaxNH4(np) = 0.0D0
+       vmaxNO2(np) = 0.0D0
+       vmaxNO3(np) = 0.0D0
+       vmaxN(np) = 0.0D0
+       vmaxPO4(np) = 0.0D0
+       vmaxSiO2(np) = 0.0D0
+
+C      initialize discrete traits to "unset"
+       physize(np)    = -1
+       diacoc(np)     = -1
+       diazo(np) = -1
+       nsource(np)    = -1
+
+       isPhoto(np) = 0
+       isPrey(np) = 0
+       isPred(np) = 0
+      ENDDO
+
+C ======================================================================
+c     phytoplankton
+C ======================================================================
+
+      DO np = 1, nPhoto
+
+      isPhoto(np) = 1
+      isPrey(np) = 1
+
+      Xmin(np) = phymin
+
+C ======================================================================
+C RANDOM NUMBERS
+
+C pre-compute random numbers and discrete traits
+
+C phyto either "small" (physize(np)=0.0) or "big" (physize(np)=1.0)
+C at this point independent of whether diatom or coccolithophor or not
+      RandNoSize = darwin_random(myThid)
+      IF (physize(np).LT.0) THEN
+       IF(RandNoSize .GT. 0.500D0)then
+        physize(np) = 1
+       ELSE
+        physize(np) = 0
+       ENDIF
+      ENDIF
+c
+c phyto either diatoms (diacoc=1.0) and use silica or cocolithophor
+c (diacoc=2.0) and produce PIC or neither (diacoc=0.0)
+c if they are large
+      IF (physize(np).EQ.1) then
+        RandNoDiatom = darwin_random(myThid)
+        IF (diacoc(np) .LT. 0) THEN
+         IF(RandNoDiatom .GT. 0.500D0)then
+          diacoc(np) = 1
+         ELSE
+          diacoc(np) = 0
+         ENDIF
+c         IF(RandNo .GT. 0.670D0)then
+c           diacoc(np) = 1
+c         ENDIF
+c         IF(RandNo .GT. 0.330D0 .AND. RandNo. le. 0.67D0)then
+c           diacoc(np) = 2
+c         ENDIF
+c         IF (RandNo .LE. 0.330D0) then
+c           diacoc(np) = 0
+c         ENDIF
+        ENDIF
+      ELSE
+         diacoc(np) = 0
+      ENDIF
+
+c phyto either diazotrophs (diazo=1.0) or not (diazo=0.0)
+      RandNoDiazo = darwin_random(myThid)
+      IF (diazo(np) .LT. 0) THEN
+       IF(RandNoDiazo .GT. 0.6700D0)then
+        diazo(np) = 1
+       ELSE
+        diazo(np) = 0
+       ENDIF
+      ENDIF
+c TEST ...........................................
+      diazo(np) = 0
+c TEST ...........................................
+
+      RandNoGrow = darwin_random(myThid)
+      RandNoMort = darwin_random(myThid)
+c nutrient source 
+      IF(diazo(np) .ne. 1)then
+         RandNoNsrc = darwin_random(myThid)
+         IF (nsource(np) .LT. 0) THEN
+          IF (physize(np).EQ.1) then   
+           nsource(np) = 3
+          ELSE
+           IF(RandNoNsrc .GT. 0.670D0)then
+             nsource(np) = 1
+           ELSEif(RandNoNsrc .LT. 0.33D0)then
+             nsource(np) = 2
+           ELSE
+             nsource(np) = 3
+           ENDIF
+c ANNA shift bias away from pros. Now equal chance of being HL, LL, Syn, Euk.
+c ANNA i.e. now 50% chance of being Pro (nsource 1 or 2, with 50% change of each being HL)
+c ANNA i.e. and 50% chance of being non-Pro (nsource 3, with 50% chance of non-pro being Syn)
+c           IF(RandNo .GT. 0.50D0)then
+c             nsource(np) = 3
+c           ELSEif(RandNo .LT. 0.25D0)then
+c             nsource(np) = 2
+c           ELSE
+c             nsource(np) = 1
+c           ENDIF 
+          ENDIF
+         ENDIF
+      ELSE
+         nsource(np) = 0
+      ENDIF 
+
+c.....................................................
+c ANNA make selections for RADTRANS 
+c.....................................................
+c ANNA number of RandNo's carreid out MUST MATCH regardless of wavebands or not.
+C ANNA the number of RandNo statements here MUST MATCH the number done above
+
+c        RandNo = darwin_random(myThid)
+c        RandNo = darwin_random(myThid)
+c        RandNo = darwin_random(myThid)
+
+c ANNA ENDIF
+
+
+      RandNoTemp = darwin_random(myThid)
+      RandNoKsat = darwin_random(myThid)
+      IF(physize(np) .EQ. 1)then
+         RandNoKsatPAR = darwin_random_normal(myThid)
+         RandNoKinhPAR = darwin_random_normal(myThid)
+      ELSE
+c QQ remove someday
+         RandNoDummy = darwin_random(myThid)
+         RandNoKsatPAR = darwin_random_normal(myThid)
+         RandNoKinhPAR = darwin_random_normal(myThid)
+      ENDIF
+
+C ======================================================================
+
+c size of phytoplankton
+      IF(physize(np).EQ. 1)then
+        dm = 10.D0  ! diameter (micrometer)
+      ELSE
+        dm = 1.D0  ! diameter (micrometer)
+      ENDIF
+c phytoplankton volume in micrometers cubed
+      volp=4.D0/3.D0 *PI*(dm/2.D0)**3D0
+c
+c common block variables (in m and m3)
+      phyto_esd(np)=dm* 1.D-6
+      phyto_vol(np)=volp* 1.D-18
+
+c growth rates
+c big/small phyto growth rates..
+      IF(physize(np) .EQ. 1)then
+        growthdays = Biggrow +RandNoGrow*Biggrowrange
+      ELSE
+        growthdays = Smallgrow +RandNoGrow*Smallgrowrange
+      ENDIF
+c but diazotrophs always slower due to energetics
+      IF(diazo(np) .EQ. 1) then
+          growthdays = growthdays * diaz_growfac
+      ENDIF
+c cocco have slower growth than other large
+      IF (diacoc(np).EQ.2.D0) then
+         growthdays= growthdays * cocco_growfac
+      ENDIF
+c diatom has faster thatn other large
+      IF (diacoc(np).EQ.1.D0) then
+         growthdays= growthdays * diatom_growfac
+      ENDIF
+c now convert to a growth rate
+      IF (growthdays.GT.0.D0) then
+       PCmax(np) = 1.0D0/(growthdays*pday)
+      ELSE
+       PCmax(np) = 0.D0
+      ENDIF
+
+c mortality and export fraction rates
+c big/small phyto mortality rates..
+      IF(physize(np) .EQ. 1)then
+        mortdays = Bigmort +RandnoMort*Bigmortrange
+        ExportFracMort(np)=Bigexport
+        ExportFracMort2(np)=Bigexport
+        ExportFracExude(np)=DARWIN_UNINIT_RL
+      ELSE
+        mortdays = Smallmort +RandNoMort*Smallmortrange
+        ExportFracMort(np)=Smallexport
+        ExportFracMort2(np)=Smallexport
+        ExportFracExude(np)=DARWIN_UNINIT_RL
+      ENDIF
+
+c now convert to a mortality rate
+      IF (mortdays.GT.0.D0) then
+        mort(np) = 1.0D0/(mortdays*pday)
+      ELSE
+        mort(np) = 0.D0
+      ENDIF
+      mort2(np) = 0.0D0
+
+C phytoplankton do not have temperature-dependent mortality
+      tempMort(np) = 0
+      tempMort2(np) = 0
+
+      respRate(np) = 0.0D0
+
+
+c..........................................................
+c generate phyto Temperature Function parameters  
+c.......................................................
+      phytoTempCoeff(np) = tempcoeff1
+      phytoTempExp1(np) = tempcoeff3
+      IF(physize(np) .EQ. 1)then
+        phytoTempExp2(np) = tempcoeff2_big
+      ELSE
+        phytoTempExp2(np) = tempcoeff2_small
+      ENDIF
+
+cswd    phytoTempOptimum(np) = 30.0D0 - RandNo*28.0D0 
+      phytoTempOptimum(np) = tempmax - RandNoTemp*temprange
+      phytoDecayPower(np) = tempdecay
+      
+c stoichiometric ratios for each functional group of phyto 
+c relative to phosphorus  - the base currency nutrient
+c set Si:P
+      IF(diacoc(np) .EQ. 1)then
+        R_SiC(np) =  val_R_SiC_diatom
+      ELSE
+        R_SiC(np) = 0.0D0
+      ENDIF
+      IF(diacoc(np) .EQ. 2)then
+        R_PICPOC(np) =  val_R_PICPOC
+      ELSE
+        R_PICPOC(np) = 0.0D0
+      ENDIF
+c set N:P and iron requirement according to diazotroph status
+      IF(diazo(np) .EQ. 1)then
+        R_NC(np) = val_R_NC_diaz
+        R_FeC(np) =  val_R_FeC_diaz
+      ELSE
+        R_NC(np) = val_R_NC
+        R_FeC(np) = val_R_FeC
+      ENDIF
+c set C:P ratio
+        R_PC(np) = val_R_PC
+c set sinking rates according to allometry
+      IF(physize(np) .EQ. 1)then
+         biosink(np) = BigSink
+      ELSE 
+         biosink(np) = SmallSink
+      ENDIF 
+      bioswim(np) = 0.0D0
+c half-saturation coeffs 
+
+      IF(physize(np) .EQ. 1)then
+         ksatPO4(np) = BigPsat + RandNoKsat*BigPsatrange
+      ELSE
+c          ksatPO4(np) = SmallPsat + RandNoKsat*SmallPsatrange
+c          if (nsource(np).LT.3) then
+c            ksatPO4(np) = ksatPO4(np)*prochlPsat
+c           ENDIF
+         IF (nsource(np).EQ.3) then
+           ksatPO4(np) = SmallPsat + RandNoKsat*SmallPsatrange
+         ENDIF
+         IF (nsource(np).EQ..0) then
+c            ksatPO4(np) = SmallPsat + RandNoKsat*SmallPsatrange
+           ksatPO4(np) = UniDzPsat + RandNoKsat*UniDzPsatrange 
+         ENDIF
+         IF (nsource(np).EQ.2.or.nsource(np).EQ.1) then
+           ksatPO4(np) = ProcPsat + RandNoKsat*ProcPsatrange
+         ENDIF
+      ENDIF
+      IF (diacoc(np) .EQ. 2) THEN
+         ksatPO4(np) = CoccoPsat + RandNoKsat*CoccoPsatrange
+      ENDIF
+
+      ksatNO3(np) = ksatPO4(np)*R_NC(np)/R_PC(np)
+      ksatNO2(np) = ksatNO3(np)*ksatNO2fac 
+c Made ksatNH4 smaller since it is the preferred source
+      ksatNH4(np) = ksatNO3(np)*ksatNH4fac
+      ksatFeT(np) = ksatPO4(np)*R_FeC(np)/R_PC(np)
+      ksatSiO2(np) = val_ksatsio2
+      amminhib(np) = val_amminhib
+
+      acclimtimescl(np) = val_acclimtimescl
+
+      R_ChlC(np) = val_R_ChlC
+
+cNEW Light parameters:
+c     ksatPAR {0.1 - 1.3}
+c     0.35=Av High Light Adapted, 0.8=Av Low Light Adapted
+c     kinhPAR  {0.0 - 3.0}
+c     0.5 =Av High Light Adapted, 2.0=Av Low Light Adapted
+c High Light Groups for Large size:
+      IF(physize(np) .EQ. 1)then
+         ksatPAR(np) = abs(Bigksatpar+Bigksatparstd*RandNoKsatPAR)
+
+         kinhPAR(np) = abs(BigkinhPAR+BigkinhPARstd*RandNoKinhPAR)
+      ELSE
+c QQ remove someday
+c Low Light Groups for Small size:
+         ksatPAR(np) = abs(smallksatpar+smallksatparstd*RandNoKsatPAR)
+
+         kinhPAR(np) = abs(smallkinhPAR+smallkinhPARstd*RandNoKinhPAR)
+      ENDIF
+
+
+      print*,'nsource',np,nsource(np)
+      IF (nsource(np) .EQ. 3) THEN
+        useNH4(np) = 1
+        useNO2(np) = 1
+        useNO3(np) = 1
+        combNO(np) = 1
+      ELSEIF (nsource(np) .EQ. 2) THEN
+        useNH4(np) = 1
+        useNO2(np) = 0
+        useNO3(np) = 0
+        combNO(np) = 0
+      ELSEIF (nsource(np) .EQ. 1) THEN
+        useNH4(np) = 1
+        useNO2(np) = 1
+        useNO3(np) = 0
+        combNO(np) = 0
+      ELSE
+        useNH4(np) = 0
+        useNO2(np) = 0
+        useNO3(np) = 0
+        combNO(np) = 0
+      ENDIF
+
+      IF (diacoc(np) .NE. 1) THEN
+        ksatSiO2(np) = 0.0
+        vmaxSiO2(np) = 0.0
+        R_SiC(np) = 0.0
+      ENDIF
+
+      IF (diacoc(np) .EQ. 1) THEN
+        hasSi(np) = 1
+        hasPIC(np) = 0
+      ELSEIF (diacoc(np) .EQ. 2) THEN
+        hasSi(np) = 0
+        hasPIC(np) = 1
+      ELSE
+        hasSi(np) = 0
+        hasPIC(np) = 0
+      ENDIF
+
+      ENDDO  ! np
+
+      DO np = 1, nplank
+
+        bactType(np) = 0
+        isAerobic(np) = 0
+        isDenit(np) = 0
+
+        yield(np) = 1.0D0
+        yieldO2(np) = 1.0D0
+        yieldNO3(np) = 1.0D0
+
+        ksatPON(np) = 1.0D0
+        ksatPOC(np) = 1.0D0
+        ksatPOP(np) = 1.0D0
+        ksatPOFe(np) = 1.0D0
+        ksatDON(np) = 1.0D0
+        ksatDOC(np) = 1.0D0
+        ksatDOP(np) = 1.0D0
+        ksatDOFe(np) = 1.0D0
+
+      ENDDO  ! np
+
+
+
+C ======================================================================
+c     zooplankton
+C ======================================================================
+
+      DO nz = 1, nplank
+       DO np = 1, nplank
+        palat(np,nz) = 0D0
+        asseff(np,nz) = 0D0
+        ExportFracPreyPred(np,nz) = 0D0
+       ENDDO
+      ENDDO
+
+      iMinPrey = 1
+      iMaxPrey = nPhoto
+      iMinPred = nPhoto + 1
+      iMaxPred = nplank
+      DO nz = iMinPred, iMaxPred
+       isPred(nz) = 1
+      ENDDO
+
+      IF ( oldTwoGrazers ) THEN
+c assume zoo(1) = small, zoo(2) = big
+
+       IF ( iMaxPred-iMinPred .NE. 1 ) THEN
+        WRITE(msgBuf,'(2A)') 'DARWIN_GENERATE: ',
+     &    'must have exactly 2 predators when oldTwoGrazers=.TRUE.'
+        CALL PRINT_ERROR( msgBuf , 1)
+        STOP 'ABNORMAL END: S/R DARWIN_GENERATE'
+       ENDIF
+       physize(iMinPred) = 0
+       physize(iMaxPred) = 1
+       grazemax(iMinPred) = GrazeFast
+       grazemax(iMaxPred) = GrazeFast
+       ExportFracMort(iMinPred) = ZooexfacSmall
+       ExportFracMort(iMaxPred) = ZooexfacBig
+       ExportFracMort2(iMinPred) = ZooexfacSmall
+       ExportFracMort2(iMaxPred) = ZooexfacBig
+       ExportFracExude(iMinPred) = DARWIN_UNINIT_RL
+       ExportFracExude(iMaxPred) = DARWIN_UNINIT_RL
+       mort(iMinPred) = ZoomortSmall
+       mort(iMaxPred) = ZoomortBig
+       mort2(iMinPred) = ZoomortSmall2
+       mort2(iMaxPred) = ZoomortBig2
+       DO np = iMinPrey, iMaxPrey
+        ExportFracPreyPred(np,iMinPred) = ExGrazFracSmall
+        ExportFracPreyPred(np,iMaxPred) = ExGrazFracBig
+       ENDDO
+       dmzoo(iMinPred) = 30.D0   ! diameter (micrometer)
+       dmzoo(iMaxPred) = 300.D0  ! diameter (micrometer)
+c palatibity according to "allometry"
+c big grazers preferentially eat big phyto etc...
+       DO nz = iMinPred, iMaxPred
+        DO np = iMinPrey, iMaxPrey
+          IF (physize(nz).EQ.physize(np)) then
+            palat(np,nz) = palathi
+            asseff(np,nz) = GrazeEffmod
+          ELSE
+            palat(np,nz) = palatlo
+            IF (physize(np).EQ.0.D0) then
+              asseff(np,nz) = GrazeEffhi
+            ELSE
+              asseff(np,nz) = GrazeEfflow
+            ENDIF
+          ENDIF
+c diatoms even less palatible
+          IF (diacoc(np).EQ.1.D0) then
+            palat(np,nz)= palat(np,nz)*diatomgraz
+          ENDIF
+c coccolithophes less palatible
+          IF (diacoc(np).EQ.2.D0) then
+            palat(np,nz)= palat(np,nz)*coccograz
+          ENDIF
+c other large phyto less palatible
+          IF (diacoc(np).EQ.0.D0 .AND.physize(np).EQ.1.D0) then
+            palat(np,nz)= palat(np,nz)*olargegraz
+          ENDIF
+c need something in here for tricho
+        ENDDO
+       ENDDO
+
+c     not oldTwoGrazers
+      ELSE
+
+       DO nz = iMinPred, iMaxPred
+        grazemax(nz) = GrazeRate
+        ExportFracMort(nz) = Zooexfac
+        ExportFracMort2(nz) = Zooexfac
+        ExportFracExude(nz) = DARWIN_UNINIT_RL
+        mort(nz) = Zoomort
+        mort2(nz) = Zoomort2
+        dmzoo(nz) = ZooDM
+        DO np = iMinPrey, iMaxPrey
+         palat(np,nz) = val_palat
+         asseff(np,nz) = val_ass_eff
+         ExportFracPreyPred(np,nz) = ExGrazFrac
+        ENDDO
+       ENDDO
+
+c     oldTwoGrazers
+      ENDIF
+
+c
+      DO nz = iMinPred, iMaxPred
+        R_NC(nz) = val_R_NC_zoo
+        R_PC(nz) = val_R_PC_zoo
+        R_SiC(nz) = val_R_SiC_zoo
+        R_FeC(nz) = val_R_FeC_zoo
+        R_ChlC(nz) = val_R_ChlC_zoo
+        R_PICPOC(nz) = val_R_PICPOC_zoo
+
+        Xmin(nz) = 0.0D0
+
+        kgrazesat(nz) = kgrazesat_val
+C zooplankton do have temperature-dependent mortality
+        tempMort(nz) = 0
+        tempMort2(nz) = 0
+        tempGraz(nz) = 0
+
+        respRate(nz) = 0.0D0
+        biosink(nz) = 0.0D0
+        bioswim(nz) = 0.0D0
+
+c zooplankton volume in micrometers cubed
+        volp = 4.D0/3.D0 *PI*(dmzoo(nz)/2.D0)**3D0
+c
+c common block variables (in m and m3)
+        phyto_esd(nz) = dmzoo(nz)* 1.D-6
+        phyto_vol(nz) = volp* 1.D-18
+      ENDDO
+
+
+      RETURN
+      END
+

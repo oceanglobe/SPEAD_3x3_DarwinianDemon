@@ -1,0 +1,22 @@
+# script_init.condor - Job file for the scheduler.
+# (c) Boris Sauterey 2023 - GPLv3+
+
+# Parameters
+name             = job.$(Cluster).$(Process)
+request_cpus     = 24
+request_memory   = 10240
+#nice_user        = True
+accounting_group = LongJob.Weekly
+requirements     = stringListMember(substr(Target.Machine,0,3), "bio")
+
+# Output
+error            = $(name).err
+output           = $(name).out
+log              = $(name).log
+
+# Command
+universe         = vanilla
+executable       = run_modelMITdarwin3.sh
+
+# Arguments
+Queue 1

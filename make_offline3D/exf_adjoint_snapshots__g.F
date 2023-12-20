@@ -1,0 +1,1 @@
+/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/exf/exf_adjoint_snapshots__g.F
