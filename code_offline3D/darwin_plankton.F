@@ -638,16 +638,16 @@ C           vr_tr(j,jp) = MIN ( 700.0, MAX(0., vr_tr(j,jp) ) )
             mn_tr(j,jp) = MIN( max_tr(j,jp), MAX( min_tr(j,jp),
      &                          mn_tr(j,jp) ) )
             dvrdt(j,jp) = MIN( max_vr_tr(j,jp) - vr_tr(j,jp), MAX( 0.0,
-     &                    0.0 _d -3 * max_vr_tr(j,jp) + 2*numut_tr(j,jp)
+     &                    1.0 _d -3 * max_vr_tr(j,jp) + 2*numut_tr(j,jp)
      &                    - vr_tr(j,jp) ) ) / dmp_time
-C            vr_tr(j,jp) = MIN ( max_vr_tr(j,jp) , MAX( 1.0 _d -3 *
-C     &                    max_vr_tr(j,jp) + 2*numut_tr(j,jp),
-C     &                    vr_tr(j,jp) ) )
+            vr_tr(j,jp) = MIN ( max_vr_tr(j,jp) , MAX( 1.0 _d -3 *
+     &                    max_vr_tr(j,jp) + 2*numut_tr(j,jp),
+     &                    vr_tr(j,jp) ) )
 C Supposedly makes variance stay at zero when set to zero (Boris 15/11/23)
-            vr_tr(j,jp) = MAX(1.0 _d -5,MIN(max_vr_tr(j,jp),vr_tr(j,jp)))
-            IF(vr_tr(j,jp) /= vr_tr(j,jp)) THEN 
-             vr_tr(j,jp) = 1.0 _d -5
-            ENDIF
+C            vr_tr(j,jp) = MAX(1.0 _d -5,MIN(max_vr_tr(j,jp),vr_tr(j,jp)))
+C            IF(vr_tr(j,jp) /= vr_tr(j,jp)) THEN 
+C             vr_tr(j,jp) = 1.0 _d -5
+C            ENDIF
 C            IF(jp .EQ. 2) THEN
 C              IF(vr_tr(j,jp) .GT. 0 _d 0) THEN
 C                print*

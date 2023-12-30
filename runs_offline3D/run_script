@@ -18,6 +18,7 @@ cp $initdir/eedata $rundir
 cp $initdir/data.* $rundir
 cp $initdir/data $rundir
 cp $initdir/../code_offline3D/darwin_tempfunc.F $rundir
+cp $initdir/../code_offline3D/darwin_plankton.F $rundir
 cp $initdir/../code_offline3D/darwin_spead_rates.F $rundir
 sleep 10s
 

@@ -11,7 +11,9 @@ running: check_fortran_compiler
  mpif77 -fconvert=big-endian -fimplicit-none -mcmodel=medium -fallow-argument-mismatch -O3 -funroll-loops -c genmake_tcomp.f
  mpif77 -fconvert=big-endian -fimplicit-none -mcmodel=medium -fallow-argument-mismatch -O3 -funroll-loops -o genmake_tcomp genmake_tcomp.o -L/usr/lib/x86_64-linux-gnu -lnetcdff
  mpirun -np 1 ./genmake_tcomp
-Client is not authorized to connect to ServerClient is not authorized to connect to Server hello world :            1
+No protocol specified
+No protocol specified
+ hello world :            1
  hello world :            2
  hello world :            3
  --> set FC_CHECK= 5 /5
@@ -32,7 +34,7 @@ genmake_test.c:1:31: warning: implicit declaration of function ‘tsub’ [-Wimp
 mpicc -O0 -mcmodel=medium -fallow-argument-mismatch -c genmake_tc_1.c
 cc1: warning: command-line option ‘-fallow-argument-mismatch’ is valid for Fortran but not for C
 mpif77 -fconvert=big-endian -fimplicit-none -mcmodel=medium -fallow-argument-mismatch -o genmake_tc genmake_tc_2.f genmake_tc_1.o
-  HELLO WORLD   1702997582.9410300     
+  HELLO WORLD   1703848304.2899671     
  --> set HAVE_CLOC='t'
 
 running: check_HAVE_SETRLSTK()
