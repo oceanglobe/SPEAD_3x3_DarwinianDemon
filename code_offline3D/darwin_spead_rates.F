@@ -2454,8 +2454,13 @@ C      gTr(ic+jp-1)= gTr(ic+jp-1) - preygraz(jp)
        a_1t(jp) = a_1t(jp) - preygraz(jp)
        acom(plank(jp)) = acom(plank(jp)) - preygraz(jp)*wght_drv(jp)
 #ifdef DARWIN_GRAZING_SWITCH
-       coeff_KTW(plank(jp)) = coeff_KTW(plank(jp)) + preygraz(jp)
+C I Added the condiitons on X>0 to avoid Nans (Boris 07/01/24)
+        IF (X(plank(jp)) .GT. 0) THEN
+           coeff_KTW(plank(jp)) = coeff_KTW(plank(jp)) + preygraz(jp)
      &             *(1 _d 0 - (1 _d 0)/a_KTW)*wght_drv(jp)/X(plank(jp))
+        ELSE
+           coeff_KTW(plank(jp)) = 0 _d 0
+        ENDIF
 #ifdef DARWIN_DEBUG
 C       IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
 C         print*, 'coeff_KTW', coeff_KTW(plank(jp)), 'preygraz',

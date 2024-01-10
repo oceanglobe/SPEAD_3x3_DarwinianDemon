@@ -2763,17 +2763,7 @@ C         vr_tr(j,jp) = X_m2(j,jp)/X(j) - mn_tr(j,jp)**2
           X_m2(j,jp)  = Ptr(ic+iplank(j)-1+num_trait(j)+jp)
           IF (X(j) .GT. 0) THEN
             vr_tr(j,jp) = X_m2(j,jp)/X(j) - mn_tr(j,jp)**2
-C            IF(jp .EQ. 2) THEN
-C              IF(vr_tr(j,jp) .GT. 0D0) THEN
-C                print*
-C     &                ,'trait', jp
-C     &                ,'dvrdt', dvrdt(j,jp)
-C     &                ,'a_d2', a_d2(j,jp)
-C     &                ,'vr_tr 1', vr_tr(j,jp)
-C     &                ,'gcom', gcom(j)
-C     &                ,'numut_tr', numut_tr(j,jp)
-C              ENDIF
-C            ENDIF
+             
 
 C damping term (Le Gland, 27/05/2021)
 C           dvrdt(j,jp) = MIN( 700.0 - vr_tr(j,jp), MAX( 0.0, 1.0D-6
@@ -2783,28 +2773,40 @@ C           vr_tr(j,jp) = MIN ( 700.0, MAX(0., vr_tr(j,jp) ) )
      &                   min_tr(j,jp) -  mn_tr(j,jp) ) ) / dmp_time
             mn_tr(j,jp) = MIN( max_tr(j,jp), MAX( min_tr(j,jp),
      &                          mn_tr(j,jp) ) )
-            dvrdt(j,jp) = MIN( max_vr_tr(j,jp) - vr_tr(j,jp), MAX( 0.0,
-     &                    1.0D-3 * max_vr_tr(j,jp) + 2*numut_tr(j,jp)
-     &                    - vr_tr(j,jp) ) ) / dmp_time
-            vr_tr(j,jp) = MIN ( max_vr_tr(j,jp) , MAX( 1.0D-3 *
-     &                    max_vr_tr(j,jp) + 2*numut_tr(j,jp),
-     &                    vr_tr(j,jp) ) )
+C            vr_tr(j,jp) = MIN ( max_vr_tr(j,jp) , MAX( 1.0D-40 *
+C     &                    max_vr_tr(j,jp) + 2*numut_tr(j,jp),
+C     &                    vr_tr(j,jp) ) )
+C            dvrdt(j,jp) = MIN( max_vr_tr(j,jp) - vr_tr(j,jp), MAX( 0.0,
+C     &                    0.0D-40 * max_vr_tr(j,jp) 
+C     &                    +2*numut_tr(j,jp)- vr_tr(j,jp) ) ) / dmp_time
+            dvrdt(j,jp) = 0D0
+
+     
 C Supposedly makes variance stay at zero when set to zero (Boris 15/11/23)
-C            vr_tr(j,jp) = MAX(1.0D-5,MIN(max_vr_tr(j,jp),vr_tr(j,jp)))
-C            IF(vr_tr(j,jp) /= vr_tr(j,jp)) THEN 
-C             vr_tr(j,jp) = 1.0D-5
-C            ENDIF
-C            IF(jp .EQ. 2) THEN
-C              IF(vr_tr(j,jp) .GT. 0D0) THEN
-C                print*
-C     &                ,'trait', jp
-C     &                ,'dvrdt', dvrdt(j,jp)
-C     &                ,'a_d2', a_d2(j,jp)
-C     &                ,'vr_tr 2', vr_tr(j,jp)
-C     &                ,'gcom', gcom(j)
-C     &                ,'numut_tr', numut_tr(j,jp)
-C              ENDIF
-C            ENDIF
+            vr_tr(j,jp) = MAX(0D0 ,MIN(max_vr_tr(j,jp),vr_tr(j,jp)))
+            IF(vr_tr(j,jp) /= vr_tr(j,jp)) THEN 
+             vr_tr(j,jp) = 0D0
+            ENDIF
+            
+            IF(vr_tr(j,jp) .LE. max_vr_tr(j,jp)*1.0D-7) THEN 
+             vr_tr(j,jp) = 0D0
+            ENDIF
+            
+c            IF(vr_tr(j,jp) /= 0) THEN
+c                IF (jp .EQ. 2) THEN
+c                    print*
+c     &                ,'Starts with vr = Nan... Time', myIter 
+c     &                ,'iG', iG
+c     &                ,'jG', jG
+c     &                ,'k', k
+c     &                ,'X_m2', X_m2(j,jp)   
+c     &                ,'X', X(j)             
+c     &                ,'trait', jp
+c     &                ,'dvrdt', dvrdt(j,jp)
+c     &                ,'vr_tr 1', vr_tr(j,jp)
+c     &                ,'numut_tr', numut_tr(j,jp)
+c                ENDIF
+c            ENDIF   
       
           ELSE
             vr_tr(j,jp) = 0D0
@@ -3065,7 +3067,7 @@ C       ENDIF
           dmndt(j,jp) = dmndt(j,jp) + a_d1(j,jp)*vr_tr(j,jp)
 C         dvrdt(j,jp) = a_d2(j,jp)*(vr_tr(j,jp)**2)
           dvrdt(j,jp) = dvrdt(j,jp) + a_d2(j,jp)*(vr_tr(j,jp)**2)
-     &                + 2*gcom(j)*numut_tr(j,jp)
+     &                + 2*gcom(j)*numut_tr(j,jp)     
         END DO
 C Terms occurring when num_trait(j) > 2
 C       DO jc = 1,num_cov(j)
@@ -3129,6 +3131,22 @@ CC            dcvdt(j,jc) = 0
      &                 + a_d11(j,jc23) * ( vr_tr(j,jt2)*cv_tr(j,jc13)
      &                                   + cv_tr(j,jc)*cv_tr(j,jc23) )
      &                 + a_d2(j,jt3) * cv_tr(j,jc13) * cv_tr(j,jc23)
+     
+c                IF(dvrdt(j,jt1) /= dvrdt(j,jt1)) THEN
+c                    print*
+c     &                ,'After second cov dvr = Nan... Time', myIter 
+c     &                ,'iG', iG
+c     &                ,'jG', jG
+c     &                ,'k', k
+c     &                ,'X_m2', X_m2(j,jt1)   
+c     &                ,'X', X(j)             
+c     &                ,'trait', jt1
+c     &                ,'dvrdt', dvrdt(j,jt1)
+c     &                ,'a_d2', a_d2(j,jt1)
+c     &                ,'vr_tr 1', vr_tr(j,jt1)
+c     &                ,'gcom', gcom(j)
+c     &                ,'numut_tr', numut_tr(j,jt1)
+c                ENDIF
 
 C             print*,'jc:', jc, 'dcvdt(1,jc):', dcvdt(1,jc),
 C    &         'Term 13:',a_d11(j,jc13) * ( vr_tr(j,jt1)*cv_tr(j,jc23)
@@ -3197,7 +3215,7 @@ C             ENDDO
             jc = jc + 1
           ENDDO
         ENDDO
-
+        
 C Parameterization of Kill The Winner (KTW) preferential grazing (Le Gland, 27/08/2021)
         DO jp = 1, num_trait(j)
           dvrdt(j,jp) = dvrdt(j,jp) + coeff_KTW(j)*vr_tr(j,jp)
@@ -3206,7 +3224,24 @@ C Parameterization of Kill The Winner (KTW) preferential grazing (Le Gland, 27/0
           dcvdt(j,jc) = dcvdt(j,jc) + coeff_KTW(j)*cv_tr(j,jc)
         ENDDO
 
-C       print*, 'gTr:', gTr(ic:ic+nTrac-1)
+c        DO jp = 1, num_trait(j)
+c            IF(dvrdt(j,jp) /= 0) THEN
+c                IF (jp .EQ. 2) THEN
+c                    print*
+c     &                ,'Ends with dvrdt > 0... Time', myIter 
+c     &                ,'iG', iG
+c     &                ,'jG', jG
+c     &                ,'k', k
+c     &                ,'X_m2', X_m2(j,jp)   
+c     &                ,'X', X(j)             
+c     &                ,'trait', jp
+c     &                ,'dvrdt', dvrdt(j,jp)
+c     &                ,'vr_tr 1', vr_tr(j,jp)
+c     &                ,'numut_tr', numut_tr(j,jp)
+c                ENDIF
+c            ENDIF 
+c        ENDDO 
+c       print*, 'gTr:', gTr(ic:ic+nTrac-1)
 
 C Trends of conserved tracers
         jt = ic + iplank(j)

@@ -1933,7 +1933,7 @@ C     Global attributes
      &     'c01' ,
      &     myThid )
       CALL MNC_FILE_ADD_ATTR_STR(fname, 'build_date',
-     &     'Fri 29 Dec 2023 12:11:43 PM CET' ,
+     &     'Tue 09 Jan 2024 11:12:41 AM CET' ,
      &     myThid )
 
       CALL MNC_FILE_ADD_ATTR_STR(fname, 'MITgcm_URL',

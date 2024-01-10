@@ -3943,8 +3943,13 @@ C     DO jp = 1, nplank
 C      gTr(ic+jp-1)= gTr(ic+jp-1) - preygraz(jp)
        a_1t(jp) = a_1t(jp) - preygraz(jp)
        acom(plank(jp)) = acom(plank(jp)) - preygraz(jp)*wght_drv(jp)
-       coeff_KTW(plank(jp)) = coeff_KTW(plank(jp)) + preygraz(jp)
+C I Added the condiitons on X>0 to avoid Nans (Boris 07/01/24)
+        IF (X(plank(jp)) .GT. 0) THEN
+           coeff_KTW(plank(jp)) = coeff_KTW(plank(jp)) + preygraz(jp)
      &             *(1D0 - (1D0)/a_KTW)*wght_drv(jp)/X(plank(jp))
+        ELSE
+           coeff_KTW(plank(jp)) = 0D0
+        ENDIF
 C       IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
 C         print*, 'coeff_KTW', coeff_KTW(plank(jp)), 'preygraz',
 C    &            preygraz(jp), 'a_KTW', a_KTW, '1-1/a',

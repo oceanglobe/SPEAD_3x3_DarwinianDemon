@@ -9,7 +9,7 @@
 #SBATCH --mail-user=bsauterey@icm.csic.es
 
 export initdir=/home/sauterey/BORIS/MIT-GIT/DARWIN/OFFLINE-3D/runs_offline3D/
-export rundir=/home/sauterey/BORIS/MIT-GIT/DARWIN/OFFLINE-3D/runs_offline3D/OUTPUT/META-DATA/test/
+export rundir=/home/sauterey/BORIS/MIT-GIT/DARWIN/OFFLINE-3D/runs_offline3D/OUTPUT/META-DATA/test_3/
 mkdir $rundir
 cp $initdir/mitgcmuv $rundir
 cp $initdir/POLY3.COEFFS $rundir
@@ -17,6 +17,7 @@ cp $initdir/data $rundir
 cp $initdir/eedata $rundir
 cp $initdir/data.* $rundir
 cp $initdir/data $rundir
+cp $initdir/pickup* $rundir
 cp $initdir/../code_offline3D/darwin_tempfunc.F $rundir
 cp $initdir/../code_offline3D/darwin_plankton.F $rundir
 cp $initdir/../code_offline3D/darwin_spead_rates.F $rundir
