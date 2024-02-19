@@ -2788,9 +2788,9 @@ C Supposedly makes variance stay at zero when set to zero (Boris 15/11/23)
              vr_tr(j,jp) = 0D0
             ENDIF
             
-            IF(vr_tr(j,jp) .LE. max_vr_tr(j,jp)*1.0D-7) THEN 
-             vr_tr(j,jp) = 0D0
-            ENDIF
+C            IF(vr_tr(j,jp) .LE. max_vr_tr(j,jp)*1.0D-7) THEN 
+C             vr_tr(j,jp) = 0D0
+C            ENDIF
             
 c            IF(vr_tr(j,jp) /= 0) THEN
 c                IF (jp .EQ. 2) THEN

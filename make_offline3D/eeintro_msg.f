@@ -319,13 +319,13 @@ C     Nr  :: No. points in Z for full process domain.
       INTEGER Ny
       INTEGER Nr
       PARAMETER (
-     &           sNx =  45,
+     &           sNx =  60,
      &           sNy =  40,
      &           OLx =   4,
      &           OLy =   4,
      &           nSx =   1,
      &           nSy =   1,
-     &           nPx =   8,
+     &           nPx =   6,
      &           nPy =   4,
      &           Nx  = sNx*nSx*nPx,
      &           Ny  = sNy*nSy*nPy,
@@ -1002,7 +1002,7 @@ CEOP
       CALL PRINT_MESSAGE( msgBuf, standardMessageUnit,
      &     SQUEEZE_RIGHT , 1)
       WRITE(msgBuf,'(2A)') '// Build date:        ',
-     &     'Tue 09 Jan 2024 11:12:41 AM CET'
+     &     'Mon 22 Jan 2024 05:01:02 PM CET'
       CALL PRINT_MESSAGE( msgBuf, standardMessageUnit,
      &     SQUEEZE_RIGHT , 1)
 
