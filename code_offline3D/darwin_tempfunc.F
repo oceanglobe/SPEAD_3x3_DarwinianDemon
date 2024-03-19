@@ -217,7 +217,7 @@ C     DO j = 1, nplank
         grazFun(j) = reminFun
 # ifdef DARWIN_TEMP_RANGE
 cswd -- temperature range
-# ifdef DARWINIAN_DEMON
+# ifdef DARWINIAN_DEMON_TEMP
         phytoTempOptimum(j) = (Temp * (0.056*5. - 1.) - 0.056*(5.)**2.)
      &      /(0.056*5. - 1.)
 # endif 

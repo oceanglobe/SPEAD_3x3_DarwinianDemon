@@ -1002,7 +1002,7 @@ CEOP
       CALL PRINT_MESSAGE( msgBuf, standardMessageUnit,
      &     SQUEEZE_RIGHT , 1)
       WRITE(msgBuf,'(2A)') '// Build date:        ',
-     &     'Mon 22 Jan 2024 05:01:02 PM CET'
+     &     'Thu 14 Mar 2024 07:54:51 PM CET'
       CALL PRINT_MESSAGE( msgBuf, standardMessageUnit,
      &     SQUEEZE_RIGHT , 1)
 

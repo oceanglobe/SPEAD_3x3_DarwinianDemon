@@ -1,7 +1,7 @@
 # Multithreaded + multi-processing makefile for:
 #    Linux c01 5.10.0-21-amd64 #1 SMP Debian 5.10.162-1 (2023-01-21) x86_64 GNU/Linux
 # This makefile was generated automatically on
-#    Mon 22 Jan 2024 05:01:02 PM CET
+#    Thu 14 Mar 2024 07:54:51 PM CET
 # by the command:
 #    /home/sauterey/BORIS/MIT-GIT/MITgcm/tools/genmake2 -mpi -of /home/sauterey/BORIS/MIT-GIT/MITgcm/tools/build_options/linux_amd64_gfortran -mods=../code_offline3D
 # executed by:
@@ -1771,7 +1771,7 @@ BUILD_INFO.h:
 	@echo Creating $@ ...
 	-echo "#define THISVER 'checkpoint67s'" > $@
 	-echo "#define THISUSER 'sauterey'" >> $@
-	-echo "#define THISDATE 'Mon 22 Jan 2024 05:01:02 PM CET'" >> $@
+	-echo "#define THISDATE 'Thu 14 Mar 2024 07:54:51 PM CET'" >> $@
 	-echo "#define THISHOST 'c01'" >> $@
 
 # The normal chain of rules is (  .F - .f - .o  )

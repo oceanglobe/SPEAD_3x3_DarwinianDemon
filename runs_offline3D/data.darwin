@@ -223,17 +223,19 @@
 #x-trait here is biovolume, not half-saturation
  numut_bvol(:) = 0.001, 0.000
 #numut_topt(:) = 0.01, 0.00
- numut_topt(:) = 1.0e-10, 0.00
-#numut_topt(:) = 0.0, 0.00  ! For darwinian demon
- numut_paropt(:) = 0.001, 0.0000
-#numut_bvol(:) = 0.000, 0.000
+#numut_topt(:) = 1.0e-10, 0.00
+ numut_topt(:) = 0.0, 0.00    ! For darwinian demon/dummy
+ numut_paropt(:) = 0.0, 0.00  ! For darwinian demon/dummy
+ numut_bvol(:) = 0.000, 0.000 ! For darwinian demon/dummy
+#numut_paropt(:) = 0.001, 0.0000
 #numut_topt(:) = 0.00, 0.00
 #numut_paropt(:) = 0.0000, 0.0000
 #Unused nutrients (Le Gland, 13/04/2021)
 #Set here so that data.traits is no longer needed
  a_ksatNO3(1) = 0.17,   ! Default Values
  a_ksatNO2(1) = 0.17,   !
- a_ksatNH4(1) = 0.085,  !
+#a_ksatNH4(1) = 0.085,  !
+ a_ksatNH4(1) = 0.17,   ! So that dealing with N when determining Sopt is not annoying
  a_ksatPO4(1) = 0.026,  !
  a_ksatFeT(1) = 8.0e-05,!
 #a_ksatNO3(1) = 0.08,

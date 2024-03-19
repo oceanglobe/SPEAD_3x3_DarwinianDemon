@@ -461,7 +461,6 @@ C (Le Gland, 15/04/2021)
 C Parameter of the steepness of the limitation by light
 C following Edward et al 2015; Boris Sauterey 22/08/2023
       _RL alpha
-
 C Intermediate variables related to unimodal growth rate (Le Gland, 10/06/2021)
       _RL biovol_norm
       _RL alpha1
@@ -707,6 +706,8 @@ C Steps to compute numerical trait derivatives
       dto = 0.1
       dpo = 0.001
 
+      PARtot = SUM(PAR)
+
 C Traits used to compute trait derivatives
       DO j = 1, nplank
 
@@ -837,24 +838,66 @@ C         jp2 = icov(j,jp,2)
           ENDIF
           IF (traitparopt(j) .NE. 0) THEN
             PARopt(jp) = EXP(vl_tr(jp,jt))
-            ksatPAR(jp) = LOG(1+PARchi(jp))
-     &                  / (11.574*PARopt(jp)/2.5)
-C    &                  / (darwin_inscal_PAR*PARopt(jp)/2.5)
-            kinhPAR(jp) = ksatPAR(jp) / PARchi(jp)
+           
 C Maximum growth rate depends on optimal irradiance
 C An optimal irradiance lower than 2.5 W/m2 is impossible
 C (cf Edwards et al., 2015)
 C (Le Gland, 05/04/2021)
             g = group(jp)
+            
+C The following code evaluated the optimal size as a function of
+C nutrient concentrations. It works ONLY if the allometric exponents
+C for the Ksats are the same for the nutrients    
+C           print*, 'biovol of ', jp, 'before DD =', biovol(jp)
+C           print*, 'limiting factors: N = ', a_ksatNO3(g)/(NO3+NO2+NH4)
+C     &     , '; P =', a_ksatPO4(g)/PO4, '; F =', a_ksatFeT(g)/FeT
+
+#ifdef DARWINIAN_DEMON_SIZE          
+            IF (a_ksatNO3(g)/(NO3+NO2+NH4) .EQ. 
+     &      MAX(a_ksatNO3(g)/(NO3+NO2+NH4),
+     &      a_ksatPO4(g)/PO4,a_ksatFeT(g)/FeT)) THEN
+              IF((NO3+NO2+NH4) .GT. 0 _d 0) THEN
+              biovol(jp) = ((NO3+NO2+NH4)*b_PCmax(g)/(a_ksatNO3(g)*
+     &        (b_ksatNO3(g)-b_PCmax(g))))**(1/b_ksatNO3(g))
+              ENDIF
+            ELSEIF (a_ksatPO4(g)/PO4 .EQ. 
+     &      MAX(a_ksatNO3(g)/(NO3+NO2+NH4),
+     &      a_ksatPO4(g)/PO4,a_ksatFeT(g)/FeT)) THEN
+              IF(PO4 .GT. 0 _d 0) THEN
+              biovol(jp) = ((PO4)*b_PCmax(g)/(a_ksatPO4(g)*
+     &        (b_ksatPO4(g)-b_PCmax(g))))**(1/b_ksatPO4(g))
+              ENDIF
+            ELSE
+              IF(FeT .GT. 0 _d 0) THEN
+              biovol(jp) = ((FeT)*b_PCmax(g)/(a_ksatFeT(g)*
+     &        (b_ksatFeT(g)-b_PCmax(g))))**(1/b_ksatFeT(g))
+              ENDIF
+            ENDIF
+#endif
+
+C           print*, 'biovol of ', jp, 'after DD =', biovol(jp)
+
 C biovolmin is the absolute minimum for cell size
 C PARoptmin is the minimum possible value of Iopt for a given cell volume
 C (Le Gland, 15/04/2021)
 C In an attempt to avoid bugs with some advection/diffusion schemes, I
 C now impose that PCmax must be positve (Le Gland, 01/06/2021)
             PARoptmin = a_PARoptmin(g) * biovol(jp)**b_PARoptmin(g)
+            
+#ifdef DARWINIAN_DEMON_LIGHT
+            PARopt(jp) = PARoptmin + SQRT(PARoptmin**2 + 
+     &      (3.2-2)*PARtot*PARoptmin + PARtot)
+#endif 
+
+            ksatPAR(jp) = LOG(1+PARchi(jp))
+     &                  / (11.574*PARopt(jp)/2.5)
+C    &                  / (darwin_inscal_PAR*PARopt(jp)/2.5)
+            kinhPAR(jp) = ksatPAR(jp) / PARchi(jp)
+
+            
             PCmax(jp) = MAX(0., a_PCmax(g) * biovol(jp)**b_PCmax(g)
-     &                * (1.0 - PARoptmin/PARopt(jp))
-     &                * (1.0 - (a_biovolmin(g)/biovol(jp)) ) )
+     &                * (1.0 - PARoptmin/PARopt(jp)))
+C     &                * (1.0 - (a_biovolmin(g)/biovol(jp)) ) )
 C    &         * (1.0 - (a_biovolmin(g)/biovol(jp))**(1+b_PCmax(g)) ) )
 CC   &                 * (1.0 - EXP(2.0)/PARopt(jp))
 C PCmax for unimodal distribution (Le Gland, 10/06/2021)
@@ -1312,7 +1355,6 @@ C     DO j = 1, nPhoto
         diags(l) = 0.0
       ENDDO
 
-      PARtot = SUM(PAR)
 
 C=======================================================================
 C==== phytoplankton ====================================================

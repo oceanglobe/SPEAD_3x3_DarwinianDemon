@@ -159,7 +159,9 @@ C If defined, ntrait must be superior or equal to 2
 #define SPEAD_ALLOW_COV
 
 C If defined the phytoplankton is a Darwian Demon
-#undef DARWINIAN_DEMON
+#define DARWINIAN_DEMON_TEMP
+#define DARWINIAN_DEMON_LIGHT
+#define DARWINIAN_DEMON_SIZE
 
 #endif /* ALLOW_DARWIN */
 #endif /* DARWIN_OPTIONS_H */
