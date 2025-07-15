@@ -1,0 +1,27 @@
+ &OFFLINE_PARM01
+  UvelFile= '/nobackup1/stephdut/IGSM/RUN4/RUN4_control/uVeltave/uVeltave',
+  VvelFile= '/nobackup1/stephdut/IGSM/RUN4/RUN4_control/vVeltave/vVeltave',
+  WvelFile= '/nobackup1/stephdut/IGSM/RUN4/RUN4_control/wVeltave/wVeltave',
+  GMwxFile= '/nobackup1/stephdut/IGSM/RUN4/RUN4_control/GM_Kwx-T/GM_Kwx-T',
+  GMwyFile= '/nobackup1/stephdut/IGSM/RUN4/RUN4_control/GM_Kwy-T/GM_Kwy-T',
+  GMwzFile= '/nobackup1/stephdut/IGSM/RUN4/RUN4_control/GM_Kwz-T/GM_Kwz-T',
+  ThetFile= '/nobackup1/stephdut/IGSM/RUN4/RUN4_control/Ttave/Ttave',
+  SaltFile= '/nobackup1/stephdut/IGSM/RUN4/RUN4_control/Stave/Stave',
+  KPP_DiffSFile='/nobackup1/stephdut/IGSM/RUN4/RUN4_control/KPPdiffKzS-T/KPPdiffKzS-T',
+  KPP_ghatKFile='/nobackup1/stephdut/IGSM/RUN4/RUN4_control/KPPghatK/KPPghatK',
+  offGen2DFile='/nobackup1/stephdut/IGSM/RUN4/RUN4_control/thSIce_tave/thSIce_tave',
+  SFluxFile='/nobackup1/stephdut/IGSM/RUN4/RUN4_control/sFluxtave/sFluxtave',
+# HFluxFile='/nobackup1/stephdut/IGSM/RUN4/RUN4_control/DIC_pCO2tave/DIC_pCO2tave',
+  offGen3DFile='/nobackup1/stephdut/IGSM/RUN4/RUN4_control/PTRtave01/PTRtave01',
+  offGen3DbFile='/nobackup1/stephdut/IGSM/RUN4/RUN4_control/PTRtave02/PTRtave02',
+
+ &end
+
+ &OFFLINE_PARM02
+  offlineIter0=0,
+  deltaToffline=14400.,
+  offlineForcingPeriod=2.592d6, 
+# offlineForcingCycle=311040000.,
+  offlineForcingCycle=7.93152d9,
+ &end
+

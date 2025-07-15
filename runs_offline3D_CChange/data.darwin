@@ -1,0 +1,287 @@
+ &DARWIN_FORCING_PARAMS
+#ironFile='../../../input_STEPH/inputs/input_igsm/mahowald2009_solubile_preind_smooth_oce_mth-2d.bin',
+ ironFile='/home/sauterey/BORIS/MIT-GIT/DARWIN/SPEAD_cont_3D/runs_offline3D/input/Fe2/mah_smooth_mth-2d_144x90x22.bin',
+ iceFile='../../../input_STEPH/inputs/input_igsm/nasa_icefraction_mth-2d.bin',   
+ PARFile='/home/sauterey/BORIS/MIT-GIT/DARWIN/SPEAD_cont_3D/runs_offline3D/input/PAR/MITesm3D_PAReday_144x90x22.bin',   
+ windFile='../../../input_STEPH/inputs/input_igsm/tren_speed_144x90.bin',
+ icePeriod= -12.,
+ ironPeriod= -12.,
+ PARPeriod= -12.,
+ windPeriod= -12.,
+ darwin_inscal_iron= 1000.,
+ darwin_inscal_PAR= 11.574074074074,
+#darwin_PO4_fluxFile= '/home/sauterey/BORIS/MIT-GIT/DARWIN/SPEAD_cont_3D/runs_offline3D/input/ann_nphos_flux.bin',
+#darwin_NO3_fluxFile= '/home/sauterey/BORIS/MIT-GIT/DARWIN/SPEAD_cont_3D/runs_offline3D/input/ann_nnitr_flux.bin',
+#darwin_Si_fluxFile= '/home/sauterey/BORIS/MIT-GIT/DARWIN/SPEAD_cont_3D/runs_offline3D/input/ann_nsil_flux.bin',
+## icefile = '/home/sauterey/BORIS/MIT-GIT/DARWIN/SPEAD_cont_3D/runs_offline3D/input/SIarea.bin',
+## icestartdate1 = 19990101,
+## icestartdate2 = 120000,
+## iceperiod     = 86400.0,
+ /
+ &DARWIN_PARAMS
+ darwin_seed= 11231,
+ alpfe= .06D0, ! Iron solubility. Default value is 0.04.
+#alpfe= 1.,
+#scav= 5.092592592592593e-08  ! 4.4D-3/day, (Default is four times lower)
+ freefemax= .1D-3
+ katten_chl= .03D0,
+ PARmin= 0.1D0,
+ PAR_oxi = 0.0,
+#phygrazmin= 0.,
+ synthcost= 0.0,
+#inhib_graz = 0.5;
+#inhib_graz = 0.25;
+#inhib_graz = 0.2;
+#inhib_graz = 0.3;
+ inhib_graz = 2.0;   ! Value from Le Gland et al. 
+#inhib_graz = 1.0;   ! Default value
+ inhib_graz_exp= 1.0,
+#hollexp = 2.0,
+ hollexp = 1.0,
+#wC_sink = 1.3889e-05, ! sinking speed of 1.2 m/d (default is 10 m/d)
+#wN_sink = 1.3889e-05, 
+#wP_sink = 1.3889e-05, 
+#wFe_sink = 1.3889e-05, 
+#wSi_sink = 1.3889e-05, 
+#wC_sink = 1.1574074074074074e-04, ! sinking speed of 10 m/d (default)
+#wN_sink = 1.1574074074074074e-04,
+#wP_sink = 1.1574074074074074e-04,
+#wFe_sink = 1.1574074074074074e-04,
+#wSi_sink = 1.1574074074074074e-04,
+#wC_sink = 8.680555555555555e-05, ! sinking speed of 7.5 m/d (default)
+#wN_sink = 8.680555555555555e-05,
+#wP_sink = 8.680555555555555e-05,
+#wFe_sink = 8.680555555555555e-05,
+#wSi_sink = 8.680555555555555e-05,
+#wC_sink = 7.233796296296297e-05, ! sinking speed of 6.25 m/d (default)
+#wN_sink = 7.233796296296297e-05,
+#wP_sink = 7.233796296296297e-05,
+#wFe_sink = 7.233796296296297e-05,
+#wSi_sink = 7.233796296296297e-05,
+ wC_sink = 6.510416666666667e-05, ! sinking speed of 5.625 m/d (default)
+ wN_sink = 6.510416666666667e-05,
+ wP_sink = 6.510416666666667e-05,
+ wFe_sink = 6.510416666666667e-05,
+ wSi_sink = 6.510416666666667e-05,
+#wC_sink = 5.7870370370370366e-05, ! sinking speed of 5 m/d (default)
+#wN_sink = 5.7870370370370366e-05,
+#wP_sink = 5.7870370370370366e-05,
+#wFe_sink = 5.7870370370370366e-05,
+#wSi_sink = 5.7870370370370366e-05,
+#wC_sink = 0.,
+#wN_sink = 0., 
+#wP_sink = 0., 
+#wFe_sink = 0., 
+#wSi_sink = 0., 
+# use values closer to the default of DARWIN (Le Gland, 03/06/2021)
+ KDOC=  2.3148148148148148e-07,  ! .02/day
+ KDON=  2.3148148148148148e-07,
+ KDOP=  2.3148148148148148e-07,
+ KDOFe= 2.3148148148148148e-07,
+ KPOC=  4.6296296296296296e-07,  ! .04/day 
+ KPON=  4.6296296296296296e-07,
+ KPOP=  4.6296296296296296e-07,
+ KPOFe= 4.6296296296296296e-07,
+ KPOSi= 7.716049380000000e-08,   ! .066/day,
+# Remin x1.25 faster (Le Gland, 03/06/2021)
+#KDOC=  2.8935185185185185e-07,  ! .03/day
+#KDON=  2.8935185185185185e-07,
+#KDOP=  2.8935185185185185e-07,
+#KDOFe= 2.8935185185185185e-07,
+#KPOC=  5.787037037037037e-07,  ! .06/day 
+#KPON=  5.787037037037037e-07,
+#KPOP=  5.787037037037037e-07,
+#KPOFe= 5.787037037037037e-07,
+#KPOSi= 9.54861111111111e-08,   ! .099/day,
+# Remin x1.5 faster (Le Gland, 03/06/2021)
+#KDOC=  3.4722222222222224e-07,  ! .03/day
+#KDON=  3.4722222222222224e-07,
+#KDOP=  3.4722222222222224e-07,
+#KDOFe= 3.4722222222222224e-07,
+#KPOC=  6.9444444444444445e-07,  ! .06/day 
+#KPON=  6.9444444444444445e-07,
+#KPOP=  6.9444444444444445e-07,
+#KPOFe= 6.9444444444444445e-07,
+#KPOSi= 1.1458333333333334e-07,   ! .099/day,
+#Knitb= 2.3148148148148148e-05,  ! NO2 -> NO3 (standard: .1/day)
+ Knita= 1.1574074074074074e-05,  ! NH4 -> NO2 1/day (standard: 2/day) 
+ PARmin = 0.0,
+# Le Gland (13/05/2021)
+#iDEBUG = 287,
+#jDEBUG = 121,
+ iDEBUG = 150,
+ jDEBUG = 91,
+ kDEBUG = 6,
+
+ /
+ &DARWIN_RADTRANS_PARAMS
+ /
+ &DARWIN_RANDOM_PARAMS
+ phymin= 0.,
+# oldTwoGrazers= .TRUE.,
+# tempmax = 20.0,
+# temprange = 22.0,
+# val_R_PC=0.,
+# val_R_PC_ZOO=0.,
+ /
+ &DARWIN_TRAIT_PARAMS
+#The number of tracers for each species depends on the number of traits (Le Gland, 25/03/2021)
+ grp_nplank(:)=          1, 1,
+ grp_photo(:)=           1, 0,
+ grp_pred(:)=            0, 1,
+ grp_prey(:)=            1, 0,
+ grp_hasSi(:)=           0, 0,
+ grp_hasPIC(:)=          0, 0,
+ grp_DIAZO(:)=           0, 0,
+ grp_useNH4(:)=          1, 0,
+ grp_useNO2(:)=          1, 0,
+ grp_useNO3(:)=          1, 0,
+ grp_combNO(:)=          1, 0,
+ grp_traitbvol(:)=       1, 0,
+ grp_traittopt(:)=       1, 0,
+ grp_traitparopt(:)=     1, 0,
+ grp_tempMort(:)=        1, 1,
+ grp_tempMort2(:)=       1, 1,
+#grp_ass_eff(1:2,3:4)= 4*0.4,
+#grp_ass_eff(1:2,3:4)= 4*0.7, ! Standard value in DARWIN3
+ grp_ass_eff(1,2)= 0.7,
+#grp_ExportFracPreyPred(1:2,3:4)= 4*0.667,
+#grp_ExportFracPreyPred(1:2,3:4)= 4*0.5, ! Standard value in DARWIN3
+ grp_ExportFracPreyPred(1,2)= 0.5,
+# max photosynthesis rates
+#a_PCmax(:)= 2*1.2,
+#a_PCmax(:)= 2*1.33,
+#a_PCmax(:)= 2*1.5,
+#a_PCmax(:)= 2*1.8,
+#a_PCmax(:)= 0.45,
+#a_PCmax(:)= 0.5,  ! Default value
+ a_PCmax(:)= 1.0,  ! Value from Le Gland et al. ?
+#a_PCmax(:)= 2.0,  
+ a_PCmax_denom(:)= 86400.,
+#b_PCmax(:)= 0.135,  ! Guillaume's default value
+ b_PCmax(:)= 0.17,    ! Higher value value to select larger sizes and increase PC (Boris Sauterey 07/10/23)
+#b1_PCmax(:)= 2*0.25,
+#b2_PCmax(:)= 2*-0.25,
+#c_PCmax(:)= 2*148.4, ! Volume for optimal PCmax
+# zoo have approx Redfield N:C
+ a_Qnmax(2)=0.1510,
+ b_Qnmax(2)=0.0,
+ a_Qnmin(2)=0.0755,
+ b_Qnmin(2)=0.0,
+#Turn off silica
+ a_R_SiC(1)= 0.0,
+# standard values when traits are not activated
+ biovol0(:)= 64., 8192.,
+#biovol0(:)= 5., 5000., 5000., 5000000.,
+ Topt0(:)= 30., 30.,
+ PARopt0(:)= 20., 0.,
+ PARchi0(:)= 12., 12.,
+#a_grazemax_denom(5)=86400,
+# use the allometric parameters of SPEAD (24/11/2020)
+ a_biosink(:) = 2*0., ! No sinking for living organisms
+#a_grazemax(3) = 1.5, ! Grazing rate at 20C
+#a_grazemax(3:4) = 3.0, 0.6 ! Grazing rate at 20C
+#a_grazemax(3:4) = 4.0, 0.5
+#a_grazemax(3:4) = 2.0, 0.25
+#a_grazemax(3:4) = 1.5, 0.15
+#a_grazemax(3:4) = 1.0, 0.15
+#a_grazemax(3:4) = 1.0, 0.2
+#a_grazemax(3:4) = 1.2, 0.4
+#a_grazemax(3:4) = 1.5, 0.45
+#a_grazemax(3:4) = 1.2, 0.36
+#a_grazemax(3:4) = 1.0, 0.4
+#a_grazemax(3:4) = 0.9, 0.3
+#a_grazemax(3:4) = 1.33, 0.4
+#a_grazemax(2) = 1.4,
+#a_grazemax(2) = 2.0,
+#a_grazemax(2) = 1.5,
+#a_grazemax(2) = 1.2,
+ a_grazemax(2) = 1.0,     ! Default value for Le Gland et al.
+#a_grazemax(2) = 0.5,
+ a_grazemax_denom(2) = 86400, ! d-1 -> s-1
+ b_grazemax(2) = 0., ! Standard is -0.16
+#a_kgrazesat(3:4) = 2*3.0, ! Grazing half-sat, in mmolC/m3 (Standard is 1.0)
+#a_kgrazesat(3:4) = 2*1.8, ! Based on the optimized value of Chen et al. [2018] 
+#a_kgrazesat(3:4) = 2*1.0,
+#a_kgrazesat(3:4) = 1.0, 1.5,
+#a_kgrazesat(3:4) = 1.0, 2.0,
+#a_kgrazesat(3:4) = 1.0, 3.0,
+#a_kgrazesat(3:4) = 1.5, 1.5,
+#a_kgrazesat(3:4) = 2.0, 2.0,
+#a_kgrazesat(3:4) = 2.0, 3.0,
+#a_kgrazesat(2) = 3.0,
+ a_kgrazesat(2) = 2.0,   ! Value from Le Gland et al.
+#a_kgrazesat(2) = 1.5,
+# allometric palatabilities for each pair of groups (Le Gland, 10/06/2021)
+ a_palat(1:2,1) = 2*0.
+ b_palat(1:2,1) = 2*0.
+#a_palat(1:2,2) = 1., 0.,
+ a_palat(1:2,2) = 0.9, 0.,   ! Value from Guillaume
+#a_palat(1:2,2) = 0.8, 0.,
+#b_palat(1:2,2) = 2*0.,
+ b_palat(1:2,2) = -0.05, 0., ! From Bingzhang Chen (CITRATE, 2018); Value From Guillaume
+#b_palat(1:2,2) = -0.1, 0.,
+#a_mort(:) = 5.787e-07, 2.894e-07, ! .05/day, .025/day
+ a_mort(:) = 5.787e-07, 1.157e-07, ! .05/day, .01/day ! Guillaume's default value 
+#a_mort(:) = 1.157e-06, 1.157e-07, ! .05/day, .01/day ! Faster phyto's death to prevent overly small sizes (Boris Sauterey 07/10/23) 
+#a_mort(:) = 5.787e-07, 8.681e-08, ! .05/day, .0075/day
+#a_mort(:) = 4.630e-07, 5.787e-08, ! .04/day, .005/day
+#a_mort(:) = 4.630e-07, 1.157e-07, ! .04/day, .01/day
+#a_mort2(:) = 0., 2.315e-06, ! Zooplankton carrying capacity of 7 mmolC/m3
+#a_mort2(:) = 0., 1.852e-06, ! Zooplankton carrying capacity of 8.75 mmolC/m3
+#a_mort2(:) = 0., 1.621e-06, ! Zooplankton carrying capacity of 7.5 mmolC/m3
+#a_mort2(:) = 0., 1.215e-06, ! Zooplankton carrying capacity of 8 mmolC/m3
+ a_mort2(:) = 0., 1.157e-06, ! Zooplankton carrying capacity of 7 mmolC/m3
+ a_ExportFracMort(:) = 2*0.5, ! Standard value of DARWIN
+ a_ExportFracMort2(:) = 2*0.5,
+ a_phytoTempExp1(:) = 2*0.056, ! Phytoplankton temperature dependency
+#Trait diffusion parameters (Le Gland, 18/12/2020)
+#x-trait here is biovolume, not half-saturation
+# High mutation rate
+ numut_bvol(:) = 1.0e-3, 0.000
+ numut_topt(:) = 1.0e-2, 0.00
+ numut_paropt(:) = 1.0e-3 0.0000
+# Intermediate mutation rate
+#numut_bvol(:) = 1.0e-5, 0.000
+#numut_topt(:) = 1.0e-4, 0.00
+#numut_paropt(:) = 1.0e-5 0.0000
+# low mutation rate
+#numut_bvol(:) = 1.0e-9, 0.000
+#numut_topt(:) = 1.0e-8, 0.00
+#numut_paropt(:) = 1.0e-9 0.0000
+# For darwinian demon/dummy
+#numut_bvol(:) = 0.000, 0.000  
+#numut_topt(:) = 0.0, 0.00    
+#numut_paropt(:) = 0.0, 0.00  
+#Unused nutrients (Le Gland, 13/04/2021)
+#Set here so that data.traits is no longer needed
+ a_ksatNO3(1) = 0.17,   ! Default Values
+ a_ksatNO2(1) = 0.17,   !
+#a_ksatNH4(1) = 0.085,  !
+ a_ksatNH4(1) = 0.17,   ! So that dealing with N when determining Sopt is not annoying
+ a_ksatPO4(1) = 0.026,  !
+ a_ksatFeT(1) = 8.0e-05,!
+#a_ksatNO3(1) = 0.08,
+#a_ksatNO2(1) = 0.08,
+#a_ksatNH4(1) = 0.04,
+#a_ksatPO4(1) = 0.013,
+#a_ksatFeT(1) = 4.0e-05,
+ b_ksatNO3(1) = 0.27,
+ b_ksatNO2(1) = 0.27,
+ b_ksatNH4(1) = 0.27,
+ b_ksatPO4(1) = 0.27,
+ b_ksatFeT(1) = 0.27,
+#Minima of size and optimal irradiance (Le Gland, 15/04/2021)
+#a_biovolmin(:)= 0.03, 0.,
+#a_biovolmin(:)= 0.02, 0.,
+ a_biovolmin(:)= 0.024, 0.,
+#a_PARoptmin(:)= 3.5, 0.,
+#a_PARoptmin(:)= 4.0, 0.,  ! Initial value (Boris 27/08/24)
+ a_PARoptmin(:)= 20.0, 0.,  ! Initial value
+ b_PARoptmin(:)= 0.1, 0.,
+#KTW parameter (Le Gland, 27/08/2021)
+#a_KTW = 1.2,
+#a_KTW = 1.1,
+ a_KTW = 1.0,
+ /
+

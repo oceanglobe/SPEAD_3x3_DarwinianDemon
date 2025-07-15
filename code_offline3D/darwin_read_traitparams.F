@@ -431,7 +431,7 @@ C Le Gland, 15/12/2020
 C     Toptfac = 0.0 _d 0
 C     logvol0ind = 0
 C Light-related traits (Le Gland, 30/03/2021)
-      PARopt0 = 25.0 _d 0
+      PARopt0 = 50.0 _d 0
       PARchi0 = 12.0 _d 0
 C Le Gland, 18/12/2020
       numut_bvol = 0.0 _d 0

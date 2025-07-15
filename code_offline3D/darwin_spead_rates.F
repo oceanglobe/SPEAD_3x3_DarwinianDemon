@@ -707,7 +707,7 @@ C Steps to compute numerical trait derivatives
       dpo = 0.001
 
       PARtot = SUM(PAR)
-
+C      print*,'PAR = ',PARtot
 C Traits used to compute trait derivatives
       DO j = 1, nplank
 
@@ -838,7 +838,9 @@ C         jp2 = icov(j,jp,2)
           ENDIF
           IF (traitparopt(j) .NE. 0) THEN
             PARopt(jp) = EXP(vl_tr(jp,jt))
-           
+C            IF (jp .EQ. 1) THEN
+C              print*,'PARopt 1 = ',PARopt(jp)
+C            ENDIF
 C Maximum growth rate depends on optimal irradiance
 C An optimal irradiance lower than 2.5 W/m2 is impossible
 C (cf Edwards et al., 2015)
@@ -859,6 +861,10 @@ C     &     , '; P =', a_ksatPO4(g)/PO4, '; F =', a_ksatFeT(g)/FeT
               IF((NO3+NO2+NH4) .GT. 0 _d 0) THEN
               biovol(jp) = ((NO3+NO2+NH4)*b_PCmax(g)/(a_ksatNO3(g)*
      &        (b_ksatNO3(g)-b_PCmax(g))))**(1/b_ksatNO3(g))
+C              IF (jp .EQ. 1) THEN
+C                print*,'size (N)',jp,biovol(jp),NO3+NO2+NH4,b_PCmax(g)
+C     &                ,a_ksatNO3(g),b_ksatNO3(g)
+C              ENDIF
               ENDIF
             ELSEIF (a_ksatPO4(g)/PO4 .EQ. 
      &      MAX(a_ksatNO3(g)/(NO3+NO2+NH4),
@@ -866,11 +872,19 @@ C     &     , '; P =', a_ksatPO4(g)/PO4, '; F =', a_ksatFeT(g)/FeT
               IF(PO4 .GT. 0 _d 0) THEN
               biovol(jp) = ((PO4)*b_PCmax(g)/(a_ksatPO4(g)*
      &        (b_ksatPO4(g)-b_PCmax(g))))**(1/b_ksatPO4(g))
+C              IF (jp .EQ. 1) THEN
+C                print*,'size (P)',jp,biovol(jp),PO4,b_PCmax(g)
+C     &                ,a_ksatPO4(g),b_ksatPO4(g)
+C              ENDIF
               ENDIF
             ELSE
               IF(FeT .GT. 0 _d 0) THEN
               biovol(jp) = ((FeT)*b_PCmax(g)/(a_ksatFeT(g)*
      &        (b_ksatFeT(g)-b_PCmax(g))))**(1/b_ksatFeT(g))
+C              IF (jp .EQ. 1) THEN
+C                print*,'size (F)',jp,biovol(jp),FeT,b_PCmax(g)
+C     &                ,a_ksatFeT(g),b_ksatFeT(g)
+C              ENDIF
               ENDIF
             ENDIF
 #endif
@@ -886,7 +900,7 @@ C now impose that PCmax must be positve (Le Gland, 01/06/2021)
             
 #ifdef DARWINIAN_DEMON_LIGHT
             PARopt(jp) = PARoptmin + SQRT(PARoptmin**2 + 
-     &      (3.2-2)*PARtot*PARoptmin + PARtot)
+     &      (3.2-2)*PARtot*PARoptmin + PARtot**2)
 #endif 
 
             ksatPAR(jp) = LOG(1+PARchi(jp))
@@ -894,7 +908,6 @@ C now impose that PCmax must be positve (Le Gland, 01/06/2021)
 C    &                  / (darwin_inscal_PAR*PARopt(jp)/2.5)
             kinhPAR(jp) = ksatPAR(jp) / PARchi(jp)
 
-            
             PCmax(jp) = MAX(0., a_PCmax(g) * biovol(jp)**b_PCmax(g)
      &                * (1.0 - PARoptmin/PARopt(jp)))
 C     &                * (1.0 - (a_biovolmin(g)/biovol(jp)) ) )
@@ -1511,7 +1524,10 @@ c        ENDIF
 #ifndef DARWIN_ALLOW_FEQUOTA
         limitnut = MIN(limitnut, limitfe)
 #endif
-
+C        IF (j .EQ. 1) THEN
+C          print*,'limitnut',j,biovol(j),limitn,limitp,limitsi,limitfe,
+C     &         ksatSiO2(j)        
+C        ENDIF  
         limitpCO2 = 1.
 
 C==== growth ===========================================================
@@ -1573,6 +1589,10 @@ C     &             EXP(-PARtot*kinhPAR(j)) * normI(j)
           alpha  = 3.2/PARopt(j) !Boris Saterey (2023-11-13)
           limitI = PARtot/(PARtot**2/(alpha*PARopt(j)**2)+(1-2/
      &             (alpha*PARopt(j)))*PARtot+1/alpha)
+C          IF (j .EQ. 1) THEN
+C           print*, 'j = ',j, 'PARopt = ',PARopt(j),'|| PARtot = ',
+C     &     PARtot, '|| limitI = ',limitI
+C          ENDIF
           PC = PCmax(j)*limitnut*limitI*photoTempFunc(j)*limitpCO2
         ELSE
           PC = 0.0 _d 0
@@ -1682,7 +1702,9 @@ C       gTr(ic+j-1)=gTr(ic+j-1)  + uptakeDIC
         a_1t(j) = a_1t(j) + uptakeDIC
         acom(plank(j)) = acom(plank(j)) + uptakeDIC*wght_drv(j)
         gcom(plank(j)) = gcom(plank(j)) + uptakeDIC*wght_drv(j)
-
+C        IF (j .EQ. 1) THEN
+C          print*,'uptake',j,uptakeDIC
+C        ENDIF
 #ifdef DARWIN_DEBUG
 C       IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
 CC        print*,'j', j, 'plank(j)', plank(j), 'uptakeDIC', uptakeDIC,
@@ -2495,6 +2517,9 @@ C     DO jp = 1, nplank
 C      gTr(ic+jp-1)= gTr(ic+jp-1) - preygraz(jp)
        a_1t(jp) = a_1t(jp) - preygraz(jp)
        acom(plank(jp)) = acom(plank(jp)) - preygraz(jp)*wght_drv(jp)
+C       IF (jp .EQ. 1) THEN
+C         print*,'preygraz',jp,preygraz(jp)
+C       ENDIF
 #ifdef DARWIN_GRAZING_SWITCH
 C I Added the conditions on X>0 to avoid Nans (Boris 07/01/24)
         IF (X(plank(jp)) .GT. 0) THEN
@@ -2558,6 +2583,7 @@ C      gTr(ic+jz-1)=gTr(ic+jz-1) + predgrazc(jz)
        a_1t(jz) = a_1t(jz) + predgrazc(jz)
        acom(plank(jz)) = acom(plank(jz)) + predgrazc(jz)*wght_drv(jz)
        gcom(plank(jz)) = gcom(plank(jz)) + predgrazc(jz)*wght_drv(jz)
+C       print*,'predgrazc',jz,predgrazc(jz)       
 #ifdef DARWIN_ALLOW_NQUOTA
 C      gTr(in+jz-1)=gTr(in+jz-1) + predgrazn(jz)
        an_1t(jz) = an_1t(jz) + predgrazn(jz)
@@ -2678,6 +2704,12 @@ C       gTr(ic+jp-1)=gTr(ic+jp-1)  - mort_c(jp) - respir_c
         a_1t(jp) = a_1t(jp) - mort_c(jp) - respir_c
         acom(plank(jp)) = acom(plank(jp))
      &                  - (mort_c(jp) + respir_c) * wght_drv(jp)
+C        IF (jp .EQ. 1) THEN
+C          print*,'mort & resp',jp,mort_c(jp),respir_c
+C        ENDIF  
+C        IF (jp .EQ. 11) THEN
+C          print*,'mort & resp',jp,mort_c(jp),respir_c
+C        ENDIF  
 #ifdef DARWIN_ALLOW_NQUOTA
 C       gTr(in+jp-1)=gTr(in+jp-1)  - mort_c(jp)*Qn(jp)
         an_1t(jp) = an_1t(jp) - mort_c(jp)*Qn(jp)

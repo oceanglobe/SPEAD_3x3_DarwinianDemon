@@ -375,13 +375,13 @@ c# include "ECCO_CPPOPTIONS.h"
 c#endif
 
 
-CBOP
+C BOP
 C    !ROUTINE: DARWIN_OPTIONS.h
 C    !INTERFACE:
 
 C    !DESCRIPTION:
 C options for darwin package
-CEOP
+C EOP
 
 C tracer selection
 
@@ -499,7 +499,6 @@ C !INTERFACE: ==========================================================
      U     gTr,
      O     chlout, diags,
      I     PAR, temp,
-     I     iG, jG, k, dT,
      I     myTime,myIter,myThid)
 
 C !DESCRIPTION:
@@ -2483,8 +2482,6 @@ C Temperature-dependent functions are set here because they vary with traits (Le
       Real*8 temp
       INTEGER myThid, myIter
       Real*8 myTime
-      INTEGER iG, jG, k
-      Real*8 dT
 
 C !INPUT/OUTPUT PARAMETERS: ============================================
 C  gTr    :: accumulates computed tendencies
@@ -2623,6 +2620,8 @@ C     Real*8 dcbtdt(nplank)
 
 
       Real*8 coeff_KTW(nplank)
+      Real*8 der(nDarwin)
+      INTEGER i_der
 
 C-----------------------------------------------------------------------
 C Step 1: define non-living tracers
@@ -2656,48 +2655,6 @@ C     print*,'DARWIN_PLANKTON: step 1 starting:'
       O2   = MAX(0., Ptr(iO2))
       ALK  = MAX(0., Ptr(iALK))
 
-      IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
-C        print*,'Concentrations',myiter,k,j,
-        print*,'Concentrations:  ',
-     &     DIC,
-     &     NH4,
-     &     NO2,
-     &     NO3,
-     &     DOC,
-     &     DON,
-     &     PIC,
-     &     POC,
-     &     PON,
-     &     O2,
-     &     ALK,
-     &     ''
-        print*,'Indices:  ',
-     &     'DIC', iDIC,
-     &     'NH4', iNH4,
-     &     'NO2', iNO2,
-     &     'NO3', iNO3,
-     &     'DOC', iDOC,
-     &     'DON', iDON,
-     &     'PIC', iPIC,
-     &     'POC', iPOC,
-     &     'PON', iPON,
-     &     'O2',  iO2,
-     &     'ALK', iALK,
-     &     ''
-        print*,'Concentrations:  ',
-     &     Ptr(iDIC),
-     &     Ptr(iNH4),
-     &     Ptr(iNO2),
-     &     Ptr(iNO3),
-     &     Ptr(iDOC),
-     &     Ptr(iDON),
-     &     Ptr(iPIC),
-     &     Ptr(iPOC),
-     &     Ptr(iPON),
-     &     Ptr(iO2),
-     &     Ptr(iALK),
-     &     ''
-      ENDIF
 
 C-----------------------------------------------------------------------
 C-------------------------- End Step 1 ---------------------------------
@@ -2888,8 +2845,8 @@ C-----------------------------------------------------------------------
 C Check that no NaN is present (Le Gland, 13/05/2021)
       DO j=1,nplank
         IF (X(j) /= X(j)) THEN
-          WRITE(msgBuf,'(2A,2I6,A,3I6)') 'DARWIN_PLANKTON: ',
-     &    'X(j) has NaN value', j, myIter, ' Location:', iG, jG, k
+          WRITE(msgBuf,'(2A,2I6)') 'DARWIN_PLANKTON: ',
+     &    'X(j) has NaN value', j, myIter
           CALL PRINT_ERROR( msgBuf, myThid )
           STOP 'ABNORMAL END: S/R DARWIN_PLANKTON'
         ENDIF
@@ -2914,13 +2871,6 @@ C     print*,'DARWIN_PLANKTON: step 2 completed:'
 C     print*,'X:', X, 'mn_bvol:', mn_bvol, 'mn_topt:', mn_topt,
 C    &       'vr_bvol:', vr_bvol, 'vr_topt:', vr_topt,
 C    &       'cv_bvto:', cv_bvto
-C     IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
-C       print*,'Plankton concentrations', X
-C       print*,'Mean traits:', mn_tr(1:2,:)
-C       print*,'Trait variances:', vr_tr(1:2,:)
-C       print*,'Trait covariances:', cv_tr(1:2,:)
-C       print*,'Trait correlations:', cr_tr(1:2,:)
-C     ENDIF
       CALL DARWIN_SPEAD_RATES(
      I           PAR,temp,
      I           myTime,myIter,myThid,
@@ -2930,7 +2880,6 @@ C     ENDIF
      O           dDIC,dNH4,dNO2,dNO3,dPO4,dSiO2,dFeT,
      O           dDOC,dDON,dDOP,dDOFe,
      O           dPIC,dPOC,dPON,dPOP,dPOSi,dPOFe,
-     I           iG, jG, k, dT,
      I           O2,ALK,
      O           dO2,dALK,
 C    I           X,mn_bvol,mn_topt,vr_bvol_vr_topt,cv_bvto,
@@ -2947,42 +2896,7 @@ C    O           a00,a10,a01,a20,a02,a11)
      O           coeff_KTW,
      O           acom)
 
-      IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
-C        print*,'Concentration derivatives',myiter,k,j,
-        print*,'Concentration derivatives',
-     &     dDIC,
-     &     dNH4,
-     &     dNO2,
-     &     dNO3,
-     &     dDOC,
-     &     dDON,
-     &     dPIC,
-     &     dPOC,
-     &     dPON,
-     &     dO2,
-     &     dALK,
-     &     ''
-      ENDIF
 
-C     IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
-C       print*,'myTime',myTime,'myIter',myIter
-C       print*,'gcom:', gcom(1:4), 'acom:', acom(1:4),'a_0:',a_0(1:4)
-C       print*,'a_d1:', a_d1(1:1,:)
-C       print*,'a_d2:', a_d2(1:1,:)
-C       print*,'a_d11:', a_d11(1:1,:)
-CC   &         'a_0:', a_0, 'a_d1:', a_d1, 'a_d2:', a_d2, 'a_d11', a_d11
-CC   &         'a00:', a00, 'a10:', a10, 'a01:', a01,
-CC   &         'a20:', a20, 'a02:', a02, 'a11:', a11
-CC      print*,'alternative acom:', a_0(1)+(1./2.)*vr_tr(1,1)*a_d2(1,1)
-CC   &         + (1./2.)*vr_tr(1,2)*a_d2(1,2) + cv_tr(1,1)*a_d11(1,1)
-C       print*,'alternative acom:', a_0(1)+(1./2.)*vr_tr(1,1)*a_d2(1,1)
-C    &         + (1./2.)*vr_tr(1,2)*a_d2(1,2) + cv_tr(1,1)*a_d11(1,1)
-C    &         + (1./2.)*vr_tr(1,3)*a_d2(1,3) + cv_tr(1,2)*a_d11(1,2)
-C    &         + cv_tr(1,3)*a_d11(1,3)
-CC      print*,'alternative acom:', a00(1) + (1./2.)*vr_bvol(1)*a20(1)
-CC   &         + (1./2.)*vr_topt(1)*a02(1) + cv_bvto(1)*a11(1)
-C       print*,'a_KTW', a_KTW, 'coeff_KTW', coeff_KTW
-C     ENDIF
 
 C-----------------------------------------------------------------------
 C-------------------------- End Step 3 ---------------------------------
@@ -2997,6 +2911,9 @@ C They do not depend on the physical or ecological model
 C At some point, mass consrvation will absolutely need to be verified
 
 C The quota thing is a nightmare, I will do it later if requested
+      DO i_der = 1,nDarwin
+        der(i_der) = gTr(i_der)
+      ENDDO  
 
       gTr(iDIC ) = gTr(iDIC ) + dDIC
       gTr(iNH4 ) = gTr(iNH4 ) + dNH4
@@ -3028,7 +2945,7 @@ C    &          + (1/2)*vr_topt(j)*a02(j) + cv_bvto(j)*a11(j))*X(j)
 C Equivalent, but easier to check mass conservation (Le Gland, 15/03/2021)
         dXdt(j) = acom(j)*X(j)
         gTr(ic+iplank(j)-1) = gTr(ic+iplank(j)-1) + dXdt(j)
-
+C        print*,j,dXdt(j)
 C       IF(isPhoto(iplank(j)) .NE. 0) THEN
 C         dmbdt(j) = a10(j)*vr_bvol(j) + a01(j)*cv_bvto(j)
 C         gTr(ic+iplank(j)) = gTr(ic+iplank(j)) + dmbdt(j)*X(j)
@@ -3067,7 +2984,7 @@ C       ENDIF
           dmndt(j,jp) = dmndt(j,jp) + a_d1(j,jp)*vr_tr(j,jp)
 C         dvrdt(j,jp) = a_d2(j,jp)*(vr_tr(j,jp)**2)
           dvrdt(j,jp) = dvrdt(j,jp) + a_d2(j,jp)*(vr_tr(j,jp)**2)
-     &                + 2*gcom(j)*numut_tr(j,jp)     
+     &                + 2*gcom(j)*numut_tr(j,jp)
         END DO
 C Terms occurring when num_trait(j) > 2
 C       DO jc = 1,num_cov(j)
@@ -3224,6 +3141,13 @@ C Parameterization of Kill The Winner (KTW) preferential grazing (Le Gland, 27/0
           dcvdt(j,jc) = dcvdt(j,jc) + coeff_KTW(j)*cv_tr(j,jc)
         ENDDO
 
+C When variance is 0, prevent it to go below Boris (28/11/24)
+        DO jp = 1, num_trait(j)
+          IF (vr_tr(j,jp) .EQ. 0D0) THEN
+            dvrdt(j,jp) = MAX(0D0,dvrdt(j,jp))
+          ENDIF
+        ENDDO
+
 c        DO jp = 1, num_trait(j)
 c            IF(dvrdt(j,jp) /= 0) THEN
 c                IF (jp .EQ. 2) THEN
@@ -3284,23 +3208,14 @@ C         ENDIF
 
 
       ENDDO
-C     IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
-C       print*, 'dX:', dXdt
-C       print*, 'dmndt', dmndt(1:2,:)
-C       print*, 'dvrdt', dvrdt(1:2,:)
-C       print*, 'dcvdt:', dcvdt(1:2,:)
-C       print*, 'Ptr:', Ptr(ic:ic+nTrac-2)
-C       print*, 'gTr:', gTr(ic:ic+nTrac-2)
-C       print*,'-------------------------------------------------------'
-C     ENDIF
 
 C Check that no NaN is present (Le Gland, 13/05/2021)
       DO j=1,nplank
         IF (acom(j) /= acom(j) .AND. myIter > 1) THEN
 C       IF (dNO2 /= dNO2 .AND. myIter > 1) THEN
-          WRITE(msgBuf,'(2A,2I6,A,3I6,A,2F20.6,4(A,3F20.6))')
+          WRITE(msgBuf,'(2A,2I6,A,2F20.6,4(A,3F20.6))')
      &    'DARWIN_PLANKTON: ',
-     &    'acom(j) has NaN value', j, myIter, ' Location:', iG,jG,k,
+     &    'acom(j) has NaN value', j, myIter,
      &    '  Concentrations:', X(j), X(j+1),
      &    '  Mean trait values:', mn_tr(j,1), mn_tr(j,2), mn_tr(j,3),
      &    '  Reference trait values:', ref_tr(j,1), ref_tr(j,2),
@@ -3313,6 +3228,10 @@ C       IF (dNO2 /= dNO2 .AND. myIter > 1) THEN
       ENDDO
 
 C Moment derivatives (Le Gland, 16/06/2022)
+
+C      DO i_der = 1,nDarwin
+C        print*,i_der,gTr(i_der)-der(i_der)
+C      ENDDO  
 
 C-----------------------------------------------------------------------
 C-------------------------- End Step 4 ---------------------------------

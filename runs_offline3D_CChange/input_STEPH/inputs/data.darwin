@@ -1,0 +1,26 @@
+ &DARWIN_FORCING
+ darwin_ironFile='/home/stephdut/Input/input_igsm/mahowald2009_solubile_preind_smooth_oce_mth-2d.bin',
+ darwin_oasim_edFile='/home/stephdut/Input/input_igsm/igsm_oasim_edp_below.bin',
+ darwin_oasim_esFile='/home/stephdut/Input/input_igsm/igsm_oasim_esp_below.bin',
+ darwin_waterabsorbFile='/home/stephdut/OPTICS_COEFF/optics_water_Aug2014_bandave25.txt',
+ darwin_phytoabsorbFile='/home/stephdut/OPTICS_COEFF/optics_phyto_8_bandave25.txt',
+ darwin_particleabsorbFile='/home/stephdut/OPTICS_COEFF/optics_detritus_8_sameas4_bandave25.txt',
+ darwin_relaxscale=0.,
+ darwin_seed=56,
+ /
+
+ &DIC_FORCING
+ DIC_windFile  = '/home/stephdut/Input/input_igsm/tren_speed_144x90.bin',
+#DIC_atmospFile= ' ',
+ dic_int1 =1,
+ dic_pCO2 = 278e-6,
+ /
+
+&DARWIN_SPECTRAL_PARM
+ darwin_waves=400.0, 425.0, 450.0, 475.0, 500.0, 525.0, 550.0, 575.0, 600.0, 625.0, 650.0, 675.0, 700.0,
+ darwin_wavebands=400.0, 412.5, 437.5, 462.5, 487.5, 512.5, 537.5, 562.5, 587.5, 612.5, 637.5, 662.5, 687.5, 700.0,
+darwin_Sdom=0.0206100,
+darwin_part_size_P = 1e-17,
+darwin_radtrans_kmax = 20,
+darwin_radtrans_niter = -2,
+/

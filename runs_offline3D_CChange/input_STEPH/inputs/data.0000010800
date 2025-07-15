@@ -1,0 +1,94 @@
+# ====================
+# | Model parameters |
+# ====================
+#
+# Continuous equation parameters
+&PARM01
+ tRef = 15*20.,
+ sRef = 15*35.,
+ viscAr=1.E-3,
+ viscAh=5.E4,
+ diffKhT=1.E3,
+ diffKrT=2.E-5,
+ diffKhS=1.E3,
+ diffKrS=2.E-5,
+ gravity=9.81,
+ rhonil=1035.,
+ rhoConstFresh=1000.,
+ rigidLid=.FALSE.,
+ implicitFreeSurface=.TRUE.,
+ eosType = 'JMD95Z',
+ implicitDiffusion=.TRUE.,
+ implicitViscosity=.TRUE.,
+ convertFW2Salt = 35.0,
+ tempAdvScheme       = 2,
+ saltAdvScheme       = 2,
+# multiDimAdvection   = .FALSE.
+ staggerTimeStep = .TRUE.,
+ exactConserv= .TRUE.,
+ hMixCriteria= -0.8,
+ useSingleCpuIO=.TRUE.,
+ &
+
+# Elliptic solver parameters
+ &PARM02
+ cg2dMaxIters=500,
+ cg2dTargetResidual=1.E-17,
+ &
+# Time stepping parameters
+ &PARM03
+# 
+ nIter0=10800,
+ nTimesteps = 10800,
+#nTimesteps = 19440,
+ deltaTmom = 480.0,
+ deltaTtracer=14400.,
+ deltaTClock =14400.,
+ deltaTfreesurf=14400.,
+ abEps = 0.1,
+#pChkptFreq  = 31104000., 
+#chkptFreq   = 31104000., 
+ pChkptFreq  = 155520000.,
+ chkptFreq   = 155520000.,
+#pChkptFreq  = 2592000.,
+#chkptFreq   = 2592000.,
+#dumpFreq    = 31104000.,
+#taveFreq    = 31104000.,
+#dumpFreq    = 279936000.,
+#taveFreq    = 155520000.,
+ dumpFreq    = 1555200000.,
+ taveFreq    = 155520000.,
+#taveFreq    = 21600.,
+#dumpFreq    = 2592000.,
+#taveFreq    = 2592000.,
+#monitorFreq = 10800.,
+ monitorFreq = 31104000.,
+ forcing_In_AB=.FALSE.,
+ tauThetaClimRelax = 0.d0,
+ tauSaltClimRelax = 0.d0,
+ periodicExternalForcing=.TRUE.,
+ externForcingPeriod=2592000.,
+ externForcingCycle=31104000.,
+ &
+# Gridding parameters
+ &PARM04
+ usingSphericalPolarGrid=.TRUE.,
+delR= 10., 15., 20., 30., 40.,
+       55., 70., 90., 110., 135.,
+       160., 190., 225., 265., 310.,
+       360., 415., 475., 540., 610.,
+       685., 765.,
+ ygOrigin=-90.,
+ xgOrigin=0,
+ delY=1.,88*2.,3.
+ delX=144*2.5,
+ &
+
+# Input datasets
+ &PARM05
+ bathyFile=      '/home/stephdut/Input/input_igsm3/bathy_144x90x22_scs2.bin',
+#hydrogThetaFile='',
+#hydrogSaltFile= '',
+ diffKrFile=     '/home/stephdut/Input/input_igsm3/diffKrFile.bin',
+ &
+

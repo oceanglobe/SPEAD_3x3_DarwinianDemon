@@ -1,0 +1,20 @@
+ &OFFLINE_PARM01
+  UvelFile= '/home/sauterey/BORIS/CIRC/GLOBALE/DARWIN_FUTURES/STEPHDUT/RUN4/RUN4_1991_2115_nopolicy/uVeltave/uVeltave',
+  VvelFile= '/home/sauterey/BORIS/CIRC/GLOBALE/DARWIN_FUTURES/STEPHDUT/RUN4/RUN4_1991_2115_nopolicy/vVeltave/vVeltave',
+  WvelFile= '/home/sauterey/BORIS/CIRC/GLOBALE/DARWIN_FUTURES/STEPHDUT/RUN4/RUN4_1991_2115_nopolicy/wVeltave/wVeltave',
+  GMwxFile= '/home/sauterey/BORIS/CIRC/GLOBALE/DARWIN_FUTURES/STEPHDUT/RUN4/RUN4_1991_2115_nopolicy/GM_Kwx-T/GM_Kwx-T',
+  GMwyFile= '/home/sauterey/BORIS/CIRC/GLOBALE/DARWIN_FUTURES/STEPHDUT/RUN4/RUN4_1991_2115_nopolicy/GM_Kwy-T/GM_Kwy-T',
+  GMwzFile= '/home/sauterey/BORIS/CIRC/GLOBALE/DARWIN_FUTURES/STEPHDUT/RUN4/RUN4_1991_2115_nopolicy/GM_Kwz-T/GM_Kwz-T',
+  ThetFile= '/home/sauterey/BORIS/CIRC/GLOBALE/DARWIN_FUTURES/STEPHDUT/RUN4/RUN4_1991_2115_nopolicy/Ttave/Ttave',
+  SaltFile= '/home/sauterey/BORIS/CIRC/GLOBALE/DARWIN_FUTURES/STEPHDUT/RUN4/RUN4_1991_2115_nopolicy/Stave/Stave',
+  KPP_DiffSFile='/home/sauterey/BORIS/CIRC/GLOBALE/DARWIN_FUTURES/STEPHDUT/RUN4/RUN4_1991_2115_nopolicy/KPPdiffKzS-T/KPPdiffKzS-T',
+  SFluxFile='/home/sauterey/BORIS/CIRC/GLOBALE/DARWIN_FUTURES/STEPHDUT/RUN4/RUN4_1991_2115_nopolicy/sFluxtave/sFluxtave',
+ &end
+
+ &OFFLINE_PARM02
+  offlineIter0=0,
+  deltaToffline=14400.,
+  offlineForcingPeriod=2.592d6, 
+# offlineForcingCycle=2.592d6, 
+  offlineForcingCycle=7.93152d9,   ! 255 years
+ &end

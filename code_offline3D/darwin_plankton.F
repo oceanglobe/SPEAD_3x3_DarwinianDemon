@@ -463,6 +463,8 @@ C     _RL dQChl11(nplank)
 #ifdef DARWIN_GRAZING_SWITCH
       _RL coeff_KTW(nplank)
 #endif
+      _RL der(nDarwin)
+      INTEGER i_der
 
 C-----------------------------------------------------------------------
 C Step 1: define non-living tracers
@@ -1194,6 +1196,9 @@ C They do not depend on the physical or ecological model
 C At some point, mass consrvation will absolutely need to be verified
 
 C The quota thing is a nightmare, I will do it later if requested
+      DO i_der = 1,nDarwin
+        der(i_der) = gTr(i_der)
+      ENDDO  
 
       gTr(iDIC ) = gTr(iDIC ) + dDIC
       gTr(iNH4 ) = gTr(iNH4 ) + dNH4
@@ -1227,7 +1232,7 @@ C    &          + (1/2)*vr_topt(j)*a02(j) + cv_bvto(j)*a11(j))*X(j)
 C Equivalent, but easier to check mass conservation (Le Gland, 15/03/2021)
         dXdt(j) = acom(j)*X(j)
         gTr(ic+iplank(j)-1) = gTr(ic+iplank(j)-1) + dXdt(j)
-
+C        print*,j,dXdt(j)
 C       IF(isPhoto(iplank(j)) .NE. 0) THEN
 C         dmbdt(j) = a10(j)*vr_bvol(j) + a01(j)*cv_bvto(j)
 C         gTr(ic+iplank(j)) = gTr(ic+iplank(j)) + dmbdt(j)*X(j)
@@ -1752,6 +1757,10 @@ C Moment derivatives (Le Gland, 16/06/2022)
         ENDDO
       ENDDO
 #endif
+
+C      DO i_der = 1,nDarwin
+C        print*,i_der,gTr(i_der)-der(i_der)
+C      ENDDO  
 
 C-----------------------------------------------------------------------
 C-------------------------- End Step 4 ---------------------------------

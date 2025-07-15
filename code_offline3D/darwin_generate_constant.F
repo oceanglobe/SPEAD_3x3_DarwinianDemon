@@ -242,7 +242,7 @@ C (Le Gland, 07/06/2021)
           numut_tr(jp,jpm) = numut_paropt(g)
           ref_tr(jp,jpm) = LOG(PARchi0(g))
           min_tr(jp,jpm) = 2.0 _d 0
-          max_tr(jp,jpm) = 5.0 _d 0
+          max_tr(jp,jpm) = 7.0 _d 0
           max_vr_tr(jp,jpm) = 0.75 _d 0
         ENDIF
         DO jp2 = jpm+1, num_trait(jp)

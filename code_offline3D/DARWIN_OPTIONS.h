@@ -123,7 +123,7 @@ C include code for per-type diagnostics
 C debugging
 
 C turn on debugging output
-#define DARWIN_DEBUG
+#undef DARWIN_DEBUG
 
 C compute and print global element totals
 #define DARWIN_ALLOW_CONS
@@ -159,9 +159,9 @@ C If defined, ntrait must be superior or equal to 2
 #define SPEAD_ALLOW_COV
 
 C If defined the phytoplankton is a Darwian Demon
-#define DARWINIAN_DEMON_TEMP
-#define DARWINIAN_DEMON_LIGHT
-#define DARWINIAN_DEMON_SIZE
+#undef DARWINIAN_DEMON_TEMP
+#undef DARWINIAN_DEMON_LIGHT
+#undef DARWINIAN_DEMON_SIZE
 
 #endif /* ALLOW_DARWIN */
 #endif /* DARWIN_OPTIONS_H */

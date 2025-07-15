@@ -1,0 +1,96 @@
+#
+ &diagnostics_list
+#
+  filename( 1) = '3d',
+  frequency(1) = 2592000.,
+  levels( :,1) = 1,
+# frequency(1) = 31104000.,
+  fields( 1,1) = 'TRAC01  ',
+  fields( 2,1) = 'TRAC02  ',
+  fields( 3,1) = 'TRAC03  ',
+  fields( 4,1) = 'TRAC04  ',
+  fields( 5,1) = 'TRAC05  ',
+  fields( 6,1) = 'TRAC06  ',
+  fields( 7,1) = 'TRAC07  ',
+  fields( 8,1) = 'TRAC08  ',
+  fields( 9,1) = 'TRAC09  ',
+  fields(10,1) = 'TRAC10  ',
+  fields(11,1) = 'TRAC11  ',
+  fields(12,1) = 'TRAC12  ',
+  fields(13,1) = 'TRAC13  ',
+  fields(14,1) = 'TRAC14  ',
+  fields(15,1) = 'TRAC15  ',
+  fields(16,1) = 'TRAC16  ',
+  fields(17,1) = 'TRAC17  ',
+  fields(18,1) = 'TRAC18  ',
+  fields(19,1) = 'TRAC19  ',
+  fields(20,1) = 'TRAC20  ',
+  fields(21,1) = 'TRAC21  ',
+  fields(22,1) = 'TRAC22  ',
+  fields(23,1) = 'TRAC23  ',
+  fields(24,1) = 'TRAC24  ',
+  fields(25,1) = 'TRAC25  ',
+  fields(26,1) = 'TRAC26  ',
+  fields(27,1) = 'TRAC27  ',
+  fields(28,1) = 'TRAC28  ',
+  fields(29,1) = 'TRAC29  ',
+  fields(30,1) = 'TRAC30  ',
+  fields(31,1) = 'TRAC31  ',
+  fields(32,1) = 'TRAC32  ',
+  fields(33,1) = 'TRAC33  ',
+  fields(34,1) = 'TRAC34  ',
+  fields(35,1) = 'TRAC35  ',
+  fields(36,1) = 'TRAC36  ',
+  fields(37,1) = 'TRAC37  ',
+  fields(38,1) = 'TRAC38  ',
+#
+  filename( 2) = 'chl',
+# frequency(2) = 2592000.,
+# frequency(2) = 31104000.,
+  frequency(2) = 432000.,
+  levels( :,2) = 1,
+  fields( 1,2) = 'TRAC72  ',
+  fields( 2,2) = 'TRAC73  ',
+  fields( 3,2) = 'TRAC74  ',
+  fields( 4,2) = 'TRAC75  ',
+  fields( 5,2) = 'TRAC76  ',
+  fields( 6,2) = 'TRAC77  ',
+  fields( 7,2) = 'TRAC78  ',
+  fields( 8,2) = 'TRAC79  ',
+  fields( 9,2) = 'TRAC80  ',
+  fields(10,2) = 'TRAC81  ',
+  fields(11,2) = 'TRAC82  ',
+  fields(12,2) = 'TRAC83  ',
+  fields(13,2) = 'TRAC84  ',
+  fields(14,2) = 'TRAC85  ',
+  fields(15,2) = 'TRAC86  ',
+  fields(16,2) = 'TRAC87  ',
+  fields(17,2) = 'TRAC88  ',
+  fields(18,2) = 'TRAC89  ',
+  fields(19,2) = 'TRAC90  ',
+  fields(20,2) = 'TRAC91  ',
+  fields(21,2) = 'TRAC92  ',
+  fields(22,2) = 'TRAC93  ',
+  fields(23,2) = 'TRAC94  ',
+  fields(24,2) = 'TRAC95  ',
+  fields(25,2) = 'TRAC96  ',
+  fields(26,2) = 'TRAC97  ',
+#
+ &
+
+# Parameter for Diagnostics of per level statistics:
+#-----------------
+# for each output-stream:
+#  stat_fname(n) : prefix of the output file name (only 8.c long) for
+#outp.stream n
+#  stat_freq(n):< 0 : write snap-shot output every |stat_freq| seconds
+#               > 0 : write time-average output every stat_freq seconds
+#  stat_phase(n)    : write at time = stat_phase + multiple of |stat_freq|
+#  stat_region(:,n) : list of "regions" (default: 1 region only=global)
+#  stat_fields(:,n) : list of diagnostics fields (8.c) (see
+#"available_diagnostics.log"
+#                 file for the list of all available diag. in this particular
+#config)
+#-----------------
+ &DIAG_STATIS_PARMS
+ &

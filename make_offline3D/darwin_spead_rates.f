@@ -375,13 +375,13 @@ c# include "ECCO_CPPOPTIONS.h"
 c#endif
 
 
-CBOP
+C BOP
 C    !ROUTINE: DARWIN_OPTIONS.h
 C    !INTERFACE:
 
 C    !DESCRIPTION:
 C options for darwin package
-CEOP
+C EOP
 
 C tracer selection
 
@@ -503,7 +503,6 @@ C !INTERFACE: ==========================================================
      O     dDIC,dNH4,dNO2,dNO3,dPO4,dSiO2,dFeT,
      O     dDOC,dDON,dDOP,dDOFe,
      O     dPIC,dPOC,dPON,dPOP,dPOSi,dPOFe,
-     I     iG, jG, k, dT,
      I     O2,ALK,
      O     dO2,dALK,
 C    I     X,mn_bvol,mn_topt,vr_bvol_vr_topt,cv_bvto,
@@ -2525,8 +2524,6 @@ C In spead_rates.F, there are many input and output variables
       Real*8 POP
       Real*8 POSi
       Real*8 POFe
-      INTEGER iG, jG, k
-      Real*8 dT
       Real*8 ALK
 C O2 must be defined out of "ALLOW_CARBON" to avoid a bug in the bacteria code
 C However its value is not set if ALLOW_CARBON is not defined
@@ -2831,7 +2828,7 @@ C Steps to compute numerical trait derivatives
       dpo = 0.001
 
       PARtot = SUM(PAR)
-
+C      print*,'PAR = ',PARtot
 C Traits used to compute trait derivatives
       DO j = 1, nplank
 
@@ -2944,7 +2941,9 @@ C         jp2 = icov(j,jp,2)
           ENDIF
           IF (traitparopt(j) .NE. 0) THEN
             PARopt(jp) = EXP(vl_tr(jp,jt))
-           
+C            IF (jp .EQ. 1) THEN
+C              print*,'PARopt 1 = ',PARopt(jp)
+C            ENDIF
 C Maximum growth rate depends on optimal irradiance
 C An optimal irradiance lower than 2.5 W/m2 is impossible
 C (cf Edwards et al., 2015)
@@ -2958,26 +2957,6 @@ C           print*, 'biovol of ', jp, 'before DD =', biovol(jp)
 C           print*, 'limiting factors: N = ', a_ksatNO3(g)/(NO3+NO2+NH4)
 C     &     , '; P =', a_ksatPO4(g)/PO4, '; F =', a_ksatFeT(g)/FeT
 
-            IF (a_ksatNO3(g)/(NO3+NO2+NH4) .EQ. 
-     &      MAX(a_ksatNO3(g)/(NO3+NO2+NH4),
-     &      a_ksatPO4(g)/PO4,a_ksatFeT(g)/FeT)) THEN
-              IF((NO3+NO2+NH4) .GT. 0D0) THEN
-              biovol(jp) = ((NO3+NO2+NH4)*b_PCmax(g)/(a_ksatNO3(g)*
-     &        (b_ksatNO3(g)-b_PCmax(g))))**(1/b_ksatNO3(g))
-              ENDIF
-            ELSEIF (a_ksatPO4(g)/PO4 .EQ. 
-     &      MAX(a_ksatNO3(g)/(NO3+NO2+NH4),
-     &      a_ksatPO4(g)/PO4,a_ksatFeT(g)/FeT)) THEN
-              IF(PO4 .GT. 0D0) THEN
-              biovol(jp) = ((PO4)*b_PCmax(g)/(a_ksatPO4(g)*
-     &        (b_ksatPO4(g)-b_PCmax(g))))**(1/b_ksatPO4(g))
-              ENDIF
-            ELSE
-              IF(FeT .GT. 0D0) THEN
-              biovol(jp) = ((FeT)*b_PCmax(g)/(a_ksatFeT(g)*
-     &        (b_ksatFeT(g)-b_PCmax(g))))**(1/b_ksatFeT(g))
-              ENDIF
-            ENDIF
 
 C           print*, 'biovol of ', jp, 'after DD =', biovol(jp)
 
@@ -2988,15 +2967,12 @@ C In an attempt to avoid bugs with some advection/diffusion schemes, I
 C now impose that PCmax must be positve (Le Gland, 01/06/2021)
             PARoptmin = a_PARoptmin(g) * biovol(jp)**b_PARoptmin(g)
             
-            PARopt(jp) = PARoptmin + SQRT(PARoptmin**2 + 
-     &      (3.2-2)*PARtot*PARoptmin + PARtot)
 
             ksatPAR(jp) = LOG(1+PARchi(jp))
      &                  / (11.574*PARopt(jp)/2.5)
 C    &                  / (darwin_inscal_PAR*PARopt(jp)/2.5)
             kinhPAR(jp) = ksatPAR(jp) / PARchi(jp)
 
-            
             PCmax(jp) = MAX(0., a_PCmax(g) * biovol(jp)**b_PCmax(g)
      &                * (1.0 - PARoptmin/PARopt(jp)))
 C     &                * (1.0 - (a_biovolmin(g)/biovol(jp)) ) )
@@ -3049,16 +3025,6 @@ C    &                   / (biovol_norm**-0.375 + biovol_norm**-0.00)
 C         ENDIF
 C         ksatFeT(jp)  = 2 * 3.8 * 1.5 * 0.00008
 C    &                   / (biovol_norm**-0.375 + biovol_norm**-0.00)
-C         IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
-C           print*, 'species', j, 'tracer', jp, 'trait', jt,
-C    &              'biovol', biovol(jp), 'topt', phytoTempOptimum(jp),
-C    &              'ksatPAR', ksatPAR(jp), 'kinhPAR', kinhPAR(jp)
-CC          print*, 'biovol_norm', biovol_norm, 'alpha1', alpha1,
-CC   &              'alpha2', alpha2, 'a_PCmax', a_PCmax(g), 'b1_PCmax',
-CC   &              b1_PCmax(g), 'b2_PCmax', b2_PCmax(g), 'PCmax',
-CC   &              PCmax(jp), 'PARoptmin', PARoptmin, 'biovolmin',
-CC   &              a_biovolmin(g)
-C         ENDIF
         END DO
 
 
@@ -3071,10 +3037,6 @@ C       END IF
 
       END DO
 
-C     IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
-C       print*,'Weight_derivatives', wght_drv, SUM(wght_drv(1:10)),
-C    &         SUM(wght_drv(11:20))
-C     ENDIF
 
 C Assign quotas when they are constant (Le Gland, 15/03/2021)
       DO j = 1, nTrac
@@ -3329,7 +3291,10 @@ c        ENDIF
 
         limitnut = MIN(limitn, limitp, limitsi)
         limitnut = MIN(limitnut, limitfe)
-
+C        IF (j .EQ. 1) THEN
+C          print*,'limitnut',j,biovol(j),limitn,limitp,limitsi,limitfe,
+C     &         ksatSiO2(j)        
+C        ENDIF  
         limitpCO2 = 1.
 
 C==== growth ===========================================================
@@ -3343,6 +3308,10 @@ C     &             EXP(-PARtot*kinhPAR(j)) * normI(j)
           alpha  = 3.2/PARopt(j) !Boris Saterey (2023-11-13)
           limitI = PARtot/(PARtot**2/(alpha*PARopt(j)**2)+(1-2/
      &             (alpha*PARopt(j)))*PARtot+1/alpha)
+C          IF (j .EQ. 1) THEN
+C           print*, 'j = ',j, 'PARopt = ',PARopt(j),'|| PARtot = ',
+C     &     PARtot, '|| limitI = ',limitI
+C          ENDIF
           PC = PCmax(j)*limitnut*limitI*photoTempFunc(j)*limitpCO2
         ELSE
           PC = 0.0D0
@@ -3400,43 +3369,14 @@ C       gTr(ic+j-1)=gTr(ic+j-1)  + uptakeDIC
         a_1t(j) = a_1t(j) + uptakeDIC
         acom(plank(j)) = acom(plank(j)) + uptakeDIC*wght_drv(j)
         gcom(plank(j)) = gcom(plank(j)) + uptakeDIC*wght_drv(j)
-
-C       IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
-CC        print*,'j', j, 'plank(j)', plank(j), 'uptakeDIC', uptakeDIC,
-C         print*,'j', j, 'plank(j)', plank(j),
-C    &   'a_1t(j)', a_1t(j), 'acom(plank(j))', acom(plank(j)),
-C    &   'gcom(plank(j))', gcom(plank(j))
-
-C         print*,'PC', PC, 'PCmax(j)', PCmax(j), 'limitnut', limitnut,
-C    &   'limitI', limitI, 'photoTempFunc(j)', photoTempFunc(j),
-C    &   'limitpCO2', limitpCO2
-
-C         print*,'limitn', limitn, 'limitNH4', limitNH4, 'limitNO',
-C    &    limitNO, 'limitNO2', limitNO2, 'limitNO3', limitNO3,
-C    &   'limitp', limitp, 'limitsi', limitsi,
-C    &   'limitfe', limitfe, 'normI(j)', normI(j)
-
-C         print*, 'ksatNH4(j)',ksatNH4(j),'ksatNO2(j)',ksatNO2(j),
-C    &    'ksatNO3(j)',ksatNO3(j),'ksatPO4',ksatPO4(j),
-C    &    'ksatSiO2(j)',ksatSiO2(j),'ksatPAR(j)',ksatPAR(j),
-C    &    'ksatFeT(j)',ksatFeT(j)
-C       ENDIF
+C        IF (j .EQ. 1) THEN
+C          print*,'uptake',j,uptakeDIC
+C        ENDIF
 
 
 
 
 
-        IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
-         print*,'uptake',myiter,k,j,
-     &     uptakeDIC,
-     &     uptakeNH4,
-     &     uptakeNO2,
-     &     uptakeNO3,
-     &     uptakeN,
-     &     uptakePO4,
-     &     uptakeSiO2,
-     &     uptakeFeT
-        ENDIF
 
 C      isPhoto(j)
        ENDIF
@@ -3453,11 +3393,6 @@ C and chemical reactions (Le Gland, 01/06/2021)
       DO j = 1, nplank
         IF (gcom(j) /= gcom(j) .OR. gcom(j) .LT. -1.0D-6
      & .OR. dDIC /= dDIC) THEN
-CC        IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
-C           print*,'SPEAD is buggy (NaN): all derivatives are set to',
-C    &             ' zero to prevent failure', 'coordinates', iG, jG, k,
-C    &             ' gcom: ', gcom(j)
-CC        ENDIF
           chlout = 0D0
           diags = 0D0
           dDIC  = 0D0
@@ -3891,16 +3826,6 @@ C         predexpc = predexpc + expFrac*grazphy*asseff(jp,jz)*regQc
      &                  + grazphy*asseff(jp,jz)*wght_drv(jp)
           predexpc = predexpc + expFrac*grazphy*asseff(jp,jz)
      &               *wght_drv(jp)*wght_drv(jz)
-C         IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
-C           print*, 'predator', jz, 'prey', jp, 'palat', palat(jp,jz),
-C    &              'sumprey', sumprey, 'grazemax(jz)', grazemax(jz),
-C    &              'grazTempFunc(jz)', grazTempFunc(jz), 'tmp', tmp,
-C    &              'grazphy', grazphy, 'preygraz(jp)', preygraz(jp),
-C    &              'predgrazc(jz)', predgrazc(jz), 'Temperature', temp,
-C    &              'hollexp', hollexp, 'kgrazesat(jz)', kgrazesat(jz),
-C    &              'inhib_graz', inhib_graz, 'inhib_graz_exp',
-C    &              inhib_graz_exp, 'pred. conc.', X(plank(jz))
-C         ENDIF
          ENDIF
         ENDDO
 
@@ -3981,6 +3906,9 @@ C     DO jp = 1, nplank
 C      gTr(ic+jp-1)= gTr(ic+jp-1) - preygraz(jp)
        a_1t(jp) = a_1t(jp) - preygraz(jp)
        acom(plank(jp)) = acom(plank(jp)) - preygraz(jp)*wght_drv(jp)
+C       IF (jp .EQ. 1) THEN
+C         print*,'preygraz',jp,preygraz(jp)
+C       ENDIF
 C I Added the conditions on X>0 to avoid Nans (Boris 07/01/24)
         IF (X(plank(jp)) .GT. 0) THEN
            coeff_KTW(plank(jp)) = coeff_KTW(plank(jp)) + preygraz(jp)
@@ -3989,13 +3917,6 @@ C I Added the conditions on X>0 to avoid Nans (Boris 07/01/24)
            coeff_KTW(plank(jp)) = coeff_KTW(plank(jp)) + 0D0
         ENDIF
         
-C       IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
-C         print*, 'coeff_KTW', coeff_KTW(plank(jp)), 'preygraz',
-C    &            preygraz(jp), 'a_KTW', a_KTW, '1-1/a',
-C    &            (1D0 - (1D0)/a_KTW), 'wght_drv', wght_drv(jp),
-C    &            'X', X(plank(jp)), 'added coeff_KTW', preygraz(jp)*
-C    &            (1D0 - (1D0)/a_KTW)*wght_drv(jp)/X(plank(jp))
-C       ENDIF
       ENDIF
       ENDDO
 
@@ -4006,6 +3927,7 @@ C      gTr(ic+jz-1)=gTr(ic+jz-1) + predgrazc(jz)
        a_1t(jz) = a_1t(jz) + predgrazc(jz)
        acom(plank(jz)) = acom(plank(jz)) + predgrazc(jz)*wght_drv(jz)
        gcom(plank(jz)) = gcom(plank(jz)) + predgrazc(jz)*wght_drv(jz)
+C       print*,'predgrazc',jz,predgrazc(jz)       
       ENDIF
       ENDDO
 
@@ -4108,16 +4030,13 @@ C       gTr(ic+jp-1)=gTr(ic+jp-1)  - mort_c(jp) - respir_c
         a_1t(jp) = a_1t(jp) - mort_c(jp) - respir_c
         acom(plank(jp)) = acom(plank(jp))
      &                  - (mort_c(jp) + respir_c) * wght_drv(jp)
+C        IF (jp .EQ. 1) THEN
+C          print*,'mort & resp',jp,mort_c(jp),respir_c
+C        ENDIF  
+C        IF (jp .EQ. 11) THEN
+C          print*,'mort & resp',jp,mort_c(jp),respir_c
+C        ENDIF  
 
-C       IF (iG.eq.iDEBUG.and.jG.eq.jDEBUG) THEN
-C         print*, 'tracer', jp, 'species', plank(jp), 'a_1t', a_1t(jp),
-C    &            'acom', acom(plank(jp)), 'mort_c', mort_c(jp),
-C    &            'mortX', mortX, 'mortX2', mortX2, 'mort', mort(jp),
-C    &            'mort2', mort2(jp), 'mortTempFunc', mortTempFunc,
-C    &            'mort2TempFunc', mort2TempFunc, 'respir_c',
-C    &            respir_c, 'kexcc', kexcc(jp), 'Xe', Xe,
-C    &            'respRate', respRate(jp)
-C       ENDIF
       ENDDO
 
 

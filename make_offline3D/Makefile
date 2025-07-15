@@ -1,11 +1,11 @@
 # Multithreaded + multi-processing makefile for:
 #    Linux c01 5.10.0-21-amd64 #1 SMP Debian 5.10.162-1 (2023-01-21) x86_64 GNU/Linux
 # This makefile was generated automatically on
-#    Thu 14 Mar 2024 07:54:51 PM CET
+#    Mon 23 Jun 2025 02:26:19 PM CEST
 # by the command:
-#    /home/sauterey/BORIS/MIT-GIT/MITgcm/tools/genmake2 -mpi -of /home/sauterey/BORIS/MIT-GIT/MITgcm/tools/build_options/linux_amd64_gfortran -mods=../code_offline3D
+#    /home/sauterey/BORIS/MIT-GIT/MITgcm/tools/genmake2 -mpi -of /home/sauterey/BORIS/MIT-GIT/MITgcm/tools/build_options/linux_amd64_gfortran -mods=../code_offline3D_CChange
 # executed by:
-#    sauterey@c01:/home/sauterey/BORIS/MIT-GIT/DARWIN/OFFLINE-3D/make_offline3D
+#    sauterey@c01:/home/sauterey/BORIS/MIT-GIT/DARWIN/SPEAD_cont_3D/make_offline3D
 #
 # OPTFILE="/home/sauterey/BORIS/MIT-GIT/MITgcm/tools/build_options/linux_amd64_gfortran"
 #
@@ -27,8 +27,8 @@
 
 ROOTDIR     = /home/sauterey/BORIS/MIT-GIT/MITgcm
 BUILDDIR    = .
-SOURCEDIRS  =  ../code_offline3D $(ROOTDIR)/pkg/darwin $(ROOTDIR)/pkg/diagnostics $(ROOTDIR)/pkg/exf $(ROOTDIR)/pkg/gchem $(ROOTDIR)/pkg/generic_advdiff $(ROOTDIR)/pkg/gmredi $(ROOTDIR)/pkg/kpp $(ROOTDIR)/pkg/mdsio $(ROOTDIR)/pkg/mnc $(ROOTDIR)/pkg/mom_fluxform $(ROOTDIR)/pkg/mom_vecinv $(ROOTDIR)/pkg/monitor $(ROOTDIR)/pkg/offline $(ROOTDIR)/pkg/ptracers $(ROOTDIR)/pkg/rw $(ROOTDIR)/pkg/sbo $(ROOTDIR)/pkg/timeave $(ROOTDIR)/pkg/mom_common $(ROOTDIR)/pkg/cal $(ROOTDIR)/eesupp/src $(ROOTDIR)/model/src
-INCLUDEDIRS =  /lib/x86_64-linux-gnu/openmpi/include ../code_offline3D $(ROOTDIR)/pkg/darwin $(ROOTDIR)/pkg/diagnostics $(ROOTDIR)/pkg/exf $(ROOTDIR)/pkg/gchem $(ROOTDIR)/pkg/generic_advdiff $(ROOTDIR)/pkg/gmredi $(ROOTDIR)/pkg/kpp $(ROOTDIR)/pkg/mdsio $(ROOTDIR)/pkg/mnc $(ROOTDIR)/pkg/mom_fluxform $(ROOTDIR)/pkg/mom_vecinv $(ROOTDIR)/pkg/monitor $(ROOTDIR)/pkg/offline $(ROOTDIR)/pkg/ptracers $(ROOTDIR)/pkg/rw $(ROOTDIR)/pkg/sbo $(ROOTDIR)/pkg/timeave $(ROOTDIR)/pkg/mom_common $(ROOTDIR)/pkg/cal $(ROOTDIR)/eesupp/inc $(ROOTDIR)/model/inc
+SOURCEDIRS  =  ../code_offline3D_CChange $(ROOTDIR)/pkg/darwin $(ROOTDIR)/pkg/diagnostics $(ROOTDIR)/pkg/exf $(ROOTDIR)/pkg/gchem $(ROOTDIR)/pkg/generic_advdiff $(ROOTDIR)/pkg/gmredi $(ROOTDIR)/pkg/kpp $(ROOTDIR)/pkg/mdsio $(ROOTDIR)/pkg/mnc $(ROOTDIR)/pkg/mom_fluxform $(ROOTDIR)/pkg/mom_vecinv $(ROOTDIR)/pkg/monitor $(ROOTDIR)/pkg/offline $(ROOTDIR)/pkg/ptracers $(ROOTDIR)/pkg/rw $(ROOTDIR)/pkg/sbo $(ROOTDIR)/pkg/timeave $(ROOTDIR)/pkg/mom_common $(ROOTDIR)/pkg/cal $(ROOTDIR)/eesupp/src $(ROOTDIR)/model/src
+INCLUDEDIRS =  /lib/x86_64-linux-gnu/openmpi/include ../code_offline3D_CChange $(ROOTDIR)/pkg/darwin $(ROOTDIR)/pkg/diagnostics $(ROOTDIR)/pkg/exf $(ROOTDIR)/pkg/gchem $(ROOTDIR)/pkg/generic_advdiff $(ROOTDIR)/pkg/gmredi $(ROOTDIR)/pkg/kpp $(ROOTDIR)/pkg/mdsio $(ROOTDIR)/pkg/mnc $(ROOTDIR)/pkg/mom_fluxform $(ROOTDIR)/pkg/mom_vecinv $(ROOTDIR)/pkg/monitor $(ROOTDIR)/pkg/offline $(ROOTDIR)/pkg/ptracers $(ROOTDIR)/pkg/rw $(ROOTDIR)/pkg/sbo $(ROOTDIR)/pkg/timeave $(ROOTDIR)/pkg/mom_common $(ROOTDIR)/pkg/cal $(ROOTDIR)/eesupp/inc $(ROOTDIR)/model/inc
 EXEDIR      = .
 EXECUTABLE  = $(EXEDIR)/mitgcmuv
 TOOLSDIR    = $(ROOTDIR)/tools
@@ -129,6 +129,7 @@ F77_SRC_FILES =  \
  darwin_tempfunc.F \
  darwin_tr_register.F \
  darwin_write_pickup.F \
+ ini_eos.F \
  kpp_output.F \
  offline_fields_load.F \
  offline_readparms.F \
@@ -860,7 +861,6 @@ F77_SRC_FILES =  \
  ini_cylinder_grid.F \
  ini_depths.F \
  ini_dynvars.F \
- ini_eos.F \
  ini_ffields.F \
  ini_fields.F \
  ini_forcing.F \
@@ -987,6 +987,7 @@ NON_AD_F77_SRC_FILES =  \
  darwin_tempfunc.F \
  darwin_tr_register.F \
  darwin_write_pickup.F \
+ ini_eos.F \
  offline_readparms.F \
  diag_calc_psivel.F \
  diag_cg2d.F \
@@ -1441,7 +1442,6 @@ NON_AD_F77_SRC_FILES =  \
  ini_cori.F \
  ini_curvilinear_grid.F \
  ini_cylinder_grid.F \
- ini_eos.F \
  ini_global_domain.F \
  ini_grid.F \
  ini_linear_phisurf.F \
@@ -1752,7 +1752,7 @@ CLEAN:
 	-rm -f oad_cp.[0-9][0-9][0-9].?????
 
 makefile:
-	$(TOOLSDIR)/genmake2  "-mpi" "-of" "/home/sauterey/BORIS/MIT-GIT/MITgcm/tools/build_options/linux_amd64_gfortran" "-mods=../code_offline3D"
+	$(TOOLSDIR)/genmake2  "-mpi" "-of" "/home/sauterey/BORIS/MIT-GIT/MITgcm/tools/build_options/linux_amd64_gfortran" "-mods=../code_offline3D_CChange"
 cleanlinks:
 	-find . -type l -exec rm {} \;
 
@@ -1771,7 +1771,7 @@ BUILD_INFO.h:
 	@echo Creating $@ ...
 	-echo "#define THISVER 'checkpoint67s'" > $@
 	-echo "#define THISUSER 'sauterey'" >> $@
-	-echo "#define THISDATE 'Thu 14 Mar 2024 07:54:51 PM CET'" >> $@
+	-echo "#define THISDATE 'Mon 23 Jun 2025 02:26:19 PM CEST'" >> $@
 	-echo "#define THISHOST 'c01'" >> $@
 
 # The normal chain of rules is (  .F - .f - .o  )
@@ -2270,9 +2270,9 @@ ini_masks_etc.o: ini_masks_etc.f
 # This section creates symbolic links
 
 
-#  These files are linked from ../code_offline3D ( aka ../code_offline3D )
- CPP_OPTIONS.h darwin_atmos.F darwin_carbon_chem.F darwin_check.F darwin_conserve_surface.F darwin_cons.F darwin_diagnostics_init.F darwin_diags.F darwin_exf_init_fixed.F darwin_exf_init_varia.F darwin_exf_load.F darwin_exf_readparms.F darwin_fe_chem.F darwin_fields_load.F darwin_forcing.F darwin_generate_allometric.F darwin_generate_constant.F darwin_generate_random.F DARWIN_INDICES.h darwin_init_chl.F darwin_init_fixed.F darwin_init_varia.F darwin_insol.F darwin_light.F darwin_light_radtrans.F darwin_monitor.F darwin_nut_supply.F DARWIN_OPTIONS.h darwin_plankton.F DARWIN_RADTRANS.h darwin_random.F darwin_read_params.F darwin_readparms.F darwin_read_pickup.F darwin_read_traitparams.F darwin_read_traits.F darwin_sinking.F DARWIN_SIZE.h darwin_spead_rates.F darwin_surfforcing.F darwin_surfforcing_init.F darwin_tempfunc.F DARWIN_TRAITPARAMS.h DARWIN_TRAITS.h darwin_tr_register.F darwin_write_pickup.F DIAGNOSTICS_SIZE.h EXF_OPTIONS.h GAD_OPTIONS.h GCHEM_OPTIONS.h GMREDI_OPTIONS.h kpp_output.F MNC_SIZE.h offline_fields_load.F OFFLINE.h OFFLINE_OPTIONS.h offline_readparms.F PTRACERS_SIZE.h RADTRANS_SIZE.h RW_MFLDS.h SIZE.h :
-	if [ ! -L $@ ]; then $(LN) ../code_offline3D/$@ $@; fi
+#  These files are linked from ../code_offline3D_CChange ( aka ../code_offline3D_CChange )
+ CPP_OPTIONS.h darwin_atmos.F darwin_carbon_chem.F darwin_check.F darwin_conserve_surface.F darwin_cons.F darwin_diagnostics_init.F darwin_diags.F darwin_exf_init_fixed.F darwin_exf_init_varia.F darwin_exf_load.F darwin_exf_readparms.F darwin_fe_chem.F darwin_fields_load.F darwin_forcing.F darwin_generate_allometric.F darwin_generate_constant.F darwin_generate_random.F DARWIN_INDICES.h darwin_init_chl.F darwin_init_fixed.F darwin_init_varia.F darwin_insol.F darwin_light.F darwin_light_radtrans.F darwin_monitor.F darwin_nut_supply.F DARWIN_OPTIONS.h darwin_plankton.F DARWIN_RADTRANS.h darwin_random.F darwin_read_params.F darwin_readparms.F darwin_read_pickup.F darwin_read_traitparams.F darwin_read_traits.F darwin_sinking.F DARWIN_SIZE.h darwin_spead_rates.F darwin_surfforcing.F darwin_surfforcing_init.F darwin_tempfunc.F DARWIN_TRAITPARAMS.h DARWIN_TRAITS.h darwin_tr_register.F darwin_write_pickup.F DIAGNOSTICS_SIZE.h EXF_OPTIONS.h GAD_OPTIONS.h GCHEM_OPTIONS.h GMREDI_OPTIONS.h ini_eos.F kpp_output.F MNC_SIZE.h offline_fields_load.F OFFLINE.h OFFLINE_OPTIONS.h offline_readparms.F PTRACERS_SIZE.h RADTRANS_SIZE.h RW_MFLDS.h SIZE.h :
+	if [ ! -L $@ ]; then $(LN) ../code_offline3D_CChange/$@ $@; fi
 
 #  These files are linked from $(ROOTDIR)/pkg/darwin ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/darwin )
  DARWIN_DIAGS.h DARWIN_EXF_FIELDS.h DARWIN_EXF_PARAMS.h DARWIN_FIELDS.h DARWIN_FLUX.h DARWIN_PARAMS.h :
@@ -2355,7 +2355,7 @@ ini_masks_etc.o: ini_masks_etc.f
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/eesupp/src/$@ $@; fi
 
 #  These files are linked from $(ROOTDIR)/model/src ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/model/src )
- adams_bashforth2.F adams_bashforth3.F add_walls2masks.F apply_forcing.F calc_3d_diffusivity.F calc_adv_flow.F calc_div_ghat.F calc_eddy_stress.F calc_grad_phi_fv.F calc_grad_phi_hyd.F calc_grad_phi_surf.F calc_grid_angles.F calc_gw.F calc_ivdc.F calc_oce_mxlayer.F calc_phi_hyd.F calc_r_star.F calc_surf_dr.F calc_viscosity.F calc_wsurf_tr.F cg2d_ex0.F cg2d.F cg2d_nsa.F cg2d_sr.F cg3d_ex0.F cg3d.F check_pickup.F config_check.F config_summary.F convective_adjustment.F convective_adjustment_ini.F convectively_mixtracer.F convective_weights.F correction_step.F cycle_ab_tracer.F cycle_tracer.F diags_oceanic_surf_flux.F diags_phi_hyd.F diags_phi_rlow.F diags_rho.F do_atmospheric_phys.F do_fields_blocking_exchanges.F do_oceanic_phys.F do_stagger_fields_exchanges.F do_statevars_diags.F do_statevars_tave.F do_the_model_io.F do_write_pickup.F dynamics.F external_fields_load.F external_forcing.F external_forcing_surf.F find_alpha.F find_hyd_press_1d.F find_rho.F forcing_surf_relax.F forward_step.F freesurf_rescale_g.F freeze_surface.F grad_sigma.F gsw_teos10.F impldiff.F ini_cartesian_grid.F ini_cg2d.F ini_cg3d.F ini_cori.F ini_curvilinear_grid.F ini_cylinder_grid.F ini_depths.F ini_dynvars.F ini_eos.F ini_ffields.F ini_fields.F ini_forcing.F ini_global_domain.F ini_grid.F ini_linear_phisurf.F ini_local_grid.F ini_masks_etc.F ini_mixing.F ini_mnc_vars.F ini_model_io.F ini_nh_fields.F ini_nh_vars.F ini_nlfs_vars.F ini_parms.F ini_p_ground.F ini_pressure.F ini_psurf.F ini_salt.F ini_sigma_hfac.F ini_spherical_polar_grid.F ini_theta.F initialise_fixed.F initialise_varia.F ini_vel.F ini_vertical_grid.F integrate_for_w.F integr_continuity.F load_fields_driver.F load_grid_spacing.F load_ref_files.F main_do_loop.F momentum_correction_step.F packages_boot.F packages_check.F packages_error_msg.F packages_init_fixed.F packages_init_variables.F packages_print_msg.F packages_readparms.F packages_unused_msg.F packages_write_pickup.F plot_field.F port_rand.F post_cg3d.F pre_cg3d.F pressure_for_eos.F read_pickup.F remove_mean.F reset_nlfs_vars.F rotate_spherical_polar_grid.F rotate_uv2en.F salt_integrate.F seawater.F set_defaults.F set_grid_factors.F set_parms.F set_ref_state.F solve_for_pressure.F solve_pentadiagonal.F solve_tridiagonal.F solve_uv_tridiago.F state_summary.F swfrac.F taueddy_init_varia.F taueddy_tendency_apply.F temp_integrate.F the_main_loop.F the_model_main.F thermodynamics.F timestep.F timestep_tracer.F timestep_wvel.F tracers_correction_step.F tracers_iigw_correction.F turnoff_model_io.F update_cg2d.F update_etah.F update_etaws.F update_masks_etc.F update_r_star.F update_sigma.F update_surf_dr.F write_grid.F write_pickup.F write_state.F :
+ adams_bashforth2.F adams_bashforth3.F add_walls2masks.F apply_forcing.F calc_3d_diffusivity.F calc_adv_flow.F calc_div_ghat.F calc_eddy_stress.F calc_grad_phi_fv.F calc_grad_phi_hyd.F calc_grad_phi_surf.F calc_grid_angles.F calc_gw.F calc_ivdc.F calc_oce_mxlayer.F calc_phi_hyd.F calc_r_star.F calc_surf_dr.F calc_viscosity.F calc_wsurf_tr.F cg2d_ex0.F cg2d.F cg2d_nsa.F cg2d_sr.F cg3d_ex0.F cg3d.F check_pickup.F config_check.F config_summary.F convective_adjustment.F convective_adjustment_ini.F convectively_mixtracer.F convective_weights.F correction_step.F cycle_ab_tracer.F cycle_tracer.F diags_oceanic_surf_flux.F diags_phi_hyd.F diags_phi_rlow.F diags_rho.F do_atmospheric_phys.F do_fields_blocking_exchanges.F do_oceanic_phys.F do_stagger_fields_exchanges.F do_statevars_diags.F do_statevars_tave.F do_the_model_io.F do_write_pickup.F dynamics.F external_fields_load.F external_forcing.F external_forcing_surf.F find_alpha.F find_hyd_press_1d.F find_rho.F forcing_surf_relax.F forward_step.F freesurf_rescale_g.F freeze_surface.F grad_sigma.F gsw_teos10.F impldiff.F ini_cartesian_grid.F ini_cg2d.F ini_cg3d.F ini_cori.F ini_curvilinear_grid.F ini_cylinder_grid.F ini_depths.F ini_dynvars.F ini_ffields.F ini_fields.F ini_forcing.F ini_global_domain.F ini_grid.F ini_linear_phisurf.F ini_local_grid.F ini_masks_etc.F ini_mixing.F ini_mnc_vars.F ini_model_io.F ini_nh_fields.F ini_nh_vars.F ini_nlfs_vars.F ini_parms.F ini_p_ground.F ini_pressure.F ini_psurf.F ini_salt.F ini_sigma_hfac.F ini_spherical_polar_grid.F ini_theta.F initialise_fixed.F initialise_varia.F ini_vel.F ini_vertical_grid.F integrate_for_w.F integr_continuity.F load_fields_driver.F load_grid_spacing.F load_ref_files.F main_do_loop.F momentum_correction_step.F packages_boot.F packages_check.F packages_error_msg.F packages_init_fixed.F packages_init_variables.F packages_print_msg.F packages_readparms.F packages_unused_msg.F packages_write_pickup.F plot_field.F port_rand.F post_cg3d.F pre_cg3d.F pressure_for_eos.F read_pickup.F remove_mean.F reset_nlfs_vars.F rotate_spherical_polar_grid.F rotate_uv2en.F salt_integrate.F seawater.F set_defaults.F set_grid_factors.F set_parms.F set_ref_state.F solve_for_pressure.F solve_pentadiagonal.F solve_tridiagonal.F solve_uv_tridiago.F state_summary.F swfrac.F taueddy_init_varia.F taueddy_tendency_apply.F temp_integrate.F the_main_loop.F the_model_main.F thermodynamics.F timestep.F timestep_tracer.F timestep_wvel.F tracers_correction_step.F tracers_iigw_correction.F turnoff_model_io.F update_cg2d.F update_etah.F update_etaws.F update_masks_etc.F update_r_star.F update_sigma.F update_surf_dr.F write_grid.F write_pickup.F write_state.F :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/model/src/$@ $@; fi
 
 #  These files are linked from /lib/x86_64-linux-gnu/openmpi/include ( aka /lib/x86_64-linux-gnu/openmpi/include )
