@@ -22,6 +22,6 @@ cp -r $initdir/../code_offline3D/ $rundir
 sleep 10s
 
 cd $rundir
-mpirun -np 40 ./mitgcmuv
+mpirun -np 40 ./mitgcmuv_DD
 sleep 10s
 
