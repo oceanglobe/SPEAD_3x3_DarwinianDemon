@@ -375,13 +375,13 @@ c# include "ECCO_CPPOPTIONS.h"
 c#endif
 
 
-C BOP
+CBOP
 C    !ROUTINE: DARWIN_OPTIONS.h
 C    !INTERFACE:
 
 C    !DESCRIPTION:
 C options for darwin package
-C EOP
+CEOP
 
 C tracer selection
 
@@ -924,6 +924,7 @@ C Contains indices into diagnostics array
       integer iDenit
       integer iDenitN
       integer iPPplank
+      integer iPPplank2
       integer iGRplank
       integer iGrGn
       integer iConsDIN
@@ -940,6 +941,7 @@ C Contains indices into diagnostics array
       PARAMETER(iConsFe= 7)
       PARAMETER(iConsDIN=8)
       PARAMETER(iPPplank=9)
+      PARAMETER(iPPplank2=9)
       PARAMETER(iGRplank=iPPplank+nplank)
       PARAMETER(iGrGn=iGRplank+nplank)
       PARAMETER(darwin_nDiag=iGrGn+nplank-1)
@@ -2957,6 +2959,38 @@ C           print*, 'biovol of ', jp, 'before DD =', biovol(jp)
 C           print*, 'limiting factors: N = ', a_ksatNO3(g)/(NO3+NO2+NH4)
 C     &     , '; P =', a_ksatPO4(g)/PO4, '; F =', a_ksatFeT(g)/FeT
 
+            IF (a_ksatNO3(g)/(NO3+NO2+NH4) .EQ. 
+     &      MAX(a_ksatNO3(g)/(NO3+NO2+NH4),
+     &      a_ksatPO4(g)/PO4,a_ksatFeT(g)/FeT)) THEN
+              IF((NO3+NO2+NH4) .GT. 0D0) THEN
+              biovol(jp) = ((NO3+NO2+NH4)*b_PCmax(g)/(a_ksatNO3(g)*
+     &        (b_ksatNO3(g)-b_PCmax(g))))**(1/b_ksatNO3(g))
+C              IF (jp .EQ. 1) THEN
+C                print*,'size (N)',jp,biovol(jp),NO3+NO2+NH4,b_PCmax(g)
+C     &                ,a_ksatNO3(g),b_ksatNO3(g)
+C              ENDIF
+              ENDIF
+            ELSEIF (a_ksatPO4(g)/PO4 .EQ. 
+     &      MAX(a_ksatNO3(g)/(NO3+NO2+NH4),
+     &      a_ksatPO4(g)/PO4,a_ksatFeT(g)/FeT)) THEN
+              IF(PO4 .GT. 0D0) THEN
+              biovol(jp) = ((PO4)*b_PCmax(g)/(a_ksatPO4(g)*
+     &        (b_ksatPO4(g)-b_PCmax(g))))**(1/b_ksatPO4(g))
+C              IF (jp .EQ. 1) THEN
+C                print*,'size (P)',jp,biovol(jp),PO4,b_PCmax(g)
+C     &                ,a_ksatPO4(g),b_ksatPO4(g)
+C              ENDIF
+              ENDIF
+            ELSE
+              IF(FeT .GT. 0D0) THEN
+              biovol(jp) = ((FeT)*b_PCmax(g)/(a_ksatFeT(g)*
+     &        (b_ksatFeT(g)-b_PCmax(g))))**(1/b_ksatFeT(g))
+C              IF (jp .EQ. 1) THEN
+C                print*,'size (F)',jp,biovol(jp),FeT,b_PCmax(g)
+C     &                ,a_ksatFeT(g),b_ksatFeT(g)
+C              ENDIF
+              ENDIF
+            ENDIF
 
 C           print*, 'biovol of ', jp, 'after DD =', biovol(jp)
 
@@ -2967,6 +3001,8 @@ C In an attempt to avoid bugs with some advection/diffusion schemes, I
 C now impose that PCmax must be positve (Le Gland, 01/06/2021)
             PARoptmin = a_PARoptmin(g) * biovol(jp)**b_PARoptmin(g)
             
+            PARopt(jp) = PARoptmin + SQRT(PARoptmin**2 + 
+     &      (3.2-2)*PARtot*PARoptmin + PARtot**2)
 
             ksatPAR(jp) = LOG(1+PARchi(jp))
      &                  / (11.574*PARopt(jp)/2.5)

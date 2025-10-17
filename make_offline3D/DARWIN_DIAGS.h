@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/darwin/DARWIN_DIAGS.h
+../code_offline3D/DARWIN_DIAGS.h

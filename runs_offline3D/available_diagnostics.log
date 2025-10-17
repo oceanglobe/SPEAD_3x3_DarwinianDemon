@@ -654,102 +654,103 @@
    632 |KPPgTr30| 23 |       |WM      LR|mmolC/.m^3/s    |KPP non-local Flux of c02
    633 |Add2EmP |  1 |       |SM      U1|kg/m^2/s        |additional EmP from salt relaxation
    634 |PP      | 23 |       |SMRP    MR|mmol C/m^3/s    |Primary Production
-   635 |Nfix    | 23 |       |SMRP    MR|mmol N/m^3/s    |N fixation
-   636 |Denit   | 23 |       |SMRP    MR|mmol N/m^3/s    |Denitrification
-   637 |DenitN  | 23 |       |SMRP    MR|mmol N/m^3/s    |Nitrogen loss due to denitrification
-   638 |atten   | 23 |       |SMRP    MR|1               |attenuation in layer
-   639 |PARF    | 23 |       |SMRP    LR|uEin/m^2/s      |PAR at top of layer
-   640 |PAR     | 23 |       |SMRP    MR|uEin/m^2/s      |total PAR at layer center
-   641 |C_DIN   | 23 |       |SM P    MR|mmolN/m3/s      |consumption of DIN
-   642 |C_PO4   | 23 |       |SM P    MR|mmolP/m3/s      |consumption of PO4
-   643 |C_Si    | 23 |       |SM P    MR|mmolSi/m3/s     |consumption of Si
-   644 |C_Fe    | 23 |       |SM P    MR|mmolFe/m3/s     |consumption of Fe
-   645 |S_DIN   | 23 |       |SM      MR|mmolN/m3/s      |non-transport source of DIN
-   646 |S_PO4   | 23 |       |SM      MR|mmolP/m3/s      |non-transport source of PO4
-   647 |S_Si    | 23 |       |SM      MR|mmolSi/m3/s     |non-transport source of Si
-   648 |S_Fe    | 23 |       |SM      MR|mmolFe/m3/s     |non-transport source of Fe
-   649 |gDAR01  | 23 |       |SMR     MR|mmolC//s        |DIC tendency from DARWIN
-   650 |gDAR02  | 23 |       |SMR     MR|mmolN//s        |NO3 tendency from DARWIN
-   651 |gDAR03  | 23 |       |SMR     MR|mmolN//s        |NO2 tendency from DARWIN
-   652 |gDAR04  | 23 |       |SMR     MR|mmolN//s        |NH4 tendency from DARWIN
-   653 |gDAR05  | 23 |       |SMR     MR|mmolP//s        |PO4 tendency from DARWIN
-   654 |gDAR06  | 23 |       |SMR     MR|mmolFe/s        |FeT tendency from DARWIN
-   655 |gDAR07  | 23 |       |SMR     MR|mmolSi/s        |SiO2 tendency from DARWIN
-   656 |gDAR08  | 23 |       |SMR     MR|mmolC//s        |DOC tendency from DARWIN
-   657 |gDAR09  | 23 |       |SMR     MR|mmolN//s        |DON tendency from DARWIN
-   658 |gDAR10  | 23 |       |SMR     MR|mmolP//s        |DOP tendency from DARWIN
-   659 |gDAR11  | 23 |       |SMR     MR|mmolFe/s        |DOFe tendency from DARWIN
-   660 |gDAR12  | 23 |       |SMR     MR|mmolC//s        |POC tendency from DARWIN
-   661 |gDAR13  | 23 |       |SMR     MR|mmolN//s        |PON tendency from DARWIN
-   662 |gDAR14  | 23 |       |SMR     MR|mmolP//s        |POP tendency from DARWIN
-   663 |gDAR15  | 23 |       |SMR     MR|mmolFe/s        |POFe tendency from DARWIN
-   664 |gDAR16  | 23 |       |SMR     MR|mmolSi/s        |POSi tendency from DARWIN
-   665 |gDAR17  | 23 |       |SMR     MR|mmolC//s        |PIC tendency from DARWIN
-   666 |gDAR18  | 23 |       |SMR     MR|mmoleq/s        |ALK tendency from DARWIN
-   667 |gDAR19  | 23 |       |SMR     MR|mmolO//s        |O2 tendency from DARWIN
-   668 |gDAR20  | 23 |       |SMR     MR|mmolC//s        |c01 tendency from DARWIN
-   669 |gDAR21  | 23 |       |SMR     MR|logxmm/s        |xm01 tendency from DARWIN
-   670 |gDAR22  | 23 |       |SMR     MR|degCmm/s        |ym01 tendency from DARWIN
-   671 |gDAR23  | 23 |       |SMR     MR|logzmm/s        |zm01 tendency from DARWIN
-   672 |gDAR24  | 23 |       |SMR     MR|logx^2/s        |xxv01 tendency from DARWIN
-   673 |gDAR25  | 23 |       |SMR     MR|degC^2/s        |yyv01 tendency from DARWIN
-   674 |gDAR26  | 23 |       |SMR     MR|logz^2/s        |zzv01 tendency from DARWIN
-   675 |gDAR27  | 23 |       |SMR     MR|logxde/s        |xyc01 tendency from DARWIN
-   676 |gDAR28  | 23 |       |SMR     MR|logxlo/s        |xzc01 tendency from DARWIN
-   677 |gDAR29  | 23 |       |SMR     MR|degClo/s        |yzc01 tendency from DARWIN
-   678 |gDAR30  | 23 |       |SMR     MR|mmolC//s        |c02 tendency from DARWIN
-   679 |PP0001  | 23 |       |SMRP    MR|mmol C/m^3/s    |Primary Production plankton    1
-   680 |GR0001  | 23 |       |SMRP    MR|mmol C/m^3/s    |Grazing loss of plankton    1
-   681 |GrGn0001| 23 |       |SMRP    MR|mmol C/m^3/s    |Grazing gain of plankton    1
-   682 |PP0002  | 23 |       |SMRP    MR|mmol C/m^3/s    |Primary Production plankton    2
-   683 |GR0002  | 23 |       |SMRP    MR|mmol C/m^3/s    |Grazing loss of plankton    2
-   684 |GrGn0002| 23 |       |SMRP    MR|mmol C/m^3/s    |Grazing gain of plankton    2
-   685 |sfcSolFe|  1 |       |SM P    L1|mmol Fe/m2/s    |Soluble iron input at sea surface
-   686 |pH      | 23 |       |SMR     MR|1               |pH
-   687 |pCO2    | 23 |       |SMRP    MR|atm             |Partial Pressure of CO2
-   688 |fugfCO2 |  1 |       |SM P    L1|atm             |Fugacity factor of CO2 (atm)
-   689 |fluxCO2 |  1 |       |SM      L1|mmol C/m2/s     |Flux of CO2 - air-sea exch
-   690 |gDICsurf|  1 |       |SM      L1|mmol C/m3/s     |Tendency of DIC due to air-sea exch + oldvirt.flux
-   691 |gALKsurf|  1 |       |SM      L1|mmol eq/m3/s    |Tendency of ALK due to oldvirt.flux
-   692 |gO2surf |  1 |       |SM      L1|mmol O2/m3/s    |Tendency of O2 due to air-sea exch
-   693 |surfPAR |  1 |       |SM P    L1|uEin/m^2/s      |PAR forcing at surface
-   694 |surfiron|  1 |       |SM P    L1|mmol Fe/m^2/s   |iron forcing at surface
-   695 |DARice  |  1 |       |SM P    L1|m^2/m^2         |ice area fraction
-   696 |DARwind |  1 |       |SM P    L1|m/s             |wind speed used for carbon exchange
-   697 |surfpCO2|  1 |       |SM P    L1|mol/mol         |surface pCO2
-   698 |GC_Tr01 | 23 |       |SMR     MR|mmol C/         |DIC concentration before GCHEM
-   699 |GC_Tr02 | 23 |       |SMR     MR|mmol N/         |NO3 concentration before GCHEM
+   635 |PP2     | 23 |       |SMRP    MR|mmol C/m^3/s    |Primary Production
+   636 |Nfix    | 23 |       |SMRP    MR|mmol N/m^3/s    |N fixation
+   637 |Denit   | 23 |       |SMRP    MR|mmol N/m^3/s    |Denitrification
+   638 |DenitN  | 23 |       |SMRP    MR|mmol N/m^3/s    |Nitrogen loss due to denitrification
+   639 |atten   | 23 |       |SMRP    MR|1               |attenuation in layer
+   640 |PARF    | 23 |       |SMRP    LR|uEin/m^2/s      |PAR at top of layer
+   641 |PAR     | 23 |       |SMRP    MR|uEin/m^2/s      |total PAR at layer center
+   642 |C_DIN   | 23 |       |SM P    MR|mmolN/m3/s      |consumption of DIN
+   643 |C_PO4   | 23 |       |SM P    MR|mmolP/m3/s      |consumption of PO4
+   644 |C_Si    | 23 |       |SM P    MR|mmolSi/m3/s     |consumption of Si
+   645 |C_Fe    | 23 |       |SM P    MR|mmolFe/m3/s     |consumption of Fe
+   646 |S_DIN   | 23 |       |SM      MR|mmolN/m3/s      |non-transport source of DIN
+   647 |S_PO4   | 23 |       |SM      MR|mmolP/m3/s      |non-transport source of PO4
+   648 |S_Si    | 23 |       |SM      MR|mmolSi/m3/s     |non-transport source of Si
+   649 |S_Fe    | 23 |       |SM      MR|mmolFe/m3/s     |non-transport source of Fe
+   650 |gDAR01  | 23 |       |SMR     MR|mmolC//s        |DIC tendency from DARWIN
+   651 |gDAR02  | 23 |       |SMR     MR|mmolN//s        |NO3 tendency from DARWIN
+   652 |gDAR03  | 23 |       |SMR     MR|mmolN//s        |NO2 tendency from DARWIN
+   653 |gDAR04  | 23 |       |SMR     MR|mmolN//s        |NH4 tendency from DARWIN
+   654 |gDAR05  | 23 |       |SMR     MR|mmolP//s        |PO4 tendency from DARWIN
+   655 |gDAR06  | 23 |       |SMR     MR|mmolFe/s        |FeT tendency from DARWIN
+   656 |gDAR07  | 23 |       |SMR     MR|mmolSi/s        |SiO2 tendency from DARWIN
+   657 |gDAR08  | 23 |       |SMR     MR|mmolC//s        |DOC tendency from DARWIN
+   658 |gDAR09  | 23 |       |SMR     MR|mmolN//s        |DON tendency from DARWIN
+   659 |gDAR10  | 23 |       |SMR     MR|mmolP//s        |DOP tendency from DARWIN
+   660 |gDAR11  | 23 |       |SMR     MR|mmolFe/s        |DOFe tendency from DARWIN
+   661 |gDAR12  | 23 |       |SMR     MR|mmolC//s        |POC tendency from DARWIN
+   662 |gDAR13  | 23 |       |SMR     MR|mmolN//s        |PON tendency from DARWIN
+   663 |gDAR14  | 23 |       |SMR     MR|mmolP//s        |POP tendency from DARWIN
+   664 |gDAR15  | 23 |       |SMR     MR|mmolFe/s        |POFe tendency from DARWIN
+   665 |gDAR16  | 23 |       |SMR     MR|mmolSi/s        |POSi tendency from DARWIN
+   666 |gDAR17  | 23 |       |SMR     MR|mmolC//s        |PIC tendency from DARWIN
+   667 |gDAR18  | 23 |       |SMR     MR|mmoleq/s        |ALK tendency from DARWIN
+   668 |gDAR19  | 23 |       |SMR     MR|mmolO//s        |O2 tendency from DARWIN
+   669 |gDAR20  | 23 |       |SMR     MR|mmolC//s        |c01 tendency from DARWIN
+   670 |gDAR21  | 23 |       |SMR     MR|logxmm/s        |xm01 tendency from DARWIN
+   671 |gDAR22  | 23 |       |SMR     MR|degCmm/s        |ym01 tendency from DARWIN
+   672 |gDAR23  | 23 |       |SMR     MR|logzmm/s        |zm01 tendency from DARWIN
+   673 |gDAR24  | 23 |       |SMR     MR|logx^2/s        |xxv01 tendency from DARWIN
+   674 |gDAR25  | 23 |       |SMR     MR|degC^2/s        |yyv01 tendency from DARWIN
+   675 |gDAR26  | 23 |       |SMR     MR|logz^2/s        |zzv01 tendency from DARWIN
+   676 |gDAR27  | 23 |       |SMR     MR|logxde/s        |xyc01 tendency from DARWIN
+   677 |gDAR28  | 23 |       |SMR     MR|logxlo/s        |xzc01 tendency from DARWIN
+   678 |gDAR29  | 23 |       |SMR     MR|degClo/s        |yzc01 tendency from DARWIN
+   679 |gDAR30  | 23 |       |SMR     MR|mmolC//s        |c02 tendency from DARWIN
+   680 |PP0001  | 23 |       |SMRP    MR|mmol C/m^3/s    |Primary Production plankton    1
+   681 |GR0001  | 23 |       |SMRP    MR|mmol C/m^3/s    |Grazing loss of plankton    1
+   682 |GrGn0001| 23 |       |SMRP    MR|mmol C/m^3/s    |Grazing gain of plankton    1
+   683 |PP0002  | 23 |       |SMRP    MR|mmol C/m^3/s    |Primary Production plankton    2
+   684 |GR0002  | 23 |       |SMRP    MR|mmol C/m^3/s    |Grazing loss of plankton    2
+   685 |GrGn0002| 23 |       |SMRP    MR|mmol C/m^3/s    |Grazing gain of plankton    2
+   686 |sfcSolFe|  1 |       |SM P    L1|mmol Fe/m2/s    |Soluble iron input at sea surface
+   687 |pH      | 23 |       |SMR     MR|1               |pH
+   688 |pCO2    | 23 |       |SMRP    MR|atm             |Partial Pressure of CO2
+   689 |fugfCO2 |  1 |       |SM P    L1|atm             |Fugacity factor of CO2 (atm)
+   690 |fluxCO2 |  1 |       |SM      L1|mmol C/m2/s     |Flux of CO2 - air-sea exch
+   691 |gDICsurf|  1 |       |SM      L1|mmol C/m3/s     |Tendency of DIC due to air-sea exch + oldvirt.flux
+   692 |gALKsurf|  1 |       |SM      L1|mmol eq/m3/s    |Tendency of ALK due to oldvirt.flux
+   693 |gO2surf |  1 |       |SM      L1|mmol O2/m3/s    |Tendency of O2 due to air-sea exch
+   694 |surfPAR |  1 |       |SM P    L1|uEin/m^2/s      |PAR forcing at surface
+   695 |surfiron|  1 |       |SM P    L1|mmol Fe/m^2/s   |iron forcing at surface
+   696 |DARice  |  1 |       |SM P    L1|m^2/m^2         |ice area fraction
+   697 |DARwind |  1 |       |SM P    L1|m/s             |wind speed used for carbon exchange
+   698 |surfpCO2|  1 |       |SM P    L1|mol/mol         |surface pCO2
+   699 |GC_Tr01 | 23 |       |SMR     MR|mmol C/         |DIC concentration before GCHEM
+   700 |GC_Tr02 | 23 |       |SMR     MR|mmol N/         |NO3 concentration before GCHEM
 ------------------------------------------------------------------------------------
   Num  |<-Name->|Levs|  mate |<- code ->|<--  Units   -->|<- Tile (max=80c)         
 ------------------------------------------------------------------------------------
-   700 |GC_Tr03 | 23 |       |SMR     MR|mmol N/         |NO2 concentration before GCHEM
-   701 |GC_Tr04 | 23 |       |SMR     MR|mmol N/         |NH4 concentration before GCHEM
-   702 |GC_Tr05 | 23 |       |SMR     MR|mmol P/         |PO4 concentration before GCHEM
-   703 |GC_Tr06 | 23 |       |SMR     MR|mmol Fe         |FeT concentration before GCHEM
-   704 |GC_Tr07 | 23 |       |SMR     MR|mmol Si         |SiO2 concentration before GCHEM
-   705 |GC_Tr08 | 23 |       |SMR     MR|mmol C/         |DOC concentration before GCHEM
-   706 |GC_Tr09 | 23 |       |SMR     MR|mmol N/         |DON concentration before GCHEM
-   707 |GC_Tr10 | 23 |       |SMR     MR|mmol P/         |DOP concentration before GCHEM
-   708 |GC_Tr11 | 23 |       |SMR     MR|mmol Fe         |DOFe concentration before GCHEM
-   709 |GC_Tr12 | 23 |       |SMR     MR|mmol C/         |POC concentration before GCHEM
-   710 |GC_Tr13 | 23 |       |SMR     MR|mmol N/         |PON concentration before GCHEM
-   711 |GC_Tr14 | 23 |       |SMR     MR|mmol P/         |POP concentration before GCHEM
-   712 |GC_Tr15 | 23 |       |SMR     MR|mmol Fe         |POFe concentration before GCHEM
-   713 |GC_Tr16 | 23 |       |SMR     MR|mmol Si         |POSi concentration before GCHEM
-   714 |GC_Tr17 | 23 |       |SMR     MR|mmol C/         |PIC concentration before GCHEM
-   715 |GC_Tr18 | 23 |       |SMR     MR|mmol eq         |ALK concentration before GCHEM
-   716 |GC_Tr19 | 23 |       |SMR     MR|mmol O/         |O2 concentration before GCHEM
-   717 |GC_Tr20 | 23 |       |SMR     MR|mmol C/         |c01 concentration before GCHEM
-   718 |GC_Tr21 | 23 |       |SMR     MR|logx mm         |xm01 concentration before GCHEM
-   719 |GC_Tr22 | 23 |       |SMR     MR|degC mm         |ym01 concentration before GCHEM
-   720 |GC_Tr23 | 23 |       |SMR     MR|logz mm         |zm01 concentration before GCHEM
-   721 |GC_Tr24 | 23 |       |SMR     MR|logx^2          |xxv01 concentration before GCHEM
-   722 |GC_Tr25 | 23 |       |SMR     MR|degC^2          |yyv01 concentration before GCHEM
-   723 |GC_Tr26 | 23 |       |SMR     MR|logz^2          |zzv01 concentration before GCHEM
-   724 |GC_Tr27 | 23 |       |SMR     MR|logx de         |xyc01 concentration before GCHEM
-   725 |GC_Tr28 | 23 |       |SMR     MR|logx lo         |xzc01 concentration before GCHEM
-   726 |GC_Tr29 | 23 |       |SMR     MR|degC lo         |yzc01 concentration before GCHEM
-   727 |GC_Tr30 | 23 |       |SMR     MR|mmol C/         |c02 concentration before GCHEM
+   701 |GC_Tr03 | 23 |       |SMR     MR|mmol N/         |NO2 concentration before GCHEM
+   702 |GC_Tr04 | 23 |       |SMR     MR|mmol N/         |NH4 concentration before GCHEM
+   703 |GC_Tr05 | 23 |       |SMR     MR|mmol P/         |PO4 concentration before GCHEM
+   704 |GC_Tr06 | 23 |       |SMR     MR|mmol Fe         |FeT concentration before GCHEM
+   705 |GC_Tr07 | 23 |       |SMR     MR|mmol Si         |SiO2 concentration before GCHEM
+   706 |GC_Tr08 | 23 |       |SMR     MR|mmol C/         |DOC concentration before GCHEM
+   707 |GC_Tr09 | 23 |       |SMR     MR|mmol N/         |DON concentration before GCHEM
+   708 |GC_Tr10 | 23 |       |SMR     MR|mmol P/         |DOP concentration before GCHEM
+   709 |GC_Tr11 | 23 |       |SMR     MR|mmol Fe         |DOFe concentration before GCHEM
+   710 |GC_Tr12 | 23 |       |SMR     MR|mmol C/         |POC concentration before GCHEM
+   711 |GC_Tr13 | 23 |       |SMR     MR|mmol N/         |PON concentration before GCHEM
+   712 |GC_Tr14 | 23 |       |SMR     MR|mmol P/         |POP concentration before GCHEM
+   713 |GC_Tr15 | 23 |       |SMR     MR|mmol Fe         |POFe concentration before GCHEM
+   714 |GC_Tr16 | 23 |       |SMR     MR|mmol Si         |POSi concentration before GCHEM
+   715 |GC_Tr17 | 23 |       |SMR     MR|mmol C/         |PIC concentration before GCHEM
+   716 |GC_Tr18 | 23 |       |SMR     MR|mmol eq         |ALK concentration before GCHEM
+   717 |GC_Tr19 | 23 |       |SMR     MR|mmol O/         |O2 concentration before GCHEM
+   718 |GC_Tr20 | 23 |       |SMR     MR|mmol C/         |c01 concentration before GCHEM
+   719 |GC_Tr21 | 23 |       |SMR     MR|logx mm         |xm01 concentration before GCHEM
+   720 |GC_Tr22 | 23 |       |SMR     MR|degC mm         |ym01 concentration before GCHEM
+   721 |GC_Tr23 | 23 |       |SMR     MR|logz mm         |zm01 concentration before GCHEM
+   722 |GC_Tr24 | 23 |       |SMR     MR|logx^2          |xxv01 concentration before GCHEM
+   723 |GC_Tr25 | 23 |       |SMR     MR|degC^2          |yyv01 concentration before GCHEM
+   724 |GC_Tr26 | 23 |       |SMR     MR|logz^2          |zzv01 concentration before GCHEM
+   725 |GC_Tr27 | 23 |       |SMR     MR|logx de         |xyc01 concentration before GCHEM
+   726 |GC_Tr28 | 23 |       |SMR     MR|logx lo         |xzc01 concentration before GCHEM
+   727 |GC_Tr29 | 23 |       |SMR     MR|degC lo         |yzc01 concentration before GCHEM
+   728 |GC_Tr30 | 23 |       |SMR     MR|mmol C/         |c02 concentration before GCHEM
 ------------------------------------------------------------------------------------
   Num  |<-Name->|Levs|  mate |<- code ->|<--  Units   -->|<- Tile (max=80c)         
 ------------------------------------------------------------------------------------

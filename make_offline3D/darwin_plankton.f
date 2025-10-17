@@ -375,13 +375,13 @@ c# include "ECCO_CPPOPTIONS.h"
 c#endif
 
 
-C BOP
+CBOP
 C    !ROUTINE: DARWIN_OPTIONS.h
 C    !INTERFACE:
 
 C    !DESCRIPTION:
 C options for darwin package
-C EOP
+CEOP
 
 C tracer selection
 
@@ -906,6 +906,7 @@ C Contains indices into diagnostics array
       integer iDenit
       integer iDenitN
       integer iPPplank
+      integer iPPplank2
       integer iGRplank
       integer iGrGn
       integer iConsDIN
@@ -922,6 +923,7 @@ C Contains indices into diagnostics array
       PARAMETER(iConsFe= 7)
       PARAMETER(iConsDIN=8)
       PARAMETER(iPPplank=9)
+      PARAMETER(iPPplank2=9)
       PARAMETER(iGRplank=iPPplank+nplank)
       PARAMETER(iGrGn=iGRplank+nplank)
       PARAMETER(darwin_nDiag=iGrGn+nplank-1)
@@ -2984,7 +2986,7 @@ C       ENDIF
           dmndt(j,jp) = dmndt(j,jp) + a_d1(j,jp)*vr_tr(j,jp)
 C         dvrdt(j,jp) = a_d2(j,jp)*(vr_tr(j,jp)**2)
           dvrdt(j,jp) = dvrdt(j,jp) + a_d2(j,jp)*(vr_tr(j,jp)**2)
-     &                + 2*gcom(j)*numut_tr(j,jp)
+     &                + 2*gcom(j)*numut_tr(j,jp)     
         END DO
 C Terms occurring when num_trait(j) > 2
 C       DO jc = 1,num_cov(j)
@@ -3139,13 +3141,6 @@ C Parameterization of Kill The Winner (KTW) preferential grazing (Le Gland, 27/0
         ENDDO
         DO jc = 1, num_cov(j)
           dcvdt(j,jc) = dcvdt(j,jc) + coeff_KTW(j)*cv_tr(j,jc)
-        ENDDO
-
-C When variance is 0, prevent it to go below Boris (28/11/24)
-        DO jp = 1, num_trait(j)
-          IF (vr_tr(j,jp) .EQ. 0D0) THEN
-            dvrdt(j,jp) = MAX(0D0,dvrdt(j,jp))
-          ENDIF
         ENDDO
 
 c        DO jp = 1, num_trait(j)

@@ -9,7 +9,7 @@
 #SBATCH --mail-user=bsauterey@icm.csic.es
 
 export initdir=/home/sauterey/BORIS/MIT-GIT/DARWIN/SPEAD_cont_3D/runs_offline3D
-export rundir=/home/sauterey/BORIS/MIT-GIT/DARWIN/SPEAD_cont_3D/runs_offline3D/OUTPUT/META-DATA/Run_final_mutT_1e2_mutS_1e3_mutL_1e3_new_higherPARoptmin_noLMaxcap/
+export rundir=/home/sauterey/BORIS/MIT-GIT/DARWIN/SPEAD_cont_3D/runs_offline3D/OUTPUT/META-DATA/test/
 mkdir $rundir
 cp $initdir/mitgcmuv $rundir
 cp $initdir/POLY3.COEFFS $rundir

@@ -1,1 +1,1 @@
-../code_offline3D_CChange/offline_readparms.F
+../code_offline3D/offline_readparms.F

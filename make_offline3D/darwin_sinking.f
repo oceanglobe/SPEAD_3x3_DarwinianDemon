@@ -375,13 +375,13 @@ c# include "ECCO_CPPOPTIONS.h"
 c#endif
 
 
-C BOP
+CBOP
 C    !ROUTINE: DARWIN_OPTIONS.h
 C    !INTERFACE:
 
 C    !DESCRIPTION:
 C options for darwin package
-C EOP
+CEOP
 
 C tracer selection
 
@@ -514,15 +514,15 @@ C    !INTERFACE:
 C    include SIZE.h
 C    !DESCRIPTION: \bv
 C     *==========================================================*
-C     | SIZE.h Declare size of underlying computational grid.     
+C     | SIZE.h Declare size of underlying computational grid.
 C     *==========================================================*
-C     | The design here support a three-dimensional model grid    
-C     | with indices I,J and K. The three-dimensional domain      
-C     | is comprised of nPx*nSx blocks of size sNx along one axis 
-C     | nPy*nSy blocks of size sNy along another axis and one     
-C     | block of size Nz along the final axis.                    
-C     | Blocks have overlap regions of size OLx and OLy along the 
-C     | dimensions that are subdivided.                           
+C     | The design here support a three-dimensional model grid
+C     | with indices I,J and K. The three-dimensional domain
+C     | is comprised of nPx*nSx blocks of size sNx along one axis
+C     | nPy*nSy blocks of size sNy along another axis and one
+C     | block of size Nz along the final axis.
+C     | Blocks have overlap regions of size OLx and OLy along the
+C     | dimensions that are subdivided.
 C     *==========================================================*
 C     \ev
 CEOP
@@ -551,16 +551,16 @@ C     Nr  :: No. points in Z for full process domain.
       INTEGER Nr
       PARAMETER (
      &           sNx =  36,
-     &           sNy =  15,
+     &           sNy =  40,
      &           OLx =   4,
      &           OLy =   4,
      &           nSx =   1,
      &           nSy =   1,
-     &           nPx =   4,
-     &           nPy =   6,
+     &           nPx =   10,
+     &           nPy =   4,
      &           Nx  = sNx*nSx*nPx,
      &           Ny  = sNy*nSy*nPy,
-     &           Nr  =  22)
+     &           Nr  =  23)
 
 C     MAX_OLX :: Set to the maximum overlap region size of any array
 C     MAX_OLY    that will be exchanged. Controls the sizing of exch
@@ -569,7 +569,6 @@ C                routine buffers.
       INTEGER MAX_OLY
       PARAMETER ( MAX_OLX = OLx,
      &            MAX_OLY = OLy )
-
 c#include "EEPARAMS.h"
 C
 CBOP
@@ -2813,6 +2812,38 @@ C Must apply to all tracers (Le Gland, 18/03/2021)
        ENDDO
       ENDDO
 
+      DO k=1,Nr
+       DO j=jMin,jMax
+        DO i=iMin,iMax
+         dzup = DRF(k)*hFacC(i,j,k,bi,bj)
+         IF (k.LT.Nr) THEN
+           dzdn = DRF(k+1)*hFacC(i,j,k+1,bi,bj)
+         ELSE
+           dzdn = 0.D0
+         ENDIF
+         IF (dzup .GT. 0D0 .AND. dzdn .EQ. 0D0) THEN
+          flux = wPIC_sink*MAX(0.0, Ptr(i,j,k,bi,bj,iPIC))
+          gTr(i,j,k  ,iPIC ) = gTr(i,j,k  ,iPIC ) - flux/dzup
+          flux = wC_sink*MAX(0.0, Ptr(i,j,k,bi,bj,iPOC))
+          gTr(i,j,k  ,iPOC ) = gTr(i,j,k  ,iPOC ) - flux/dzup
+          flux = wN_sink*MAX(0.0, Ptr(i,j,k,bi,bj,iPON))
+          gTr(i,j,k  ,iPON ) = gTr(i,j,k  ,iPON ) - flux/dzup
+          flux = wP_sink*MAX(0.0, Ptr(i,j,k,bi,bj,iPOP))
+          gTr(i,j,k  ,iPOP ) = gTr(i,j,k  ,iPOP ) - flux/dzup
+          flux = wSi_sink*MAX(0.0, Ptr(i,j,k,bi,bj,iPOSi))
+          gTr(i,j,k  ,iPOSi) = gTr(i,j,k  ,iPOSi) - flux/dzup
+          flux = wFe_sink*MAX(0.0, Ptr(i,j,k,bi,bj,iPOFe))
+          gTr(i,j,k  ,iPOFe) = gTr(i,j,k  ,iPOFe) - flux/dzup
+C         DO l = 1, nplank
+C Must apply to all tracers (Le Gland, 18/03/2021)
+          DO l = 1, nTrac
+           flux = biosink(l)*MAX(0.0, Ptr(i,j,k,bi,bj,ic+l-1))
+           gTr(i,j,k  ,ic+l-1 )=gTr(i,j,k  ,ic+l-1 ) - flux/dzup
+          ENDDO
+         ENDIF
+        ENDDO
+       ENDDO
+      ENDDO
 
 
       RETURN

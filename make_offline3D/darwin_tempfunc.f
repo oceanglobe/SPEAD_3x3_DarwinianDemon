@@ -375,13 +375,13 @@ c# include "ECCO_CPPOPTIONS.h"
 c#endif
 
 
-C BOP
+CBOP
 C    !ROUTINE: DARWIN_OPTIONS.h
 C    !INTERFACE:
 
 C    !DESCRIPTION:
 C options for darwin package
-C EOP
+CEOP
 
 C tracer selection
 
@@ -1547,6 +1547,8 @@ C     DO j = 1, nplank
       DO j = 1, nTrac
         grazFun(j) = reminFun
 cswd -- temperature range
+        phytoTempOptimum(j) = (Temp * (0.056*5. - 1.) - 0.056*(5.)**2.)
+     &      /(0.056*5. - 1.)
 C Correction in the order of parentheses to prevent photoFun from
 C being negative (Le Gland, 10/05/2021)
         photoFun(j) = MAX(1D-10, EXP(phytoTempExp1(j)*

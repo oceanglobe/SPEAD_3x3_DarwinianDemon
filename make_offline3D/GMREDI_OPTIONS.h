@@ -1,1 +1,1 @@
-../code_offline3D_CChange/GMREDI_OPTIONS.h
+../code_offline3D/GMREDI_OPTIONS.h

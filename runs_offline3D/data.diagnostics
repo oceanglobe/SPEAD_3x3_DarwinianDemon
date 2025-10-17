@@ -109,6 +109,19 @@
 #timephase(6)= 0.,
 #fields(1,6) = 'SALT      ',
 #
+ filename(3) = 'FPP2',
+ frequency(3)= 8640.,
+#frequency(7)= 86400.,
+#frequency(7)= 432000.,
+#frequency(7)= 2592000.,
+#timephase(7)= 62208000.,
+#timephase(7)= 31104000.,
+ timephase(3)= 0.,
+#timephase(7)= 124416000.,
+#timephase(7)= 279936000.,
+ levels(1:8,3) = 1.,2.,3.,4.,5.,6.,7.,8.,
+ fields(1,3) = 'PP2      ',
+#
  &
  &diag_statis_parms
  &

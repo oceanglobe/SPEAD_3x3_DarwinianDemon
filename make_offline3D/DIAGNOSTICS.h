@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/diagnostics/DIAGNOSTICS.h
+../code_offline3D/DIAGNOSTICS.h

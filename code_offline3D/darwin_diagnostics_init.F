@@ -59,6 +59,13 @@ C---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
       CALL DIAGNOSTICS_ADDTOLIST( diagNum,
      I           diagName, diagCode, diagUnits, diagTitle, 0, myThid )
 
+      WRITE(diagName,'(A)')'PP2'
+      WRITE(diagTitle,'(A)')'Primary Production'
+      diagUnits = 'mmol C/m^3/s    '
+      diagCode  = 'SMRP    MR      '
+      CALL DIAGNOSTICS_ADDTOLIST( diagNum,
+     I           diagName, diagCode, diagUnits, diagTitle, 0, myThid )
+
       WRITE(diagName,'(A)')'Nfix'
       WRITE(diagTitle,'(A)')'N fixation'
       diagUnits = 'mmol N/m^3/s    '

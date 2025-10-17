@@ -378,13 +378,13 @@ c# include "ECCO_CPPOPTIONS.h"
 c#endif
 
 
-C BOP
+CBOP
 C    !ROUTINE: DARWIN_OPTIONS.h
 C    !INTERFACE:
 
 C    !DESCRIPTION:
 C options for darwin package
-C EOP
+CEOP
 
 C tracer selection
 

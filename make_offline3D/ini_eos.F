@@ -1,1 +1,1 @@
-../code_offline3D_CChange/ini_eos.F
+/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/ini_eos.F
