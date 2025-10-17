@@ -1,5 +1,5 @@
-This code runs the DARWIN model coupled with the SPEAD eco-evolutionary framework which allows simulating the evolution of three phytoplankton traits: cell-size, temperature optimum, and irradiance optimum.
+This code runs the DARWIN model coupled with the SPEAD eco-evolutionary framework which allows simulating the evolution of three phytoplankton traits: cell-size, temperature optimum, and irradiance optimum. The main code is the MITgcm code and can be find here: https://github.com/MITgcm/MITgcm. Our additions/modifications to this code can be found in the code_offline3D directory.
 
-The main code is the MITgcm code and can be find here: https://github.com/MITgcm/MITgcm
+To run the code you will need a gfortran compiler and Open MPI for parallel computing. The code was run on a machine using gcc version 10.2.1 and Open MPI 4.1.0. We provide in the directory runs_offline3D 5 executables for each of the 5 different simulations. Those executables have been compiled to run on 40 CPUs. To run them, you need to execute the 'run_script' bash file (found in the same directory) after setting up the right executable name in the 'run_script' file (l. 25). 
 
-Our additions/modifications to this code can be found in the code_offline3D directory.
+The data* files are namelists containing the model parameters. In the data file, the number of time steps 'nTimeSteps' can be setup. By default, it is set to 2880 which corresponds to a year (the time step being 3 hours). It is good to run demo simulations. Longer simulations (~20 years; in the study we use nTimeSteps=60480) are required for the system to converge and to obtain the results shown in the study. 
