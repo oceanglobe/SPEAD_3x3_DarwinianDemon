@@ -1,5 +1,5 @@
 # Information on the code #
-This code runs the DARWIN model coupled with the SPEAD eco-evolutionary framework which allows simulating the evolution of three phytoplankton traits: cell-size, temperature optimum, and irradiance optimum. We provide pre-compiled standalone executables to run the main configurations of the code without compilation required. To modify, compile then run the code, the main code of the MITgcm (which can be find here: https://github.com/MITgcm/MITgcm) is required. 
+This code runs the DARWIN model coupled with the SPEAD eco-evolutionary framework which allows simulating the evolution of three phytoplankton traits: cell-size, temperature optimum, and irradiance optimum; Sauterey et al. (in prep). We provide pre-compiled standalone executables to run the main configurations of the code without compilation required. To modify, compile then run the code, the main code of the MITgcm (which can be find here: https://github.com/MITgcm/MITgcm) is required. 
 
 # Running the precompiled code #
 As compiling the code on a unknown machine is not trivial, we provide 5 pre-compiled executables:
