@@ -54,5 +54,5 @@ When run as follows
 ```
 python3 Pickling_Outputs.py 
 ```
-The script will ask the number of years that should be included. The pickle file generates can then be opened with jupyter rnotebook "Read_Outputs_3D.ipynb" provided in the python directory provided in this repository. 
+The script will ask the number of years that should be included. The generated pickle file can then be opened with the jupyter rnotebook "Read_Outputs_3D.ipynb" provided in the python directory provided in this repository. 
 
