@@ -1,4 +1,5 @@
-runs_offline3D/OUTPUT/
+#runs_offline3D/OUTPUT/
+runs_offline3D/OUTPUT/META-DATA/*
 #runs_offline3D/input/
 runs_offline3D/STD*
 runs_offline3D/pickup*
