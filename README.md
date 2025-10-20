@@ -22,7 +22,7 @@ Once it is done, the script can be executed in command line as follows
 ```
 bash ./run_script
 ```
-Note that this needs to be adapted if the code is run on a machine with a job manager (e.g., SLURM, HTCondor).
+Note that this needs to be adapted if the code is run on a machine with a job manager (e.g., SLURM, HTCondor). As the simulation is running, monthly output files will be generated in the "OUTPUT/META-DATA/<name of your run>" directory. The files TRAC* contain all the state variables, the FPP* files the primary productivity. Please refer to the file data.ptracers in the run_offline3D directory to know about 1/ the variables included in the TRAC files, 2/ their units, /3 their order.
 
 # Testing the code and reproducing the study's results #
 The data* files are namelists containing the model parameters. In the data file, the number of time steps 'nTimeSteps' can be setup. By default, nTimeSteps is set to 240 (one month) which should run in ~5 minutes. Longer simulations of ~20 years (nTimeSteps=60480 in Sauterey et al.; should take about a day to run) are required for the system to converge to a seasonal equilibirum and to obtain the results shown in Sauterey et al. (in prep). 
@@ -44,4 +44,15 @@ mpirun -np <your new number of necessary CPUs> ./<your executable>
 Then you can execute the script.
 
 # Extract outputs #
-The output files are produced in the chosen directory and can be extracted using the python libraries provided by in the MITgcm github (https://github.com/MITgcm/MITgcm/tree/master/utils/python/MITgcmutils) which are documented here: https://mitgcm.readthedocs.io/en/latest/utilities/utilities.html#mitgcmutils 
+The output files are produced in the chosen directory and can be extracted using the python libraries provided by in the MITgcm github (https://github.com/MITgcm/MITgcm/tree/master/utils/python/MITgcmutils) which are documented here: https://mitgcm.readthedocs.io/en/latest/utilities/utilities.html#mitgcmutils.
+
+Alternatively, you can use the python script Pickling_Outputs.py which will combine all the TRAC* and FPP* files into a single pickle file. This script is based on python utilies built by MITgcm team (mds.rdmds). More details can be found here: https://github.com/MITgcm/MITgcm/tree/master/utils/python/MITgcmutils. Within the script can be modified the variables from the TRAC files to include in the pickle (l 49), by default:
+```
+Var        = [1,2,3,4,5]+np.arange(19,30).tolist()
+```
+When run as follows
+```
+python3 Pickling_Outputs.py 
+```
+The script will ask the number of years that should be included. The pickle file generates can then be opened with jupyter rnotebook "Read_Outputs_3D.ipynb" provided in the python directory provided in this repository. 
+
