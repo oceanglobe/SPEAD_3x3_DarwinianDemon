@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/diagnostics/diag_cg2d.F
+../../../MITgcm/pkg/diagnostics/diag_cg2d.F

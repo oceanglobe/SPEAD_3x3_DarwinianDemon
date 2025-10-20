@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mdsio/mdsio_segxtorx_2d.F
+../../../MITgcm/pkg/mdsio/mdsio_segxtorx_2d.F

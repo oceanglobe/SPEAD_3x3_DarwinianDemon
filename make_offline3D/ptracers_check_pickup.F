@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/ptracers/ptracers_check_pickup.F
+../../../MITgcm/pkg/ptracers/ptracers_check_pickup.F

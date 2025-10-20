@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/inc/EEPARAMS.h
+../../../MITgcm/eesupp/inc/EEPARAMS.h

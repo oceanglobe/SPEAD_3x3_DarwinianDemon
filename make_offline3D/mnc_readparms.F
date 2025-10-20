@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mnc/mnc_readparms.F
+../../../MITgcm/pkg/mnc/mnc_readparms.F

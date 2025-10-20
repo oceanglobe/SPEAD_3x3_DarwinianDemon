@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/diagnostics/diagstats_close_io.F
+../../../MITgcm/pkg/diagnostics/diagstats_close_io.F

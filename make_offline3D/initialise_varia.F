@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/initialise_varia.F
+../../../MITgcm/model/src/initialise_varia.F

@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/diagnostics/diag_calc_psivel.F
+../../../MITgcm/pkg/diagnostics/diag_calc_psivel.F

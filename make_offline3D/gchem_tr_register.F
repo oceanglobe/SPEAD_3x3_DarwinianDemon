@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/gchem/gchem_tr_register.F
+../../../MITgcm/pkg/gchem/gchem_tr_register.F

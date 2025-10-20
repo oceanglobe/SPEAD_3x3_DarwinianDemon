@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mom_vecinv/mom_vi_v_coriolis_c4.F
+../../../MITgcm/pkg/mom_vecinv/mom_vi_v_coriolis_c4.F

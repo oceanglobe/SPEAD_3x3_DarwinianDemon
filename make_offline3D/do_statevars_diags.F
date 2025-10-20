@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/do_statevars_diags.F
+../../../MITgcm/model/src/do_statevars_diags.F

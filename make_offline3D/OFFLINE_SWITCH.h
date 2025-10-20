@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/offline/OFFLINE_SWITCH.h
+../../../MITgcm/pkg/offline/OFFLINE_SWITCH.h

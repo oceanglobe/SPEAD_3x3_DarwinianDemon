@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/set_ref_state.F
+../../../MITgcm/model/src/set_ref_state.F

@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/diags_phi_hyd.F
+../../../MITgcm/model/src/diags_phi_hyd.F

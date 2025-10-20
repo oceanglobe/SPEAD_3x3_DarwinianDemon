@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mdsio/mdsio_write_meta.F
+../../../MITgcm/pkg/mdsio/mdsio_write_meta.F

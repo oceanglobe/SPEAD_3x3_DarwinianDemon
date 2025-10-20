@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mnc/mnc_cw_model_attr.F
+../../../MITgcm/pkg/mnc/mnc_cw_model_attr.F

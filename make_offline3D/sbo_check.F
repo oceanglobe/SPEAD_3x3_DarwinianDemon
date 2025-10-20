@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/sbo/sbo_check.F
+../../../MITgcm/pkg/sbo/sbo_check.F

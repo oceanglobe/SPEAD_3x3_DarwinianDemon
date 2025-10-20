@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mom_common/mom_v_rviscflux.F
+../../../MITgcm/pkg/mom_common/mom_v_rviscflux.F

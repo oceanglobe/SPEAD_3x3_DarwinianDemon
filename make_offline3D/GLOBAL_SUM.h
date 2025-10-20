@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/inc/GLOBAL_SUM.h
+../../../MITgcm/eesupp/inc/GLOBAL_SUM.h

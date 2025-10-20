@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/gmredi/gmredi_k3d.F
+../../../MITgcm/pkg/gmredi/gmredi_k3d.F

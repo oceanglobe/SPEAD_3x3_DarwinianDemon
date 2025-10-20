@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/rw/read_rec.F
+../../../MITgcm/pkg/rw/read_rec.F

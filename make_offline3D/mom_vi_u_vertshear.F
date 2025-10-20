@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mom_vecinv/mom_vi_u_vertshear.F
+../../../MITgcm/pkg/mom_vecinv/mom_vi_u_vertshear.F

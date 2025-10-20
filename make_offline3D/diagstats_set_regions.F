@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/diagnostics/diagstats_set_regions.F
+../../../MITgcm/pkg/diagnostics/diagstats_set_regions.F

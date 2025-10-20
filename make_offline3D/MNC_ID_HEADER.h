@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mnc/MNC_ID_HEADER.h
+../../../MITgcm/pkg/mnc/MNC_ID_HEADER.h

@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/write_state.F
+../../../MITgcm/model/src/write_state.F

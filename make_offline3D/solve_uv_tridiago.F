@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/solve_uv_tridiago.F
+../../../MITgcm/model/src/solve_uv_tridiago.F

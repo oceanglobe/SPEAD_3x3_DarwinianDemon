@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mom_common/MOM_COMMON_OPTIONS.h
+../../../MITgcm/pkg/mom_common/MOM_COMMON_OPTIONS.h

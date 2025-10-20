@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/external_forcing.F
+../../../MITgcm/model/src/external_forcing.F

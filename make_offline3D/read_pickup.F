@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/read_pickup.F
+../../../MITgcm/model/src/read_pickup.F

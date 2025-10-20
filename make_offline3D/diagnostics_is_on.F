@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/diagnostics/diagnostics_is_on.F
+../../../MITgcm/pkg/diagnostics/diagnostics_is_on.F

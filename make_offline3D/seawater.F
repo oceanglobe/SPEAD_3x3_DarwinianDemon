@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/seawater.F
+../../../MITgcm/model/src/seawater.F

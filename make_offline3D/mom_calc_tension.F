@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mom_common/mom_calc_tension.F
+../../../MITgcm/pkg/mom_common/mom_calc_tension.F

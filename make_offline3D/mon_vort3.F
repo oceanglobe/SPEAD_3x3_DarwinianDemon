@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/monitor/mon_vort3.F
+../../../MITgcm/pkg/monitor/mon_vort3.F

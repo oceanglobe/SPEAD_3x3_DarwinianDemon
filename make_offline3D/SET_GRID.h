@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/inc/SET_GRID.h
+../../../MITgcm/model/inc/SET_GRID.h

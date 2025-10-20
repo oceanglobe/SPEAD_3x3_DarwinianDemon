@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/generic_advdiff/gad_som_advect.F
+../../../MITgcm/pkg/generic_advdiff/gad_som_advect.F

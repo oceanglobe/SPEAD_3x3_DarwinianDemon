@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/barrier.F
+../../../MITgcm/eesupp/src/barrier.F

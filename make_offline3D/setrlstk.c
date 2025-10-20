@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/setrlstk.c
+../../../MITgcm/eesupp/src/setrlstk.c

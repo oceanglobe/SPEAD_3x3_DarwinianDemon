@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/gmredi/gmredi_diagnostics_impl.F
+../../../MITgcm/pkg/gmredi/gmredi_diagnostics_impl.F

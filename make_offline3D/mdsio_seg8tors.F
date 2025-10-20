@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mdsio/mdsio_seg8tors.F
+../../../MITgcm/pkg/mdsio/mdsio_seg8tors.F

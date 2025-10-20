@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/gmredi/gmredi_residual_flow.F
+../../../MITgcm/pkg/gmredi/gmredi_residual_flow.F

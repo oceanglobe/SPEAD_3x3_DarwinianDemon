@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/gchem/gchem_add_tendency.F
+../../../MITgcm/pkg/gchem/gchem_add_tendency.F

@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/gsw_teos10.F
+../../../MITgcm/model/src/gsw_teos10.F

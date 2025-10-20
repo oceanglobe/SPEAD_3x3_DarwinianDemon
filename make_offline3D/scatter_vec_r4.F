@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/scatter_vec_r4.F
+../../../MITgcm/eesupp/src/scatter_vec_r4.F

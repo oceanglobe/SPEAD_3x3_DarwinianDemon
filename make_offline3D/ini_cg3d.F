@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/ini_cg3d.F
+../../../MITgcm/model/src/ini_cg3d.F

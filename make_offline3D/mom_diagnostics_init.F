@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mom_common/mom_diagnostics_init.F
+../../../MITgcm/pkg/mom_common/mom_diagnostics_init.F

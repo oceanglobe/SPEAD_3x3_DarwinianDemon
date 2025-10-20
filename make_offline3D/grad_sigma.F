@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/grad_sigma.F
+../../../MITgcm/model/src/grad_sigma.F

@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/memsync.F
+../../../MITgcm/eesupp/src/memsync.F

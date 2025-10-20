@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/reset_nlfs_vars.F
+../../../MITgcm/model/src/reset_nlfs_vars.F

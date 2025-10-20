@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/gchem/gchem_init_fixed.F
+../../../MITgcm/pkg/gchem/gchem_init_fixed.F

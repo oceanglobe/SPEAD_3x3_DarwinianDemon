@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/gmredi/gmredi_calc_psi_bvp.F
+../../../MITgcm/pkg/gmredi/gmredi_calc_psi_bvp.F

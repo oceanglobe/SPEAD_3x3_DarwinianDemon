@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/ini_fields.F
+../../../MITgcm/model/src/ini_fields.F

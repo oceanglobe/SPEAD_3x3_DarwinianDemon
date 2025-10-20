@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mnc/mnc_update_time.F
+../../../MITgcm/pkg/mnc/mnc_update_time.F

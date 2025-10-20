@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/sbo/SBO_OPTIONS.h
+../../../MITgcm/pkg/sbo/SBO_OPTIONS.h

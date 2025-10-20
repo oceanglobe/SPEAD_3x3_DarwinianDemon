@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/ptracers/ptracers_mnc_init.F
+../../../MITgcm/pkg/ptracers/ptracers_mnc_init.F

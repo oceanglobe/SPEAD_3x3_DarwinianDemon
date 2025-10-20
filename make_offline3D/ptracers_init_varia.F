@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/ptracers/ptracers_init_varia.F
+../../../MITgcm/pkg/ptracers/ptracers_init_varia.F

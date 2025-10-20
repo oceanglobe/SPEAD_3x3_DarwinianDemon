@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/monitor/mon_writestats_rs.F
+../../../MITgcm/pkg/monitor/mon_writestats_rs.F

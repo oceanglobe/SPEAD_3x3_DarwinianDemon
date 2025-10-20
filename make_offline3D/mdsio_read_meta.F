@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mdsio/mdsio_read_meta.F
+../../../MITgcm/pkg/mdsio/mdsio_read_meta.F

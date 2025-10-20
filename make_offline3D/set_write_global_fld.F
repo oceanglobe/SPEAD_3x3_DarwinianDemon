@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/rw/set_write_global_fld.F
+../../../MITgcm/pkg/rw/set_write_global_fld.F

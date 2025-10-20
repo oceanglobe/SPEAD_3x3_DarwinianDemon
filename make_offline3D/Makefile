@@ -1,13 +1,13 @@
 # Multithreaded + multi-processing makefile for:
 #    Linux c01 5.10.0-21-amd64 #1 SMP Debian 5.10.162-1 (2023-01-21) x86_64 GNU/Linux
 # This makefile was generated automatically on
-#    Fri 17 Oct 2025 03:21:01 PM CEST
+#    Mon 20 Oct 2025 02:21:40 PM CEST
 # by the command:
-#    /home/sauterey/BORIS/MIT-GIT/MITgcm/tools/genmake2 -mpi -of /home/sauterey/BORIS/MIT-GIT/MITgcm/tools/build_options/linux_amd64_gfortran -mods=../code_offline3D
+#    ../../../MITgcm/tools/genmake2 -mpi -of ../../../MITgcm/tools/build_options/linux_amd64_gfortran -mods=../code_offline3D
 # executed by:
 #    sauterey@c01:/home/sauterey/BORIS/MIT-GIT/DARWIN/SPEAD_cont_3D/make_offline3D
 #
-# OPTFILE="/home/sauterey/BORIS/MIT-GIT/MITgcm/tools/build_options/linux_amd64_gfortran"
+# OPTFILE="../../../MITgcm/tools/build_options/linux_amd64_gfortran"
 #
 # BUILDDIR     : Directory where object files are written
 # SOURCEDIRS   : Directories containing the source (.F) files
@@ -25,7 +25,7 @@
 # LINK         : Command for link editor program
 # LIBS         : Library flags /or/ additional optimization/debugging flags
 
-ROOTDIR     = /home/sauterey/BORIS/MIT-GIT/MITgcm
+ROOTDIR     = ../../../MITgcm
 BUILDDIR    = .
 SOURCEDIRS  =  ../code_offline3D $(ROOTDIR)/pkg/darwin $(ROOTDIR)/pkg/diagnostics $(ROOTDIR)/pkg/exf $(ROOTDIR)/pkg/gchem $(ROOTDIR)/pkg/generic_advdiff $(ROOTDIR)/pkg/gmredi $(ROOTDIR)/pkg/kpp $(ROOTDIR)/pkg/mdsio $(ROOTDIR)/pkg/mnc $(ROOTDIR)/pkg/mom_fluxform $(ROOTDIR)/pkg/mom_vecinv $(ROOTDIR)/pkg/monitor $(ROOTDIR)/pkg/offline $(ROOTDIR)/pkg/ptracers $(ROOTDIR)/pkg/rw $(ROOTDIR)/pkg/sbo $(ROOTDIR)/pkg/timeave $(ROOTDIR)/pkg/mom_common $(ROOTDIR)/pkg/cal $(ROOTDIR)/eesupp/src $(ROOTDIR)/model/src
 INCLUDEDIRS =  /lib/x86_64-linux-gnu/openmpi/include ../code_offline3D $(ROOTDIR)/pkg/darwin $(ROOTDIR)/pkg/diagnostics $(ROOTDIR)/pkg/exf $(ROOTDIR)/pkg/gchem $(ROOTDIR)/pkg/generic_advdiff $(ROOTDIR)/pkg/gmredi $(ROOTDIR)/pkg/kpp $(ROOTDIR)/pkg/mdsio $(ROOTDIR)/pkg/mnc $(ROOTDIR)/pkg/mom_fluxform $(ROOTDIR)/pkg/mom_vecinv $(ROOTDIR)/pkg/monitor $(ROOTDIR)/pkg/offline $(ROOTDIR)/pkg/ptracers $(ROOTDIR)/pkg/rw $(ROOTDIR)/pkg/sbo $(ROOTDIR)/pkg/timeave $(ROOTDIR)/pkg/mom_common $(ROOTDIR)/pkg/cal $(ROOTDIR)/eesupp/inc $(ROOTDIR)/model/inc
@@ -1752,7 +1752,7 @@ CLEAN:
 	-rm -f oad_cp.[0-9][0-9][0-9].?????
 
 makefile:
-	$(TOOLSDIR)/genmake2  "-mpi" "-of" "/home/sauterey/BORIS/MIT-GIT/MITgcm/tools/build_options/linux_amd64_gfortran" "-mods=../code_offline3D"
+	$(TOOLSDIR)/genmake2  "-mpi" "-of" "../../../MITgcm/tools/build_options/linux_amd64_gfortran" "-mods=../code_offline3D"
 cleanlinks:
 	-find . -type l -exec rm {} \;
 
@@ -1771,7 +1771,7 @@ BUILD_INFO.h:
 	@echo Creating $@ ...
 	-echo "#define THISVER 'checkpoint67s'" > $@
 	-echo "#define THISUSER 'sauterey'" >> $@
-	-echo "#define THISDATE 'Fri 17 Oct 2025 03:21:01 PM CEST'" >> $@
+	-echo "#define THISDATE 'Mon 20 Oct 2025 02:21:40 PM CEST'" >> $@
 	-echo "#define THISHOST 'c01'" >> $@
 
 # The normal chain of rules is (  .F - .f - .o  )
@@ -2274,87 +2274,87 @@ ini_masks_etc.o: ini_masks_etc.f
  CPP_OPTIONS.h darwin_atmos.F darwin_carbon_chem.F darwin_check.F darwin_conserve_surface.F darwin_cons.F darwin_diagnostics_init.F darwin_diags.F DARWIN_DIAGS.h darwin_exf_init_fixed.F darwin_exf_init_varia.F darwin_exf_load.F darwin_exf_readparms.F darwin_fe_chem.F darwin_fields_load.F darwin_forcing.F darwin_generate_allometric.F darwin_generate_constant.F darwin_generate_random.F DARWIN_INDICES.h darwin_init_chl.F darwin_init_fixed.F darwin_init_varia.F darwin_insol.F darwin_light.F darwin_light_radtrans.F darwin_monitor.F darwin_nut_supply.F DARWIN_OPTIONS.h darwin_plankton.F DARWIN_RADTRANS.h darwin_random.F darwin_read_params.F darwin_readparms.F darwin_read_pickup.F darwin_read_traitparams.F darwin_read_traits.F darwin_sinking.F DARWIN_SIZE.h darwin_spead_rates.F darwin_surfforcing.F darwin_surfforcing_init.F darwin_tempfunc.F DARWIN_TRAITPARAMS.h DARWIN_TRAITS.h darwin_tr_register.F darwin_write_pickup.F DIAGNOSTICS.h DIAGNOSTICS_SIZE.h EXF_OPTIONS.h GAD_OPTIONS.h GCHEM_OPTIONS.h GMREDI_OPTIONS.h kpp_output.F MNC_SIZE.h offline_fields_load.F OFFLINE.h OFFLINE_OPTIONS.h offline_readparms.F PTRACERS_SIZE.h RADTRANS_SIZE.h RW_MFLDS.h SIZE.h :
 	if [ ! -L $@ ]; then $(LN) ../code_offline3D/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/darwin ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/darwin )
+#  These files are linked from $(ROOTDIR)/pkg/darwin ( aka ../../../MITgcm/pkg/darwin )
  DARWIN_EXF_FIELDS.h DARWIN_EXF_PARAMS.h DARWIN_FIELDS.h DARWIN_FLUX.h DARWIN_PARAMS.h :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/darwin/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/diagnostics ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/diagnostics )
+#  These files are linked from $(ROOTDIR)/pkg/diagnostics ( aka ../../../MITgcm/pkg/diagnostics )
  diag_calc_psivel.F diag_cg2d.F diagnostics_addtolist.F DIAGNOSTICS_CALC.h diagnostics_calc_phivel.F diagnostics_check.F diagnostics_clear.F diagnostics_fill.F diagnostics_fill_field.F diagnostics_fill_rs.F diagnostics_fill_state.F diagnostics_fract_fill.F diagnostics_ini_io.F diagnostics_init_early.F diagnostics_init_fixed.F diagnostics_init_varia.F diagnostics_interp_p2p.F diagnostics_interp_vert.F diagnostics_is_on.F diagnostics_list_check.F diagnostics_main_init.F diagnostics_mnc_out.F diagnostics_out.F diagnostics_readparms.F diagnostics_read_pickup.F diagnostics_scale_fill.F diagnostics_scale_fill_rs.F diagnostics_set_calc.F diagnostics_setdiag.F diagnostics_set_levels.F diagnostics_set_pointers.F diagnostics_status_error.F diagnostics_sum_levels.F diagnostics_summary.F diagnostics_switch_onoff.F diagnostics_utils.F diagnostics_write_adj.F diagnostics_write.F diagnostics_write_pickup.F DIAG_OPTIONS.h diagstats_ascii_out.F diagstats_calc.F diagstats_clear.F diagstats_close_io.F diagstats_fill.F diagstats_global.F diagstats_ini_io.F diagstats_local.F diagstats_mnc_out.F diagstats_others_calc.F diagstats_output.F DIAGSTATS_REGIONS.h diagstats_setdiag.F diagstats_set_pointers.F diagstats_set_regions.F diag_vegtile_fill.F diagnostics_ad.flow :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/diagnostics/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/exf ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/exf )
+#  These files are linked from $(ROOTDIR)/pkg/exf ( aka ../../../MITgcm/pkg/exf )
  exf_ad_check_lev1_dir.h exf_ad_check_lev2_dir.h exf_ad_check_lev3_dir.h exf_ad_check_lev4_dir.h exf_ad_dump.F exf_adjoint_snapshots_ad.F exf_adjoint_snapshots.F exf_adjoint_snapshots__g.F exf_bulkformulae.F exf_check.F exf_check_range.F EXF_CONSTANTS.h exf_diagnostics_fill.F exf_diagnostics_init.F EXF_FIELDS.h exf_filter_rl.F exf_getclim.F exf_getffieldrec.F exf_getffields.F exf_getffield_start.F exf_getfield_start.F exf_getforcing.F exf_getsurfacefluxes.F exf_getyearlyfieldname.F exf_init_fixed.F exf_init_fld.F exf_init_interp.F exf_init_varia.F exf_interp.F exf_interpolate.F EXF_INTERP_PARAM.h exf_interp_read.F EXF_INTERP_SIZE.h exf_interp_uv.F exf_mapfields.F exf_monitor_ad.F exf_monitor.F EXF_PARAM.h exf_radiation.F exf_readparms.F exf_set_fld.F exf_set_gen.F exf_set_obcs.F exf_set_uv.F exf_summary.F exf_swapffields.F exf_weight_sfx_diags.F exf_wind.F exf_zenithangle.F exf_zenithangle_table.F exf_ad.flow :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/exf/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/gchem ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/gchem )
+#  These files are linked from $(ROOTDIR)/pkg/gchem ( aka ../../../MITgcm/pkg/gchem )
  gchem_ad_check_lev1_dir.h gchem_ad_check_lev2_dir.h gchem_ad_check_lev3_dir.h gchem_ad_check_lev4_dir.h gchem_add_tendency.F gchem_calc_tendency.F gchem_check.F gchem_diagnostics_init.F GCHEM_FIELDS.h gchem_fields_load.F gchem_forcing_sep.F GCHEM.h gchem_init_fixed.F gchem_init_vari.F gchem_output.F gchem_readparms.F GCHEM_SIZE.h gchem_surfmean.F gchem_tr_register.F gchem_write_pickup.F :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/gchem/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/generic_advdiff ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/generic_advdiff )
+#  These files are linked from $(ROOTDIR)/pkg/generic_advdiff ( aka ../../../MITgcm/pkg/generic_advdiff )
  gad_ad_check_lev1_dir.h gad_ad_check_lev2_dir.h gad_ad_check_lev3_dir.h gad_ad_check_lev4_dir.h gad_advection.F gad_advscheme.F gad_biharm_r.F gad_biharm_x.F gad_biharm_y.F gad_c2_adv_r.F gad_c2_adv_x.F gad_c2_adv_y.F gad_c2_impl_r.F gad_c4_adv_r.F gad_c4_adv_x.F gad_c4_adv_y.F gad_calc_rhs.F gad_check.F gad_del2.F gad_diagnostics_init.F gad_diagnostics_state.F gad_diff_r.F gad_diff_x.F gad_diff_y.F gad_dst2u1_adv_r.F gad_dst2u1_adv_x.F gad_dst2u1_adv_y.F gad_dst2u1_impl_r.F gad_dst3_adv_r.F gad_dst3_adv_x.F gad_dst3_adv_y.F gad_dst3fl_adv_r.F gad_dst3fl_adv_x.F gad_dst3fl_adv_y.F gad_dst3fl_impl_r.F gad_exch_som.F gad_fluxlimit_adv_r.F gad_fluxlimit_adv_x.F gad_fluxlimit_adv_y.F GAD_FLUX_LIMITER.h gad_fluxlimit_impl_r.F gad_grad_x.F gad_grad_y.F GAD.h gad_implicit_r.F gad_init_fixed.F gad_init_varia.F gad_os7mp_adv_r.F gad_os7mp_adv_x.F gad_os7mp_adv_y.F gad_osc_hat_r.F gad_osc_hat_x.F gad_osc_hat_y.F gad_osc_mul_r.F gad_osc_mul_x.F gad_osc_mul_y.F gad_plm_fun.F gad_ppm_adv_r.F gad_ppm_adv_x.F gad_ppm_adv_y.F gad_ppm_flx_r.F gad_ppm_flx_x.F gad_ppm_flx_y.F gad_ppm_fun.F gad_ppm_hat_r.F gad_ppm_hat_x.F gad_ppm_hat_y.F gad_ppm_p3e_r.F gad_ppm_p3e_x.F gad_ppm_p3e_y.F gad_pqm_adv_r.F gad_pqm_adv_x.F gad_pqm_adv_y.F gad_pqm_flx_r.F gad_pqm_flx_x.F gad_pqm_flx_y.F gad_pqm_fun.F gad_pqm_hat_r.F gad_pqm_hat_x.F gad_pqm_hat_y.F gad_pqm_p5e_r.F gad_pqm_p5e_x.F gad_pqm_p5e_y.F gad_read_pickup.F gad_som_advect.F gad_som_adv_r.F gad_som_adv_x.F gad_som_adv_y.F gad_som_exchanges.F gad_som_fill_cs_corner.F gad_som_lim_r.F gad_som_prep_cs_corner.F GAD_SOM_VARS.h gad_u3_adv_r.F gad_u3_adv_x.F gad_u3_adv_y.F gad_u3c4_impl_r.F gad_write_pickup.F salt_fill.F :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/generic_advdiff/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/gmredi ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/gmredi )
+#  These files are linked from $(ROOTDIR)/pkg/gmredi ( aka ../../../MITgcm/pkg/gmredi )
  gmredi_calc_diff.F gmredi_calc_eigs.F gmredi_calc_psi_b.F gmredi_calc_psi_bvp.F gmredi_calc_qgleith.F gmredi_calc_tensor.F gmredi_calc_urms.F gmredi_check.F gmredi_diagnostics_fill.F gmredi_diagnostics_impl.F gmredi_diagnostics_init.F gmredi_do_exch.F GMREDI.h gmredi_init_fixed.F gmredi_init_varia.F gmredi_k3d.F gmredi_mnc_init.F gmredi_output.F gmredi_readparms.F gmredi_read_pickup.F gmredi_residual_flow.F gmredi_rtransport.F gmredi_slope_limit.F gmredi_slope_psi.F GMREDI_TAVE.h gmredi_write_pickup.F gmredi_xtransport.F gmredi_ytransport.F submeso_calc_psi.F gmredi_ad.flow :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/gmredi/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/kpp ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/kpp )
+#  These files are linked from $(ROOTDIR)/pkg/kpp ( aka ../../../MITgcm/pkg/kpp )
  kpp_calc_diff_ptr.F kpp_calc_diff_s.F kpp_calc_diff_t.F kpp_calc.F kpp_calc_visc.F kpp_check.F kpp_diagnostics_init.F kpp_do_exch.F kpp_forcing_surf.F KPP.h kpp_init_fixed.F kpp_init_varia.F KPP_OPTIONS.h KPP_PARAMS.h kpp_readparms.F kpp_routines.F KPP_TAVE.h kpp_transport_ptr.F kpp_transport_s.F kpp_transport_t.F :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/kpp/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/mdsio ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mdsio )
+#  These files are linked from $(ROOTDIR)/pkg/mdsio ( aka ../../../MITgcm/pkg/mdsio )
  MDSIO_BUFF_3D.h mdsio_buffertorl.F mdsio_buffertors.F MDSIO_BUFF_WH.h mdsio_check4file.F mdsio_facef_read.F mdsio_gl.F mdsio_gl_slice.F MDSIO_OPTIONS.h mdsio_pass_r4torl.F mdsio_pass_r4tors.F mdsio_pass_r8torl.F mdsio_pass_r8tors.F mdsio_rd_rec_rl.F mdsio_rd_rec_rs.F mdsio_read_field.F mdsio_read_meta.F mdsio_read_section.F mdsio_read_tape.F mdsio_readvec_loc.F mdsio_read_whalos.F mdsio_rw_field.F mdsio_rw_slice.F mdsio_seg4torl.F mdsio_seg4tors.F mdsio_seg8torl.F mdsio_seg8tors.F mdsio_segxtorx_2d.F mdsio_write_field.F mdsio_writelocal.F mdsio_write_meta.F mdsio_write_section.F mdsio_write_tape.F mdsio_writevec_loc.F mdsio_write_whalos.F mdsio_wr_metafiles.F mdsio_wr_rec_rl.F mdsio_wr_rec_rs.F mdsio_ad.flow :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/mdsio/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/mnc ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mnc )
+#  These files are linked from $(ROOTDIR)/pkg/mnc ( aka ../../../MITgcm/pkg/mnc )
  MNC_BUFF.h MNC_COMMON.h mnc_create_dir.c mnc_cw_citer.F mnc_cw_cvars.F mnc_cw_fsize.c mnc_cw_init.F mnc_cw_missingvals.F mnc_cw_model_attr.F mnc_cwrapper.F MNC_CW_READWRITE_I.F MNC_CW_READWRITE_RL.F MNC_CW_READWRITE_RS.F mnc_cw_udim.F mnc_cw_write_grid_info.F mnc_dim.F mnc_dump.F mnc_file.F mnc_grid.F MNC_ID_HEADER.h mnc_init.F MNC_OPTIONS.h MNC_PARAMS.h mnc_readparms.F mnc_update_time.F mnc_utils.F mnc_var.F mnc_ad.flow :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/mnc/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/mom_fluxform ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mom_fluxform )
+#  These files are linked from $(ROOTDIR)/pkg/mom_fluxform ( aka ../../../MITgcm/pkg/mom_fluxform )
  mom_calc_rtrans.F mom_fluxform.F MOM_FLUXFORM.h MOM_FLUXFORM_OPTIONS.h mom_u_adv_uu.F mom_u_adv_vu.F mom_u_adv_wu.F mom_u_coriolis.F mom_u_del2u.F mom_u_metric_cylinder.F mom_u_metric_sphere.F mom_uv_boundary.F mom_u_xviscflux.F mom_u_yviscflux.F mom_v_adv_uv.F mom_v_adv_vv.F mom_v_adv_wv.F mom_v_coriolis.F mom_v_del2v.F mom_v_metric_cylinder.F mom_v_metric_sphere.F mom_v_xviscflux.F mom_v_yviscflux.F :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/mom_fluxform/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/mom_vecinv ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mom_vecinv )
+#  These files are linked from $(ROOTDIR)/pkg/mom_vecinv ( aka ../../../MITgcm/pkg/mom_vecinv )
  mom_vecinv.F MOM_VECINV_OPTIONS.h mom_vi_coriolis.F mom_vi_del2uv.F mom_vi_hdissip.F mom_vi_u_coriolis_c4.F mom_vi_u_coriolis.F mom_vi_u_grad_ke.F mom_vi_u_vertshear.F mom_vi_v_coriolis_c4.F mom_vi_v_coriolis.F mom_vi_v_grad_ke.F mom_vi_v_vertshear.F :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/mom_vecinv/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/monitor ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/monitor )
+#  These files are linked from $(ROOTDIR)/pkg/monitor ( aka ../../../MITgcm/pkg/monitor )
  mon_advcfl.F mon_advcflw2.F mon_advcflw.F mon_calc_advcfl.F mon_calc_stats_rl.F mon_calc_stats_rs.F mon_init.F monitor_ad.F monitor.F monitor_g.F MONITOR.h MONITOR_OPTIONS.h mon_ke.F mon_out.F mon_printstats_rl.F mon_printstats_rs.F mon_set_iounit.F mon_set_pref.F mon_solution.F mon_stats_latbnd_rl.F mon_stats_rl.F mon_stats_rs.F mon_surfcor.F mon_vort3.F mon_writestats_rl.F mon_writestats_rs.F monitor_ad.flow :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/monitor/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/offline ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/offline )
+#  These files are linked from $(ROOTDIR)/pkg/offline ( aka ../../../MITgcm/pkg/offline )
  offline_ad_check_lev1_dir.h offline_ad_check_lev2_dir.h offline_ad_check_lev3_dir.h offline_ad_check_lev4_dir.h offline_check.F offline_get_diffus.F offline_init_varia.F offline_reset_parms.F OFFLINE_SWITCH.h :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/offline/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/ptracers ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/ptracers )
+#  These files are linked from $(ROOTDIR)/pkg/ptracers ( aka ../../../MITgcm/pkg/ptracers )
  ptracers_ad_check_lev1_dir.h ptracers_ad_check_lev2_dir.h ptracers_ad_check_lev3_dir.h ptracers_ad_check_lev4_dir.h ptracers_adcommon.h ptracers_ad_dump.F ptracers_apply_forcing.F ptracers_calc_wsurf_tr.F ptracers_check.F ptracers_check_pickup.F ptracers_convect.F ptracers_debug.F ptracers_diagnostics_init.F ptracers_diagnostics_state.F ptracers_dyn_state_data_mod.F ptracers_dyn_state_mod.F ptracers_fields_blocking_exch.F PTRACERS_FIELDS.h ptracers_forcing_surf.F ptracers_init_fixed.F ptracers_init_varia.F ptracers_integrate.F ptracers_mnc_init.F PTRACERS_MOD.h ptracers_monitor_ad.F ptracers_monitor.F PTRACERS_OPTIONS.h ptracers_output.F PTRACERS_PARAMS.h ptracers_readparms.F ptracers_read_pickup.F ptracers_reset.F ptracers_set_iolabel.F PTRACERS_START.h ptracers_switch_onoff.F PTRACERS_TAVE.h ptracers_timeave.F ptracers_turnoff_io.F ptracers_write_pickup.F ptracers_write_state.F ptracers_write_timeave.F ptracers_zonal_filt_apply.F ptracers_ad.flow :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/ptracers/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/rw ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/rw )
+#  These files are linked from $(ROOTDIR)/pkg/rw ( aka ../../../MITgcm/pkg/rw )
  get_write_global_fld.F read_fld_xy_rl.F read_fld_xy_rs.F read_fld_xyz_rl.F read_fld_xyz_rs.F read_glvec_rl.F read_glvec_rs.F read_mflds.F read_rec.F rw_get_suffix.F RW_OPTIONS.h set_write_global_fld.F write_fld_3d_rl.F write_fld_3d_rs.F write_fld_s3d_rl.F write_fld_s3d_rs.F write_fld_xy_rl.F write_fld_xy_rs.F write_fld_xyz_rl.F write_fld_xyz_rs.F write_glvec_rl.F write_glvec_rs.F write_local_rl.F write_local_rs.F write_rec.F rw_ad.flow :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/rw/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/sbo ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/sbo )
+#  These files are linked from $(ROOTDIR)/pkg/sbo ( aka ../../../MITgcm/pkg/sbo )
  sbo_calc.F sbo_check.F SBO.h SBO_OPTIONS.h sbo_output.F sbo_readparms.F sbo_rho.F :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/sbo/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/timeave ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/timeave )
+#  These files are linked from $(ROOTDIR)/pkg/timeave ( aka ../../../MITgcm/pkg/timeave )
  timeave_cumul_1k1t.F timeave_cumul_1t.F timeave_cumul_1vfc.F timeave_cumul_2v.F timeave_cumul_2vfc.F timeave_cumulate.F timeave_cumul_dif_1t.F timeave_init_fixed.F timeave_norma_2v.F timeave_normalize.F TIMEAVE_OPTIONS.h timeave_reset.F timeave_statvars.F TIMEAVE_STATV.h timeave_statv_write.F timeave_surf_flux.F :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/timeave/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/mom_common ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mom_common )
+#  These files are linked from $(ROOTDIR)/pkg/mom_common ( aka ../../../MITgcm/pkg/mom_common )
  mom_calc_3d_strain.F mom_calc_absvort3.F mom_calc_hdiv.F mom_calc_hfacz.F mom_calc_ke.F mom_calc_relvort3.F mom_calc_smag_3d.F mom_calc_strain.F mom_calc_tension.F mom_calc_visc.F MOM_COMMON_OPTIONS.h mom_diagnostics_init.F mom_hdissip.F mom_init_fixed.F mom_quasihydrostatic.F mom_u_botdrag_coeff.F mom_u_coriolis_nh.F mom_u_implicit_r.F mom_u_metric_nh.F mom_u_rviscflux.F mom_u_sidedrag.F mom_uv_smag_3d.F mom_v_botdrag_coeff.F mom_v_coriolis_nh.F mom_v_implicit_r.F MOM_VISC.h mom_visc_qgl_limit.F mom_visc_qgl_stretch.F mom_v_metric_nh.F mom_v_rviscflux.F mom_v_sidedrag.F mom_w_coriolis_nh.F mom_w_metric_nh.F mom_w_sidedrag.F mom_w_smag_3d.F :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/mom_common/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/pkg/cal ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/cal )
+#  These files are linked from $(ROOTDIR)/pkg/cal ( aka ../../../MITgcm/pkg/cal )
  cal_addtime.F cal_checkdate.F cal_compdates.F cal_convdate.F cal_copydate.F cal_daysformonth.F cal_dayspermonth.F cal_fulldate.F cal_getdate.F cal_getmonthsrec.F cal.h cal_init_fixed.F cal_intdays.F cal_intmonths.F cal_intyears.F cal_isleap.F cal_monthsforyear.F cal_monthsperyear.F cal_numints.F CAL_OPTIONS.h cal_printdate.F cal_printerror.F cal_readparms.F cal_set.F cal_stepsforday.F cal_stepsperday.F cal_subdates.F cal_summary.F cal_time2dump.F cal_timeinterval.F cal_timepassed.F cal_timestamp.F cal_toseconds.F cal_weekday.F :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/pkg/cal/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/eesupp/src ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src )
+#  These files are linked from $(ROOTDIR)/eesupp/src ( aka ../../../MITgcm/eesupp/src )
  all_proc_die.F bar2.F bar_check.F barrier.F check_threads.F comm_stats.F cumulsum_z_tile.F different_multiple.F diff_phase_multiple.F eeboot.F eeboot_minimal.F eedata_example.F eedie.F eeintro_msg.F eeset_parms.F eewrite_eeenv.F exch0_r4.F exch0_r8.F exch0_rl.F exch0_rs.F exch1_bg_r4_cube.F exch1_bg_r8_cube.F exch1_bg_rl_cube.F exch1_bg_rs_cube.F exch1_r4_cube.F exch1_r4.F exch1_r8_cube.F exch1_r8.F exch1_rl_ad.F exch1_rl_cube_ad.F exch1_rl_cube.F exch1_rl.F exch1_rs_ad.F exch1_rs_cube_ad.F exch1_rs_cube.F exch1_rs.F exch1_uv_r4_cube.F exch1_uv_r8_cube.F exch1_uv_rl_cube.F exch1_uv_rs_cube.F exch1_z_r4_cube.F exch1_z_r8_cube.F exch1_z_rl_cube.F exch1_z_rs_cube.F exch_3d_r4.F exch_3d_r8.F exch_3d_rl.F exch_3d_rs.F exch_cycle_ebl.F exch_init.F exch_r4_recv_get_x.F exch_r4_recv_get_y.F exch_r4_send_put_x.F exch_r4_send_put_y.F exch_r8_recv_get_x.F exch_r8_recv_get_y.F exch_r8_send_put_x.F exch_r8_send_put_y.F exch_rl_recv_get_x.F exch_rl_recv_get_y.F exch_rl_send_put_x.F exch_rl_send_put_y.F exch_rs_recv_get_x.F exch_rs_recv_get_y.F exch_rs_send_put_x.F exch_rs_send_put_y.F exch_s3d_r4.F exch_s3d_r8.F exch_s3d_rl.F exch_s3d_rs.F exch_sm_3d_r4.F exch_sm_3d_r8.F exch_sm_3d_rl.F exch_sm_3d_rs.F exch_uv_3d_r4.F exch_uv_3d_r8.F exch_uv_3d_rl.F exch_uv_3d_rs.F exch_uv_agrid_3d_r4.F exch_uv_agrid_3d_r8.F exch_uv_agrid_3d_rl.F exch_uv_agrid_3d_rs.F exch_uv_bgrid_3d_r4.F exch_uv_bgrid_3d_r8.F exch_uv_bgrid_3d_rl.F exch_uv_bgrid_3d_rs.F exch_uv_dgrid_3d_r4.F exch_uv_dgrid_3d_r8.F exch_uv_dgrid_3d_rl.F exch_uv_dgrid_3d_rs.F exch_uv_xy_r4.F exch_uv_xy_r8.F exch_uv_xy_rl.F exch_uv_xy_rs.F exch_uv_xyz_r4.F exch_uv_xyz_r8.F exch_uv_xyz_rl.F exch_uv_xyz_rs.F exch_xy_r4.F exch_xy_r8.F exch_xy_rl.F exch_xy_rs.F exch_xyz_r4.F exch_xyz_r8.F exch_xyz_rl.F exch_xyz_rs.F exch_z_3d_r4.F exch_z_3d_r8.F exch_z_3d_rl.F exch_z_3d_rs.F fill_cs_corner_ag_rl.F fill_cs_corner_tr_rl.F fill_cs_corner_uv_rl.F fill_cs_corner_uv_rs.F fool_the_compiler.F gather_2d_r4.F gather_2d_r8.F gather_2d_wh_r4.F gather_2d_wh_r8.F gather_vec_r4.F gather_vec_r8.F gather_xz.F gather_yz.F get_periodic_interval.F global_max.F global_sum.F global_sum_singlecpu.F global_sum_tile.F global_vec_sum.F gsl_ieee_env.c gsum.F ini_communication_patterns.F ini_procs.F ini_threading_environment.F lef_zero.F main.F master_cpu_io.F master_cpu_thread.F mds_byteswapi4.F mds_byteswapr4.F mds_byteswapr8.F mdsfindunit.F mds_flush.F mds_reclen.F memsync.F nml_change_syntax.F nml_set_terminator.F open_copy_data_file.F print.F ptwrapper.c reset_halo.F scatter_2d_r4.F scatter_2d_r8.F scatter_2d_wh_r4.F scatter_2d_wh_r8.F scatter_vec_r4.F scatter_vec_r8.F scatter_xz.F scatter_yz.F setdir.c setrlstk.c sigreg.c stop_if_error.F tim.c timers.F timer_stats.c utils.F write_utils.F eesupp.flow exch1_ad.flow :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/eesupp/src/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/model/src ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/model/src )
+#  These files are linked from $(ROOTDIR)/model/src ( aka ../../../MITgcm/model/src )
  adams_bashforth2.F adams_bashforth3.F add_walls2masks.F apply_forcing.F calc_3d_diffusivity.F calc_adv_flow.F calc_div_ghat.F calc_eddy_stress.F calc_grad_phi_fv.F calc_grad_phi_hyd.F calc_grad_phi_surf.F calc_grid_angles.F calc_gw.F calc_ivdc.F calc_oce_mxlayer.F calc_phi_hyd.F calc_r_star.F calc_surf_dr.F calc_viscosity.F calc_wsurf_tr.F cg2d_ex0.F cg2d.F cg2d_nsa.F cg2d_sr.F cg3d_ex0.F cg3d.F check_pickup.F config_check.F config_summary.F convective_adjustment.F convective_adjustment_ini.F convectively_mixtracer.F convective_weights.F correction_step.F cycle_ab_tracer.F cycle_tracer.F diags_oceanic_surf_flux.F diags_phi_hyd.F diags_phi_rlow.F diags_rho.F do_atmospheric_phys.F do_fields_blocking_exchanges.F do_oceanic_phys.F do_stagger_fields_exchanges.F do_statevars_diags.F do_statevars_tave.F do_the_model_io.F do_write_pickup.F dynamics.F external_fields_load.F external_forcing.F external_forcing_surf.F find_alpha.F find_hyd_press_1d.F find_rho.F forcing_surf_relax.F forward_step.F freesurf_rescale_g.F freeze_surface.F grad_sigma.F gsw_teos10.F impldiff.F ini_cartesian_grid.F ini_cg2d.F ini_cg3d.F ini_cori.F ini_curvilinear_grid.F ini_cylinder_grid.F ini_depths.F ini_dynvars.F ini_eos.F ini_ffields.F ini_fields.F ini_forcing.F ini_global_domain.F ini_grid.F ini_linear_phisurf.F ini_local_grid.F ini_masks_etc.F ini_mixing.F ini_mnc_vars.F ini_model_io.F ini_nh_fields.F ini_nh_vars.F ini_nlfs_vars.F ini_parms.F ini_p_ground.F ini_pressure.F ini_psurf.F ini_salt.F ini_sigma_hfac.F ini_spherical_polar_grid.F ini_theta.F initialise_fixed.F initialise_varia.F ini_vel.F ini_vertical_grid.F integrate_for_w.F integr_continuity.F load_fields_driver.F load_grid_spacing.F load_ref_files.F main_do_loop.F momentum_correction_step.F packages_boot.F packages_check.F packages_error_msg.F packages_init_fixed.F packages_init_variables.F packages_print_msg.F packages_readparms.F packages_unused_msg.F packages_write_pickup.F plot_field.F port_rand.F post_cg3d.F pre_cg3d.F pressure_for_eos.F read_pickup.F remove_mean.F reset_nlfs_vars.F rotate_spherical_polar_grid.F rotate_uv2en.F salt_integrate.F seawater.F set_defaults.F set_grid_factors.F set_parms.F set_ref_state.F solve_for_pressure.F solve_pentadiagonal.F solve_tridiagonal.F solve_uv_tridiago.F state_summary.F swfrac.F taueddy_init_varia.F taueddy_tendency_apply.F temp_integrate.F the_main_loop.F the_model_main.F thermodynamics.F timestep.F timestep_tracer.F timestep_wvel.F tracers_correction_step.F tracers_iigw_correction.F turnoff_model_io.F update_cg2d.F update_etah.F update_etaws.F update_masks_etc.F update_r_star.F update_sigma.F update_surf_dr.F write_grid.F write_pickup.F write_state.F :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/model/src/$@ $@; fi
 
@@ -2362,11 +2362,11 @@ ini_masks_etc.o: ini_masks_etc.f
  mpi-ext.h mpif-c-constants-decl.h mpif-config.h mpif-constants.h mpif-externals.h mpif-ext.h mpif.h mpif-handles.h mpif-io-constants.h mpif-io-handles.h mpif-sentinels.h mpif-sizeof.h mpi.h mpi_portable_platform.h pshmem.h pshmemx.h shmem-compat.h shmem.h shmemx.h :
 	if [ ! -L $@ ]; then $(LN) /lib/x86_64-linux-gnu/openmpi/include/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/eesupp/inc ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/inc )
+#  These files are linked from $(ROOTDIR)/eesupp/inc ( aka ../../../MITgcm/eesupp/inc )
  BAR2.h BARRIER.h CPP_EEMACROS.h CPP_EEOPTIONS.h CUMULSUM.h DEF_IN_MAKEFILE.h EEBUFF_SCPU.h EEPARAMS.h EESUPPORT.h EXCH.h GLOBAL_MAX.h GLOBAL_SUM.h MAIN_PDIRECTIVES1.h MAIN_PDIRECTIVES2.h MPI_INFO.h SIGREG.h :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/eesupp/inc/$@ $@; fi
 
-#  These files are linked from $(ROOTDIR)/model/inc ( aka /home/sauterey/BORIS/MIT-GIT/MITgcm/model/inc )
+#  These files are linked from $(ROOTDIR)/model/inc ( aka ../../../MITgcm/model/inc )
  CG2D.h CG3D.h DXC_MACROS.h DXF_MACROS.h DXG_MACROS.h DXV_MACROS.h DYC_MACROS.h DYF_MACROS.h DYG_MACROS.h DYNVARS.h DYU_MACROS.h EOS.h FCORI_MACROS.h FFIELDS.h GRID.h GRID_MACROS.h HFACC_MACROS.h HFACS_MACROS.h HFACW_MACROS.h MASKS_MACROS.h MASKW_MACROS.h NH_VARS.h PARAMS.h RA_MACROS.h RAS_MACROS.h RAW_MACROS.h RECIP_DXC_MACROS.h RECIP_DXF_MACROS.h RECIP_DXG_MACROS.h RECIP_DXV_MACROS.h RECIP_DYC_MACROS.h RECIP_DYF_MACROS.h RECIP_DYG_MACROS.h RECIP_DYU_MACROS.h RECIP_HFACC_MACROS.h RECIP_HFACS_MACROS.h RECIP_HFACW_MACROS.h RESTART.h SET_GRID.h SOLVE_FOR_PRESSURE3D.h SOLVE_FOR_PRESSURE.h SURFACE.h TANPHIATU_MACROS.h TANPHIATV_MACROS.h THE_MODEL_COMMON_BLOCKS.h XC_MACROS.h YC_MACROS.h :
 	if [ ! -L $@ ]; then $(LN) $(ROOTDIR)/model/inc/$@ $@; fi
 

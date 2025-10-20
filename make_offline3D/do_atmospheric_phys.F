@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/do_atmospheric_phys.F
+../../../MITgcm/model/src/do_atmospheric_phys.F

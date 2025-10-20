@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/config_check.F
+../../../MITgcm/model/src/config_check.F

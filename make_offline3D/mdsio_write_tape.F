@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mdsio/mdsio_write_tape.F
+../../../MITgcm/pkg/mdsio/mdsio_write_tape.F

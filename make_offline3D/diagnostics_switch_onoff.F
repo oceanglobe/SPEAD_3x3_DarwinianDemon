@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/diagnostics/diagnostics_switch_onoff.F
+../../../MITgcm/pkg/diagnostics/diagnostics_switch_onoff.F

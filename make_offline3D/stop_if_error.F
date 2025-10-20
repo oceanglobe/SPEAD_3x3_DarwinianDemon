@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/stop_if_error.F
+../../../MITgcm/eesupp/src/stop_if_error.F

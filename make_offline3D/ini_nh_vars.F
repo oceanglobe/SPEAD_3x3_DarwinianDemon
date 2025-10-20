@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/ini_nh_vars.F
+../../../MITgcm/model/src/ini_nh_vars.F

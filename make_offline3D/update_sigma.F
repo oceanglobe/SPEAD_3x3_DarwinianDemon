@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/update_sigma.F
+../../../MITgcm/model/src/update_sigma.F

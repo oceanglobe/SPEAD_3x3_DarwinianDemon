@@ -3,13 +3,11 @@
 #SBATCH --time=04-12:00:00     # run no longer than 60 hours
 #SBATCH --mem-per-cpu=2500
 #SBATCH --ntasks=40
-#SBATCH --output=/home/sauterey/BORIS/MIT-GIT/DARWIN/SPEAD_cont_3D/runs_offline3D/OUTPUT/META-DATA/SLURM_OUTPUT
-#SBATCH --error=/home/sauterey/BORIS/MIT-GIT/DARWIN/SPEAD_cont_3D/runs_offline3D/OUTPUT/META-DATA/SLURM_ERROR
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=bsauterey@icm.csic.es
+#SBATCH --output=./OUTPUT/META-DATA/SLURM_OUTPUT
+#SBATCH --error=./OUTPUT/META-DATA/SLURM_ERROR
 
-export initdir=/home/sauterey/BORIS/MIT-GIT/DARWIN/SPEAD_cont_3D/runs_offline3D
-export rundir=/home/sauterey/BORIS/MIT-GIT/DARWIN/SPEAD_cont_3D/runs_offline3D/OUTPUT/META-DATA/test/
+export initdir=./
+export rundir=$initdir/OUTPUT/META-DATA/test/
 mkdir $rundir
 cp $initdir/mitgcmuv $rundir
 cp $initdir/POLY3.COEFFS $rundir

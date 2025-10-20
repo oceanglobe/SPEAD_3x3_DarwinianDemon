@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/setdir.c
+../../../MITgcm/eesupp/src/setdir.c

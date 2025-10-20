@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/darwin/DARWIN_PARAMS.h
+../../../MITgcm/pkg/darwin/DARWIN_PARAMS.h

@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mnc/mnc_cw_init.F
+../../../MITgcm/pkg/mnc/mnc_cw_init.F

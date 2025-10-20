@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/ini_vertical_grid.F
+../../../MITgcm/model/src/ini_vertical_grid.F

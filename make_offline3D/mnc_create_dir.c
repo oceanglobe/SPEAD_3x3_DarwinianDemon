@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mnc/mnc_create_dir.c
+../../../MITgcm/pkg/mnc/mnc_create_dir.c

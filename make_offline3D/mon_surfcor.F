@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/monitor/mon_surfcor.F
+../../../MITgcm/pkg/monitor/mon_surfcor.F

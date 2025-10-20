@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/kpp/kpp_readparms.F
+../../../MITgcm/pkg/kpp/kpp_readparms.F

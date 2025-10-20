@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mom_fluxform/mom_u_metric_sphere.F
+../../../MITgcm/pkg/mom_fluxform/mom_u_metric_sphere.F

@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/inc/EEBUFF_SCPU.h
+../../../MITgcm/eesupp/inc/EEBUFF_SCPU.h

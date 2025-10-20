@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/generic_advdiff/gad_som_exchanges.F
+../../../MITgcm/pkg/generic_advdiff/gad_som_exchanges.F

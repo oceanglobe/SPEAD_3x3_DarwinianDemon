@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/gmredi/gmredi_init_fixed.F
+../../../MITgcm/pkg/gmredi/gmredi_init_fixed.F

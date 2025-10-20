@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/diagnostics/DIAG_OPTIONS.h
+../../../MITgcm/pkg/diagnostics/DIAG_OPTIONS.h

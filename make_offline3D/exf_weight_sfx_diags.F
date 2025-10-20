@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/exf/exf_weight_sfx_diags.F
+../../../MITgcm/pkg/exf/exf_weight_sfx_diags.F

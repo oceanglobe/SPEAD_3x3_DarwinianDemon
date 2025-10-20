@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/update_etaws.F
+../../../MITgcm/model/src/update_etaws.F

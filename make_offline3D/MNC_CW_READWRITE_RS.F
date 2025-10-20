@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mnc/MNC_CW_READWRITE_RS.F
+../../../MITgcm/pkg/mnc/MNC_CW_READWRITE_RS.F

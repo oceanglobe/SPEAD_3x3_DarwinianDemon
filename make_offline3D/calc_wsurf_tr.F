@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/calc_wsurf_tr.F
+../../../MITgcm/model/src/calc_wsurf_tr.F

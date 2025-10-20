@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/diagnostics/diagstats_calc.F
+../../../MITgcm/pkg/diagnostics/diagstats_calc.F

@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/eeboot_minimal.F
+../../../MITgcm/eesupp/src/eeboot_minimal.F

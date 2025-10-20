@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/inc/CG2D.h
+../../../MITgcm/model/inc/CG2D.h

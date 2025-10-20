@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/bar_check.F
+../../../MITgcm/eesupp/src/bar_check.F

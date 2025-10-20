@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/add_walls2masks.F
+../../../MITgcm/model/src/add_walls2masks.F

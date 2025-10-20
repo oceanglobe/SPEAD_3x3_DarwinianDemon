@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/diags_oceanic_surf_flux.F
+../../../MITgcm/model/src/diags_oceanic_surf_flux.F

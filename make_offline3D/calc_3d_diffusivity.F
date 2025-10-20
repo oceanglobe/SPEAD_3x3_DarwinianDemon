@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/calc_3d_diffusivity.F
+../../../MITgcm/model/src/calc_3d_diffusivity.F

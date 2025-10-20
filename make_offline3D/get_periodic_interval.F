@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/get_periodic_interval.F
+../../../MITgcm/eesupp/src/get_periodic_interval.F

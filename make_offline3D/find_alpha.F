@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/find_alpha.F
+../../../MITgcm/model/src/find_alpha.F

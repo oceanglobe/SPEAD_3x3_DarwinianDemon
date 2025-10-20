@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/kpp/kpp_diagnostics_init.F
+../../../MITgcm/pkg/kpp/kpp_diagnostics_init.F

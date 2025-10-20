@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/cg2d_nsa.F
+../../../MITgcm/model/src/cg2d_nsa.F

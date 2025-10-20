@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/diags_rho.F
+../../../MITgcm/model/src/diags_rho.F

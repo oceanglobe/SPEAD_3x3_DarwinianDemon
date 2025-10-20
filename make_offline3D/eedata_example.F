@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/eedata_example.F
+../../../MITgcm/eesupp/src/eedata_example.F

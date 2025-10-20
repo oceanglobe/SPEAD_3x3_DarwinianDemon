@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/freeze_surface.F
+../../../MITgcm/model/src/freeze_surface.F

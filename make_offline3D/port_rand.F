@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/port_rand.F
+../../../MITgcm/model/src/port_rand.F

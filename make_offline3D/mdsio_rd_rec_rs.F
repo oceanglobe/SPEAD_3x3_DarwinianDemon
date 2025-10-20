@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mdsio/mdsio_rd_rec_rs.F
+../../../MITgcm/pkg/mdsio/mdsio_rd_rec_rs.F

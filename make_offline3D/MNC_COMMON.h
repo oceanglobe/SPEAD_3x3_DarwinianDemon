@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mnc/MNC_COMMON.h
+../../../MITgcm/pkg/mnc/MNC_COMMON.h

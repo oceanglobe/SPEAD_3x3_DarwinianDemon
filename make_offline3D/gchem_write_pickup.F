@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/gchem/gchem_write_pickup.F
+../../../MITgcm/pkg/gchem/gchem_write_pickup.F

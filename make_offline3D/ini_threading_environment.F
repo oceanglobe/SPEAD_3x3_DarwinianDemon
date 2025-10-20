@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/ini_threading_environment.F
+../../../MITgcm/eesupp/src/ini_threading_environment.F

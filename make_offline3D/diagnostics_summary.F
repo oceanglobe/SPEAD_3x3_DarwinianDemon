@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/diagnostics/diagnostics_summary.F
+../../../MITgcm/pkg/diagnostics/diagnostics_summary.F

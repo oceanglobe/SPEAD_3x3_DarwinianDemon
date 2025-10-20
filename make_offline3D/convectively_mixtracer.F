@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/convectively_mixtracer.F
+../../../MITgcm/model/src/convectively_mixtracer.F

@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/convective_adjustment_ini.F
+../../../MITgcm/model/src/convective_adjustment_ini.F

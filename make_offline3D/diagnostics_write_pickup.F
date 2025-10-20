@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/diagnostics/diagnostics_write_pickup.F
+../../../MITgcm/pkg/diagnostics/diagnostics_write_pickup.F

@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/write_pickup.F
+../../../MITgcm/model/src/write_pickup.F

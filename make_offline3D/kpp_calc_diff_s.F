@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/kpp/kpp_calc_diff_s.F
+../../../MITgcm/pkg/kpp/kpp_calc_diff_s.F

@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/global_sum_singlecpu.F
+../../../MITgcm/eesupp/src/global_sum_singlecpu.F

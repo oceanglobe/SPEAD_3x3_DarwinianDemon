@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/eedie.F
+../../../MITgcm/eesupp/src/eedie.F

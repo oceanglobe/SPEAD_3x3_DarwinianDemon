@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/set_parms.F
+../../../MITgcm/model/src/set_parms.F

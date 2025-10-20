@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/gmredi/gmredi_do_exch.F
+../../../MITgcm/pkg/gmredi/gmredi_do_exch.F

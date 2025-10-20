@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mom_common/mom_w_smag_3d.F
+../../../MITgcm/pkg/mom_common/mom_w_smag_3d.F

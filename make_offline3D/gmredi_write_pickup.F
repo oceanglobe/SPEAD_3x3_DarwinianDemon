@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/gmredi/gmredi_write_pickup.F
+../../../MITgcm/pkg/gmredi/gmredi_write_pickup.F

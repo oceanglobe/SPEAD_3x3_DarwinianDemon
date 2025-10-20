@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/master_cpu_thread.F
+../../../MITgcm/eesupp/src/master_cpu_thread.F

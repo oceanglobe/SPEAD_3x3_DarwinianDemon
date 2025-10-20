@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/inc/RECIP_DYG_MACROS.h
+../../../MITgcm/model/inc/RECIP_DYG_MACROS.h

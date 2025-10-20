@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/update_masks_etc.F
+../../../MITgcm/model/src/update_masks_etc.F

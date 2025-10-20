@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mom_common/mom_init_fixed.F
+../../../MITgcm/pkg/mom_common/mom_init_fixed.F

@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/inc/XC_MACROS.h
+../../../MITgcm/model/inc/XC_MACROS.h

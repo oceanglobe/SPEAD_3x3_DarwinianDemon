@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/scatter_yz.F
+../../../MITgcm/eesupp/src/scatter_yz.F

@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mdsio/mdsio_check4file.F
+../../../MITgcm/pkg/mdsio/mdsio_check4file.F

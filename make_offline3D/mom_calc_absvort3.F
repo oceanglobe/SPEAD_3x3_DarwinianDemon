@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/mom_common/mom_calc_absvort3.F
+../../../MITgcm/pkg/mom_common/mom_calc_absvort3.F

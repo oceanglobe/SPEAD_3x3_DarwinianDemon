@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/inc/DYNVARS.h
+../../../MITgcm/model/inc/DYNVARS.h

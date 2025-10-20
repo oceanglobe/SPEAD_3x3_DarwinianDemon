@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/generic_advdiff/gad_read_pickup.F
+../../../MITgcm/pkg/generic_advdiff/gad_read_pickup.F

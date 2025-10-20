@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/rw/rw_get_suffix.F
+../../../MITgcm/pkg/rw/rw_get_suffix.F

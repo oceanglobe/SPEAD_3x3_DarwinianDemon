@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/do_the_model_io.F
+../../../MITgcm/model/src/do_the_model_io.F

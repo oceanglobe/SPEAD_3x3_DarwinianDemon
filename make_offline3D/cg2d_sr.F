@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/cg2d_sr.F
+../../../MITgcm/model/src/cg2d_sr.F

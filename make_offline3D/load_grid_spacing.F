@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/load_grid_spacing.F
+../../../MITgcm/model/src/load_grid_spacing.F

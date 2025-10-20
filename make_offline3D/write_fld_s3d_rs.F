@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/pkg/rw/write_fld_s3d_rs.F
+../../../MITgcm/pkg/rw/write_fld_s3d_rs.F

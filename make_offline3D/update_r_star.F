@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/update_r_star.F
+../../../MITgcm/model/src/update_r_star.F

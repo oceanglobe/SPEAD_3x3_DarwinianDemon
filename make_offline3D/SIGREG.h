@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/inc/SIGREG.h
+../../../MITgcm/eesupp/inc/SIGREG.h

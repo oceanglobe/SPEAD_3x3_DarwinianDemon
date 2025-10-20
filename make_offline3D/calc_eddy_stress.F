@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/model/src/calc_eddy_stress.F
+../../../MITgcm/model/src/calc_eddy_stress.F

@@ -1,1 +1,1 @@
-/home/sauterey/BORIS/MIT-GIT/MITgcm/eesupp/src/exch_xy_rs.F
+../../../MITgcm/eesupp/src/exch_xy_rs.F
