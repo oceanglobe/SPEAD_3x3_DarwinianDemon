@@ -24,7 +24,7 @@ def nice_print(x,pre=bcolors.OKGREEN+bcolors.BOLD,post=bcolors.ENDC):
 
 t0 = time.perf_counter()
 root_dir   = './'
-run_name   = 'Run_final_mutT_1e2_mutS_1e3_mutL_1e3_new_higherPARoptmin_noLMaxcap'
+run_name   = 'your_run'
 run_dir    = root_dir+run_name+'/'
 nice_print('Selected run: '+run_dir)
 
@@ -35,7 +35,7 @@ FPP_list   = sorted(glob.glob(FPP_input +'.*.data'))
 
 
 nice_print('\nThe run contains '+str(int(len(TRAC_list)/12))+' years.')
-year = input(bcolors.OKGREEN+bcolors.BOLD+'Do you want to load everything (y/nunber of years)? '+bcolors.ENDC)
+year = input(bcolors.OKGREEN+bcolors.BOLD+'Do you want to load everything (y/nunber of years; can be negative to start from the end)? '+bcolors.ENDC)
 if (year == 'y') or (year == ''):
     nice_print('------ Loading everything',pre=bcolors.OKGREEN)
     Iter   = [int(i[-15:-5]) for i in TRAC_list]
