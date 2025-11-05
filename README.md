@@ -9,14 +9,11 @@ As compiling the code on a unknown machine is not trivial, we provide 5 pre-comp
 
 Those executables have been compiled to run on 40 CPUs. So to run the code you will need a linux machine with at least 40 CPUs and Open MPI for parallel computing. The code was compiled and run on a machine using Debian GNU/Linux 11 (bullseye), gcc version 10.2.1 and Open MPI 4.1.0. 
 
-To run the executables, you need to execute the 'run_script' bash file found in the same directory. Prior to execution, must be set in the file the directory initial run directory (l 11) and your final output directory (l 12):
+To run the executables, you need to execute the 'run_script' bash file found in the same directory. Prior to execution, must be set in the file the directory initial run directory (l 11), your final output directory (l 12), and the executable file to use (l 13):
 ```
 export initdir=<your initial run directory>
 export rundir=<your final output directory>
-```
-as well as the name of the executable to use (l 25)
-```
-mpirun -np 40 ./<your executable>
+export exe=<your executable>
 ```
 Once it is done, the script can be executed in command line as follows
 ```
@@ -39,7 +36,7 @@ Once this is done, you can execute the script as follows
 ```
 The compilation will produce an executable named mitgcmuv (you can/should rename it) in the run directory. To run this new executable, you must modify the run_script script to adjust it to the new number of cpu and executable filename 
 ```
-mpirun -np <your new number of necessary CPUs> ./<your executable>
+mpirun -np <your new number of necessary CPUs> ./$exe
 ```
 Then you can execute the script.
 
