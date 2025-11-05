@@ -32,7 +32,7 @@ genmake_test.c:1:31: warning: implicit declaration of function ‘tsub’ [-Wimp
 mpicc -O0 -mcmodel=medium -fallow-argument-mismatch -c genmake_tc_1.c
 cc1: warning: command-line option ‘-fallow-argument-mismatch’ is valid for Fortran but not for C
 mpif77 -fconvert=big-endian -fimplicit-none -mcmodel=medium -fallow-argument-mismatch -o genmake_tc genmake_tc_2.f genmake_tc_1.o
-  HELLO WORLD   1760962901.2671859     
+  HELLO WORLD   1762342968.3498530     
  --> set HAVE_CLOC='t'
 
 running: check_HAVE_SETRLSTK()

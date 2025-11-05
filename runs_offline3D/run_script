@@ -6,10 +6,11 @@
 #SBATCH --output=./OUTPUT/META-DATA/SLURM_OUTPUT
 #SBATCH --error=./OUTPUT/META-DATA/SLURM_ERROR
 
-export initdir=./
+export initdir=.
 export rundir=$initdir/OUTPUT/META-DATA/your_run/
+export exe=mitgcmuv_DD
 mkdir $rundir
-cp $initdir/mitgcmuv $rundir
+cp $initdir/$exe $rundir
 cp $initdir/POLY3.COEFFS $rundir
 cp $initdir/data $rundir
 cp $initdir/eedata $rundir
@@ -20,6 +21,6 @@ cp -r $initdir/../code_offline3D/ $rundir
 sleep 10s
 
 cd $rundir
-mpirun -np 40 ./mitgcmuv_DD
+mpirun -np 40 ./$exe
 sleep 10s
 

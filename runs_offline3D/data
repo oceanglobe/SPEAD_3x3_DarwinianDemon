@@ -119,9 +119,9 @@ ygOrigin=-80.,
 # Data Files
 # **********
 &PARM05
-bathyFile=       'input/bathy_fl.bin',
-#hydrogThetaFile= 'input/LEVITUS_1x1_ptmp_NEW_corK',
-#hydrogSaltFile=  'input/LEVITUS_1x1_salt_NEW_corK',
+bathyFile=       '../../../input/bathy_fl.bin',
+#hydrogThetaFile= '../../../input/LEVITUS_1x1_ptmp_NEW_corK',
+#hydrogSaltFile=  '../../../input/LEVITUS_1x1_salt_NEW_corK',
 zonalWindFile=   '',
 meridWindFile=   '',
 thetaClimFile=   '',
