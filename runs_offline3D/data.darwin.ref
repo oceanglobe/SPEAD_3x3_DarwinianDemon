@@ -19,7 +19,6 @@
  /
  &DARWIN_PARAMS
  darwin_seed= 11231,
- alpfe= .06D0
 #alpfe= .05D0, ! Iron solubility. Default value is 0.04.
 #alpfe= .04D0,
 #scav= 5.092592592592593e-08  ! 4.4D-3/day, (Default is four times lower)
@@ -48,16 +47,11 @@
 #wP_sink = 1.1574074074074074e-04,
 #wFe_sink = 1.1574074074074074e-04,
 #wSi_sink = 1.1574074074074074e-04,
-#wC_sink = 5.7870370370370366e-05, ! sinking speed of 5 m/d (default)
-#wN_sink = 5.7870370370370366e-05,
-#wP_sink = 5.7870370370370366e-05,
-#wFe_sink = 5.7870370370370366e-05,
-#wSi_sink = 5.7870370370370366e-05,
- wC_sink = 6.510416666666667e-05, ! sinking speed of 5.625 m/d (default)
- wN_sink = 6.510416666666667e-05,
- wP_sink = 6.510416666666667e-05,
- wFe_sink = 6.510416666666667e-05,
- wSi_sink = 6.510416666666667e-05,
+ wC_sink = 5.7870370370370366e-05, ! sinking speed of 5 m/d (default)
+ wN_sink = 5.7870370370370366e-05,
+ wP_sink = 5.7870370370370366e-05,
+ wFe_sink = 5.7870370370370366e-05,
+ wSi_sink = 5.7870370370370366e-05,
 #wC_sink = 0.,
 #wN_sink = 0., 
 #wP_sink = 0., 

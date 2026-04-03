@@ -1272,7 +1272,7 @@ C       ENDIF
           dmndt(j,jp) = dmndt(j,jp) + a_d1(j,jp)*vr_tr(j,jp)
 C         dvrdt(j,jp) = a_d2(j,jp)*(vr_tr(j,jp)**2)
           dvrdt(j,jp) = dvrdt(j,jp) + a_d2(j,jp)*(vr_tr(j,jp)**2)
-     &                + 2*gcom(j)*numut_tr(j,jp)     
+     &                + 2*gcom(j)*numut_tr(j,jp)
         END DO
 #ifdef SPEAD_ALLOW_COV
 C Terms occurring when num_trait(j) > 2
@@ -1432,6 +1432,13 @@ C Parameterization of Kill The Winner (KTW) preferential grazing (Le Gland, 27/0
           dcvdt(j,jc) = dcvdt(j,jc) + coeff_KTW(j)*cv_tr(j,jc)
         ENDDO
 #endif
+
+C When variance is 0, prevent it to go below Boris (28/11/24)
+        DO jp = 1, num_trait(j)
+          IF (vr_tr(j,jp) .EQ. 0 _d 0) THEN
+            dvrdt(j,jp) = MAX(0 _d 0,dvrdt(j,jp))
+          ENDIF
+        ENDDO
 
 c        DO jp = 1, num_trait(j)
 c            IF(dvrdt(j,jp) /= 0) THEN
