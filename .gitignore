@@ -8,8 +8,7 @@ runs_offline3D/OUTPUT/META-DATA/SLURM*
 runs_offline3D/mitgcmuv
 runs_offline3D/STD*
 runs_offline3D/pickup*
-runs_offline3D_CChange/
-code_offline3D_CChange/
+make_offline3D/
 #runs_offline3D_CChange/OUTPUT/
 #runs_offline3D_CChange/input/
 #runs_offline3D_CChange/STD*
