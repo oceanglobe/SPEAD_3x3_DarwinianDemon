@@ -24,7 +24,7 @@ def nice_print(x,pre=bcolors.OKGREEN+bcolors.BOLD,post=bcolors.ENDC):
 
 t0 = time.perf_counter()
 root_dir   = './'
-run_name   = 'Alltraits_100y_debug'
+run_name   = 'AllTraits_100y_Fe'
 run_dir    = root_dir+run_name+'/'
 nice_print('Selected run: '+run_dir)
 
@@ -40,30 +40,20 @@ if (year == 'y') or (year == ''):
     nice_print('------ Loading everything',pre=bcolors.OKGREEN)
     Iter   = [int(i[-15:-5]) for i in TRAC_list]
 elif float(year) > 0:
-    inp = input(bcolors.OKGREEN+bcolors.BOLD+"Loads the whole interval (y/n; 'n' loads only the one year)? "+bcolors.ENDC)
-    if (inp == 'y'):
-        nice_print('------ Loading the '+str(year)+' first years',pre=bcolors.OKGREEN)
-        Iter   = [int(i[-15:-5]) for i in TRAC_list][:int(year)*12]
-    else:
-        nice_print('------ Loading the year '+str(year),pre=bcolors.OKGREEN)
-        Iter   = [int(i[-15:-5]) for i in TRAC_list][(int(year)-1)*12:int(year)*12]
+    nice_print('------ Loading the '+str(year)+' first years',pre=bcolors.OKGREEN)
+    Iter   = [int(i[-15:-5]) for i in TRAC_list][:int(year)*12]
 elif float(year) < 0:
-    if (inp == 'y'):
-        nice_print('------ Loading the '+str(year)+' last years',pre=bcolors.OKGREEN)    
-        Iter   = [int(i[-15:-5]) for i in TRAC_list][int(year)*12:]
-    else:
-        nice_print('------ Loading the year '+str(int(len(TRAC_list)/12)+year),pre=bcolors.OKGREEN)
-        Iter   = [int(i[-15:-5]) for i in TRAC_list][(int(year)-1)*12:int(year)*12]
+    nice_print('------ Loading the '+str(year)+' last years',pre=bcolors.OKGREEN)    
+    Iter   = [int(i[-15:-5]) for i in TRAC_list][int(year)*12:]
 
-Var        = [1,2,3,4,5]+np.arange(19,30).tolist()
-#Var        = [19]
+Var        = [6]
 TRAC       = mds.rdmds(TRAC_input,Iter,rec=Var)
 FPP        = mds.rdmds(FPP_input,Iter)
 nice_print('------ Outputs loaded',pre=bcolors.OKGREEN)  
 
 t1 = time.perf_counter()
 nice_print('\n------ Pickling the outputs',pre=bcolors.OKGREEN)
-pickle_name = run_dir+run_name+'_All.pickle'
+pickle_name = run_dir+run_name+'_Fe.pickle'
 f=open(pickle_name,'wb')
 pickle.dump([TRAC,FPP], f)
 #f=gzip.GzipFile(pickle_name,'wb')

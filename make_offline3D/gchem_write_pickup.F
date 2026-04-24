@@ -1,1 +1,0 @@
-../../../MITgcm/pkg/gchem/gchem_write_pickup.F

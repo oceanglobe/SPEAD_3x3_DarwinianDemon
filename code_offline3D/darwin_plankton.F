@@ -698,6 +698,15 @@ C           cv_tr(j,jp) = X_m11(j,jp)/X(j) - mn_tr(j,jt1)*mn_tr(j,jt2)
           ELSE
             cv_tr(j,jp) = 0 _d 0
           ENDIF
+
+C Supposedly makes covariance stay at zero when set to zero
+C and prevents Nans (Boris 04/26)
+          cv_tr(j,jp) = MAX(0 _d 0 ,cv_tr(j,jp))
+          IF(cv_tr(j,jp) /= cv_tr(j,jp)) THEN 
+           cv_tr(j,jp) = 0 _d 0
+C           print*, 'Cov. has Nans :', X_m11(j,jp)
+          ENDIF
+                    
 C Recall terms (Le Gland, 27/05/2021)
           dcvdt(j,jp) = MIN( 0.99*sd_tr(j,jt1)*sd_tr(j,jt2) -
      &    cv_tr(j,jp), MAX(0., -0.99*sd_tr(j,jt1)*sd_tr(j,jt2) -
@@ -711,6 +720,7 @@ C         IF (myIter .EQ. 1) THEN
 C           print*, 'X_m11 index:', ic+iplank(j)-1+2*num_trait(j)+jp,
 C    &              'value: ', X_m11(j,jp)
 C         ENDIF
+
           IF (jt2 < num_trait(j)) THEN
             jt2 = jt2 + 1
           ELSE
@@ -774,7 +784,7 @@ C       IF (isPhoto(j) .NE. 0 .AND. X(j) .GT. 0 _d 0) THEN
           IF (isPhoto(iplank(j)) .NE. 0) THEN
             Qn(j) = Qnmax(iplank(j))
           ELSEIF (X(j) .GT. 0 _d 0) THEN
-            Qn(j) = MAX(0 _d 0, Ptr(in+iplank(j)-1)/X(j)
+            Qn(j) = MAX(0 _d 0, Ptr(in+iplank(j)-1)/X(j))
           ELSE
             Qn(j) = Qnmax(iplank(j))
           ENDIF
@@ -821,7 +831,7 @@ C       Qn(j) = R_NC(iplank(j))
           IF (isPhoto(iplank(j)) .NE. 0) THEN
             Qp(j) = Qpmax(iplank(j))
           ELSEIF (X(j) .GT. 0 _d 0) THEN
-            Qp(j) = MAX(0 _d 0, Ptr(ip+iplank(j)-1)/X(j)
+            Qp(j) = MAX(0 _d 0, Ptr(ip+iplank(j)-1)/X(j))
           ELSE
             Qp(j) = Qpmax(iplank(j))
           ENDIF
@@ -868,7 +878,7 @@ C       Qp(j) = R_PC(iplank(j))
           IF (isPhoto(iplank(j)) .NE. 0) THEN
             Qsi(j) = Qsimax(iplank(j))
           ELSEIF (X(j) .GT. 0 _d 0) THEN
-            Qsi(j) = MAX(0 _d 0, Ptr(isi+iplank(j)-1)/X(j)
+            Qsi(j) = MAX(0 _d 0, Ptr(isi+iplank(j)-1)/X(j))
           ELSE
             Qsi(j) = Qsimax(iplank(j))
           ENDIF
@@ -915,7 +925,7 @@ C       Qsi(j) = R_SiC(iplank(j))
           IF (isPhoto(iplank(j)) .NE. 0) THEN
             Qfe(j) = Qfemax(iplank(j))
           ELSEIF (X(j) .GT. 0 _d 0) THEN
-            Qfe(j) = MAX(0 _d 0, Ptr(ife+iplank(j)-1)/X(j)
+            Qfe(j) = MAX(0 _d 0, Ptr(ife+iplank(j)-1)/X(j))
           ELSE
             Qfe(j) = Qfemax(iplank(j))
           ENDIF
@@ -1272,7 +1282,7 @@ C       ENDIF
           dmndt(j,jp) = dmndt(j,jp) + a_d1(j,jp)*vr_tr(j,jp)
 C         dvrdt(j,jp) = a_d2(j,jp)*(vr_tr(j,jp)**2)
           dvrdt(j,jp) = dvrdt(j,jp) + a_d2(j,jp)*(vr_tr(j,jp)**2)
-     &                + 2*gcom(j)*numut_tr(j,jp)     
+     &                + 2*gcom(j)*numut_tr(j,jp)
         END DO
 #ifdef SPEAD_ALLOW_COV
 C Terms occurring when num_trait(j) > 2
@@ -1432,6 +1442,14 @@ C Parameterization of Kill The Winner (KTW) preferential grazing (Le Gland, 27/0
           dcvdt(j,jc) = dcvdt(j,jc) + coeff_KTW(j)*cv_tr(j,jc)
         ENDDO
 #endif
+
+C When variance is 0, prevent it to go below Boris (28/11/24)
+        DO jp = 1, num_trait(j)
+          IF (vr_tr(j,jp) .LE. 0 _d 0) THEN
+            vr_tr(j,jp) = 0 _d 0 
+            dvrdt(j,jp) = MAX(0 _d 0,dvrdt(j,jp))
+          ENDIF
+        ENDDO
 
 c        DO jp = 1, num_trait(j)
 c            IF(dvrdt(j,jp) /= 0) THEN
