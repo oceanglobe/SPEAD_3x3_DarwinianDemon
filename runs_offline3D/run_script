@@ -7,8 +7,8 @@
 #SBATCH --error=./OUTPUT/META-DATA/SLURM_ERROR
 
 export initdir=.
-export rundir=$initdir/OUTPUT/META-DATA/Alltraits_test3/
-export exe=mitgcmuv_Alltraits_test2
+export rundir=$initdir/OUTPUT/META-DATA/Alltraits_100y_2
+export exe=mitgcmuv
 mkdir $rundir
 cp $initdir/$exe $rundir
 cp $initdir/POLY3.COEFFS $rundir
