@@ -475,9 +475,6 @@ C Constant for the semi-empirical expression of the darwinian demon in size (Bor
       _RL c3
       _RL c4
       _RL c5
-      _RL biovol_star
-      _RL PARoptmin_star
-
 #ifdef DARWIN_ALLOW_NQUOTA
       _RL an_1t(nTrac)
 #endif
@@ -870,36 +867,33 @@ C           print*, 'biovol of ', jp, 'before DD =', biovol(jp)
 C           print*, 'limiting factors: N = ', a_ksatNO3(g)/(NO3+NO2+NH4)
 C     &     , '; P =', a_ksatPO4(g)/PO4, '; F =', a_ksatFeT(g)/FeT
 
-C#ifdef DARWINIAN_DEMON_SIZE    
-C            IF (a_ksatNO3(g)/(NO3+NO2+NH4) .EQ. 
-C     &      MAX(a_ksatNO3(g)/(NO3+NO2+NH4),
-C     &      a_ksatPO4(g)/PO4,a_ksatFeT(g)/FeT)) THEN
-C              IF((NO3+NO2+NH4) .GT. 0 _d 0) THEN
-C              biovol(jp) = c1*(((NO3+NO2+NH4)*0.17/
-C     &         (a_ksatNO3(g)*(0.27-0.17)))
-C     &         **(1/0.27))*10**(c2/(1 + c5*PARtot**c3*((NO3+NO2+NH4)
-C     &         /a_ksatNO3(g))**c4))
-C              ENDIF
-C            ELSEIF (a_ksatPO4(g)/PO4 .EQ. 
-C     &      MAX(a_ksatNO3(g)/(NO3+NO2+NH4),
-C     &      a_ksatPO4(g)/PO4,a_ksatFeT(g)/FeT)) THEN
-C              IF(PO4 .GT. 0 _d 0) THEN
-C                biovol(jp) = c1*((PO4*0.17/(a_ksatPO4(g)*(0.27-0.17)))
-C     &          **(1/0.27))*10**(c2/(1 + c5*PARtot**c3*(PO4
-C     &          /a_ksatPO4(g))**c4))
-C              ENDIF
-C            ELSE
-C              IF(FeT .GT. 0 _d 0) THEN
-C                biovol(jp) = c1*((FeT*0.17/(a_ksatFeT(g)*(0.27-0.17)))
-C     &          **(1/0.27))*10**(c2/(1 + c5*PARtot**c3*(FeT
-C     &          /a_ksatFeT(g))**c4))
-C              ENDIF
-C            ENDIF
-C            IF(biovol(jp) .NE. biovol_star) THEN
-C            print*, '!! biovol :', biovol(jp), '  biovol_star :', biovol_star
-C            ENDIF
-C#endif
+#ifdef DARWINIAN_DEMON_SIZE    
+            IF (a_ksatNO3(g)/(NO3+NO2+NH4) .EQ. 
+     &      MAX(a_ksatNO3(g)/(NO3+NO2+NH4),
+     &      a_ksatPO4(g)/PO4,a_ksatFeT(g)/FeT)) THEN
+              IF((NO3+NO2+NH4) .GT. 0 _d 0) THEN
+              biovol(jp) = c1*(((NO3+NO2+NH4)*0.17/
+     &         (a_ksatNO3(g)*(0.27-0.17)))
+     &         **(1/0.27))*10**(c2/(1 + c5*PARtot**c3*((NO3+NO2+NH4)
+     &         /a_ksatNO3(g))**c4))
+              ENDIF
+            ELSEIF (a_ksatPO4(g)/PO4 .EQ. 
+     &      MAX(a_ksatNO3(g)/(NO3+NO2+NH4),
+     &      a_ksatPO4(g)/PO4,a_ksatFeT(g)/FeT)) THEN
+              IF(PO4 .GT. 0 _d 0) THEN
+                biovol(jp) = c1*((PO4*0.17/(a_ksatPO4(g)*(0.27-0.17)))
+     &          **(1/0.27))*10**(c2/(1 + c5*PARtot**c3*(PO4
+     &          /a_ksatPO4(g))**c4))
+              ENDIF
+            ELSE
+              IF(FeT .GT. 0 _d 0) THEN
+                biovol(jp) = c1*((FeT*0.17/(a_ksatFeT(g)*(0.27-0.17)))
+     &          **(1/0.27))*10**(c2/(1 + c5*PARtot**c3*(FeT
+     &          /a_ksatFeT(g))**c4))
 
+              ENDIF
+            ENDIF
+#endif
 
 C           print*, 'biovol of ', jp, 'after DD =', biovol(jp)
 
@@ -908,55 +902,12 @@ C PARoptmin is the minimum possible value of Iopt for a given cell volume
 C (Le Gland, 15/04/2021)
 C In an attempt to avoid bugs with some advection/diffusion schemes, I
 C now impose that PCmax must be positve (Le Gland, 01/06/2021)
-
-            biovol_star = biovol(jp)
-
-            IF (a_ksatNO3(g)/(NO3+NO2+NH4) .EQ. 
-     &      MAX(a_ksatNO3(g)/(NO3+NO2+NH4),
-     &      a_ksatPO4(g)/PO4,a_ksatFeT(g)/FeT)) THEN
-              IF((NO3+NO2+NH4) .GT. 0 _d 0) THEN
-              biovol_star = c1*(((NO3+NO2+NH4)*0.17/
-     &         (a_ksatNO3(g)*(0.27-0.17)))
-     &         **(1/0.27))*10**(c2/(1 + c5*PARtot**c3*((NO3+NO2+NH4)
-     &         /a_ksatNO3(g))**c4))
-               !print*, 'N = ', (NO3+NO2+NH4)
-              ENDIF
-            ELSEIF (a_ksatPO4(g)/PO4 .EQ. 
-     &      MAX(a_ksatNO3(g)/(NO3+NO2+NH4),
-     &      a_ksatPO4(g)/PO4,a_ksatFeT(g)/FeT)) THEN
-              IF(PO4 .GT. 0 _d 0) THEN
-              biovol_star = c1*((PO4*0.17/(a_ksatPO4(g)*(0.27-0.17)))
-     &          **(1/0.27))*10**(c2/(1 + c5*PARtot**c3*(PO4
-     &          /a_ksatPO4(g))**c4))
-              !print*, 'P = ', (PO4)
-              ENDIF
-            ELSE
-              IF(FeT .GT. 0 _d 0) THEN
-              biovol_star = c1*((FeT*0.17/(a_ksatFeT(g)*(0.27-0.17)))
-     &          **(1/0.27))*10**(c2/(1 + c5*PARtot**c3*(FeT
-     &          /a_ksatFeT(g))**c4))
-              !print*, 'Fe = ', (FeT)
-              ENDIF
-            ENDIF
-
-#ifdef DARWINIAN_DEMON_SIZE
-            biovol(jp) = biovol_star
-#endif
-
             PARoptmin = a_PARoptmin(g) * biovol(jp)**b_PARoptmin(g)
-
+            
 #ifdef DARWINIAN_DEMON_LIGHT
-            tmp = b_PARoptmin(g)
-            PARoptmin_star  = a_PARoptmin(g) * biovol_star**tmp
-            PARopt(jp) = PARoptmin_star + SQRT(PARoptmin_star**2 + 
-     &      (3.2-2)*PARtot*PARoptmin_star + PARtot**2)
-#endif
-                        
-            !IF (PARtot .GT. 10.) THEN
-            !  print*, 'PAR = ', (PARtot)
-            !  print*, 'biovol = ', (biovol(jp))
-            !  print*, 'PARopt = ', (PARopt(jp))
-            !ENDIF
+            PARopt(jp) = PARoptmin + SQRT(PARoptmin**2 + 
+     &      (3.2-2)*PARtot*PARoptmin + PARtot**2)
+#endif 
 
             ksatPAR(jp) = LOG(1+PARchi(jp))
      &                  / (11.574*PARopt(jp)/2.5)

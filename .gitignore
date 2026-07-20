@@ -5,6 +5,7 @@ runs_offline3D/OUTPUT/META-DATA/test/
 runs_offline3D/OUTPUT/META-DATA/Standard_run/
 runs_offline3D/OUTPUT/META-DATA/SLURM*
 runs_offline3D/OUTPUT/META-DATA/DD_*
+runs_offline3D/OUTPUT/META-DATA/new*
 runs_offline3D/OUTPUT/META-DATA/All*
 #runs_offline3D/input/
 runs_offline3D/mitgcmuv

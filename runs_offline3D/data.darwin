@@ -221,12 +221,21 @@
  a_phytoTempExp1(:) = 2*0.056, ! Phytoplankton temperature dependency
 #Trait diffusion parameters (Le Gland, 18/12/2020)
 #x-trait here is biovolume, not half-saturation
- numut_bvol(:) = 1.0e-3, 0.000
- numut_topt(:) = 1.0e-2, 0.00
- numut_paropt(:) = 1.0e-3 0.0000
+ numut_bvol(:) = 1.0e-1, 0.000
+ numut_topt(:) = 1.0e-0, 0.00
+ numut_paropt(:) = 1.0e-1 0.0000
+#numut_bvol(:) = 1.0e-2, 0.000
+#numut_topt(:) = 1.0e-1, 0.00
+#numut_paropt(:) = 1.0e-2 0.0000
+#numut_bvol(:) = 1.0e-3, 0.000        ! Default
+#numut_topt(:) = 1.0e-2, 0.00         ! Default
+#numut_paropt(:) = 1.0e-3 0.0000      ! Default
 #numut_bvol(:) = 1.0e-5, 0.000
 #numut_topt(:) = 1.0e-4, 0.00
 #numut_paropt(:) = 1.0e-5 0.0000
+#numut_bvol(:) = 1.0e-7, 0.000
+#numut_topt(:) = 1.0e-6, 0.00
+#numut_paropt(:) = 1.0e-7 0.0000
 #numut_bvol(:) = 0.000, 0.000 ! For darwinian demon/dummy
 #numut_topt(:) = 0.0, 0.00    ! For darwinian demon/dummy
 #numut_paropt(:) = 0.0, 0.00  ! For darwinian demon/dummy
