@@ -8,7 +8,7 @@
 
 export initdir=.
 export rundir=$initdir/OUTPUT/META-DATA/DD_Size_100y/
-export exe=mitgcmuv_Size2
+export exe=mitgcmuv_Alltraits
 mkdir $rundir
 cp $initdir/$exe $rundir
 cp $initdir/POLY3.COEFFS $rundir
