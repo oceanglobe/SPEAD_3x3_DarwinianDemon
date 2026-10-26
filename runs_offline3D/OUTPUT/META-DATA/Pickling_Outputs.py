@@ -24,7 +24,7 @@ def nice_print(x,pre=bcolors.OKGREEN+bcolors.BOLD,post=bcolors.ENDC):
 
 t0 = time.perf_counter()
 root_dir   = './'
-run_name   = 'DD_100y_cont50y_Light'
+run_name   = 'Alltraits_100y_LowMut'
 run_dir    = root_dir+run_name+'/'
 nice_print('Selected run: '+run_dir)
 
