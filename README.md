@@ -3,7 +3,6 @@ This code runs the DARWIN model coupled with the SPEAD eco-evolutionary framewor
 
 # Running the precompiled code #
 As compiling the code on a unknown machine is not trivial, we provide 5 pre-compiled executables:
-- three in which one trait evolves while the two others are assumed optimal (mitgcmuv_Size, mitgcmuv_Light, mitgcmuv_Temp),
 - one in which all traits evolve (mitgcmuv_AllTraits),
 - one in which all traits are optimal) in the directory runs_offline3D (mitgcmuv_DD). 
 
