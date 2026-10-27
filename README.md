@@ -50,5 +50,5 @@ When run as follows
 ```
 python3 Pickling_Outputs.py 
 ```
-The script will ask the number of years that should be included. The generated pickle file can then be opened with the jupyter rnotebook "Read_Outputs_3D.ipynb" provided in the python directory provided in this repository. Note that we provide the outputs corresponding to the last year of each of the 6 simulations presented in Sauterey et al. (in prep) in the subdirectory "OUTPUT/META-DATA/Outputs_SautereyEtAl". 
+The script will ask the number of years that should be included. The generated pickle file can then be opened with the jupyter rnotebook "Read_Outputs_3D.ipynb" provided in the python directory provided in this repository. Note that we provide the outputs corresponding to the last year of each of the 6 simulations presented in Sauterey et al. (in prep) in the subdirectory "OUTPUT/META-DATA/Outputs_SautereyEtAl" and that all the analysis can be redone using the notebook "Summary_Notebook_Git". 
 
